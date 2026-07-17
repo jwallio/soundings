@@ -1,0 +1,84 @@
+wmo_id,station_id,icao_id,igra_id,station_name,latitude,longitude,state,country,nco_region,igra_first_year,igra_last_year,source,active_expected
+71603,YQI,CYQI,CAM00071603,"Yarmouth, NS",43.8308,-66.0886,NS,Canada,N,1988,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+71722,YMW,CYMW,CAM00071722,"Maniwaki, QC",46.1417,-76.0811,QC,Canada,N,1954,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+72201,KEY,KEYW,USM00072201,"Key West, FL",24.5531,-81.7886,FL,US,S,1919,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72202,MFL,KMFL,USM00072202,"Miami, FL",25.7500,-80.3833,FL,US,S,1945,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72206,JAX,KJAX,USM00072206,"Jacksonville, FL",30.4839,-81.7011,FL,US,S,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72208,CHS,KCHS,USM00072208,"Charleston, SC",32.8950,-80.0275,SC,US,E,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72210,TBW,KTBW,USM00072210,"Tampa, FL",27.7053,-82.4006,FL,US,S,1931,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72214,TAE,KTAE,USM00072214,"Tallahassee, FL",30.4461,-84.2994,FL,US,S,1940,2024,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72215,FFC,KFFC,USM00072215,"Peachtree, GA",33.3558,-84.5672,GA,US,S,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72221,VPS,KVPS,USM00072221,"Valparais, FL",30.4833,-86.5167,FL,US,L,1938,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+72230,BMX,KBMX,USM00072230,"Shelby Co, AL",33.1789,-86.7822,AL,US,S,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72233,LIX,KLIX,USM00072233,"Slidell, LA",30.3369,-89.8250,LA,US,S,1988,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72235,JAN,KJAN,USM00072235,"Jackson, MS",32.3189,-90.0800,MS,US,S,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72240,LCH,KLCH,USM00072240,"Lake Charles, LA",30.1253,-93.2161,LA,US,S,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72248,SHV,KSHV,USM00072248,"Shreveport, LA",32.4511,-93.8414,LA,US,S,1949,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72249,FWD,KFWD,USM00072249,"Fort Worth, TX",32.8350,-97.2986,TX,US,S,1937,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72250,BRO,KBRO,USM00072250,"Brownsville, TX",25.9167,-97.4192,TX,US,S,1929,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72251,CRP,KCRP,USM00072251,"Corpus Christi, TX",27.7789,-97.5055,TX,US,S,1953,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72261,DRT,KDRT,USM00072261,"Del Rio, TX",29.3744,-100.9183,TX,US,S,1954,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72265,MAF,KMAF,USM00072265,"Midland, TX",31.9425,-102.1891,TX,US,S,1930,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72274,TWC,KTWC,USM00072274,"Tuscon, AZ",32.2278,-110.9558,AZ,US,W,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72293,NKX,KNKX,USM00072293,"San Diego, CA",32.8333,-117.1166,CA,US,W,1946,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72305,MHX,KMHX,USM00072305,"Morehead City, NC",34.7761,-76.8767,NC,US,E,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72317,GSO,KGSO,USM00072317,"Greensboro, NC",36.0981,-79.9428,NC,US,E,1928,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72318,RNK,KRNK,USM00072318,"Blacksburg, VA",37.2039,-80.4142,VA,US,E,1995,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72327,OHX,KOHX,USM00072327,"Nashville, TN",36.2333,-86.5500,TN,US,S,1937,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72340,LZK,KLZK,USM00072340,"Little Rock, AR",34.8350,-92.2594,AR,US,S,1947,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72357,OUN,KOUN,USM00072357,"Norman, OK",35.1808,-97.4378,OK,US,S,1974,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72363,AMA,KAMA,USM00072363,"Amarillo, TX",35.2331,-101.7091,TX,US,S,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72364,EPZ,KEPZ,USM00072364,"Santa Teresa, NM",31.8728,-106.6980,NM,US,S,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72365,ABQ,KABQ,USM00072365,"Albuquerque, NM",35.0378,-106.6219,NM,US,S,1931,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72376,FGZ,KFGZ,USM00072376,"Flagstaff, AZ",35.2300,-111.8216,AZ,US,W,1995,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72381,EDW,KEDW,USM00072381,"Edwards AFB, CA",34.9167,-117.9000,CA,US,L,1942,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+72388,VEF,KVEF,USM00072388,"Las Vegas, NV",36.0471,-115.1846,NV,US,W,1935,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72393,VBG,KVBG,USM00072393,"Vandenburg, CA",34.7500,-120.5666,CA,US,L,1958,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+72402,WAL,KWAL,USM00072402,"Wallops Island, VA",37.9333,-75.4833,VA,US,E,1963,2025,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72403,LWX,KIAD,USM00072403,"Sterling, VA",38.9500,-77.4500,VA,US,E,1960,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72426,ILN,KILN,USM00072426,"Wilmington, OH",39.4214,-83.8217,OH,US,E,1943,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72440,SGF,KSGF,USM00072440,"Springfield, MO",37.2347,-93.4014,MO,US,C,1939,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72451,DDC,KDDC,USM00072451,"Dodge City, KS",37.7614,-99.9686,KS,US,C,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72456,TOP,KTOP,USM00072456,"Topeka, KS",39.0722,-95.6305,KS,US,C,1953,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72469,DNR,KDNR,USM00072469,"Denver, CO",39.7675,-104.8694,CO,US,C,1919,2022,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72476,GJT,KGJT,USM00072476,"Grand Junction, CO",39.1200,-108.5250,CO,US,C,1938,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72489,REV,KREV,USM00072489,"Reno, NV",39.5681,-119.7966,NV,US,W,1927,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72493,OAK,KOAK,USM00072493,"Oakland, CA",37.7444,-122.2236,CA,US,W,1928,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72501,OKX,KOKX,USM00072501,"Brookhaven, NY",40.8650,-72.8628,NY,US,E,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72518,ALY,KALB,USM00072518,"Albany, NY",42.7500,-73.8000,NY,US,E,1930,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72520,PBZ,KPIT,USM00072520,"Pittsburgh, PA",40.5167,-80.2167,PA,US,E,1948,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72528,BUF,KBUF,USM00072528,"Buffalo, NY",42.9411,-78.7189,NY,US,E,1929,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72558,OAX,KOAX,USM00072558,"Omaha Valley, NE",41.3200,-96.3669,NE,US,C,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72562,LBF,KLBF,USM00072562,"North Platte, NE",41.1328,-100.7000,NE,US,C,1930,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72572,SLC,KSLC,USM00072572,"Salt Lake City, UT",40.7722,-111.9552,UT,US,W,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72582,LKN,KLKN,USM00072582,"Elko, NV",40.8600,-115.7422,NV,US,W,1931,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72597,MFR,KMFR,USM00072597,"Medford, OR",42.3769,-122.8822,OR,US,W,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72632,DTX,KDTX,USM00072632,"Detroit/Pontiac, MI",42.6989,-83.4714,MI,US,C,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72634,APX,KAPX,USM00072634,"Gaylord, MI",44.9075,-84.7189,MI,US,C,1996,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72645,GRB,KGRB,USM00072645,"Green Bay, WI",44.4986,-88.1119,WI,US,C,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72649,MPX,KMPX,USM00072649,"Chanhassen, MN",44.8497,-93.5647,MN,US,C,1937,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72659,ABR,KABR,USM00072659,"Aberdeen, SD",45.4556,-98.4133,SD,US,C,1994,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72662,UNR,KUNR,USM00072662,"Rapid City, SD",44.0453,-103.0569,SD,US,C,1939,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72672,RIW,KRIW,USM00072672,"Riverton, WY",43.0647,-108.4766,WY,US,C,1995,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72681,BOI,KBOI,USM00072681,"Boise, ID",43.5672,-116.2113,ID,US,W,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72694,SLE,KSLE,USM00072694,"Salem, OR",44.9092,-123.0083,OR,US,W,1956,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72712,CAR,KCAR,USM00072712,"Caribou, ME",46.8683,-68.0136,ME,US,E,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72747,INL,KINL,USM00072747,"Int'l Falls, MN",48.5647,-93.3975,MN,US,C,1942,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72764,BIS,KBIS,USM00072764,"Bismarck, ND",46.7717,-100.7594,ND,US,C,1932,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72768,GGW,KGGW,USM00072768,"Glasgow, MT",48.2067,-106.6255,MT,US,W,1943,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72776,TFX,KTFX,USM00072776,"Great Falls, MT",47.4614,-111.3847,MT,US,W,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72786,OTX,KOTX,USM00072786,"Spokane, WA",47.6806,-117.6266,WA,US,W,1926,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+72797,UIL,KUIL,USM00072797,"Quillayute, WA",47.9339,-124.5602,WA,US,W,1966,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+74001,QAG,KQAG,USM00074001,"Redstone Arsenal, AL",34.6000,-86.6333,AL,US,L,1992,2014,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+74005,LUF,KLUF,USM00074005,"Luke AFB, Yuma, AZ",32.8636,-114.0330,AZ,US,L,2008,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+74389,GYX,KGYX,USM00074389,"Gray, ME",43.8925,-70.2572,ME,US,E,1940,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+74455,DVN,KDVN,USM00074455,"Davenport, IA",41.6114,-90.5817,IA,US,C,1935,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+74494,CHH,KCHH,USM00074494,"Chatham, MA",41.6569,-69.9589,MA,US,E,1970,2021,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+74560,ILX,KILX,USM00074560,"Lincoln, IL",40.1517,-89.3383,IL,US,C,1995,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,true
+74626,PSR,KPSR,USM00074626,"Phoenix, AZ",33.4500,-111.9500,AZ,US,L,2000,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+74646,LMN,KLMN,USM00074646,"Lamont, OK",36.6000,-97.5000,OK,US,F,2000,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+74794,XMR,KXMR,USM00074794,"Cape Canaveral, FL",28.4667,-80.5500,FL,US,L,1950,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+76225,CUU,MMCU,MXM00076225,"Chihuahua, Chihuahua",28.7000,-106.0667,Chihuahua,Mexico,M,1964,2010,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+76256,GYM,MMGM,MXM00076256,"Empalma, Sonora",27.9573,-110.7973,Sonora,Mexico,M,1964,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+76394,MTY,MMTY,MXM00076394,"Monterrey, Nuevo Leo",25.8667,-100.2333,Nuevo Leo,Mexico,M,1964,2026,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false
+78073,NAS,MYNN,BFM00078073,"Nassau, Bahamas",25.0500,-77.4667,Bahamas,Caribbean/Bahamas,B,1977,2020,NCO RAOB station listing; NOAA/NCEI IGRA v2 station list,false

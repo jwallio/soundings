@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+outputs/
+data/raw/
+upper-air-site/dist/

@@ -1,0 +1,7 @@
+numpy
+pandas
+matplotlib
+requests
+beautifulsoup4
+plotly>=6.5,<7
+pytest

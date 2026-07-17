@@ -1,0 +1,917 @@
+message_time_utc,cycle_date_utc,cycle_hour,model,alaskan_count,canadian_count,conus_count,mexican_count,caribbean_count,pacific_count,raw_message_id,raw_message_excerpt,message_hash
+2025-01-05T01:39:00Z,2025-01-05,00,NAM,13,26,67,10,4,,a8c1329e28146a15,67 CONUS...10 Mexican...and 4 Caribbean raobs available for ingest,a8c1329e28146a15
+2025-01-07T13:33:00Z,2025-01-07,12,NAM,12,26,69,12,4,9,b7796e4b9077e110,69 CONUS...12 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,b7796e4b9077e110
+2025-01-07T15:31:00Z,2025-01-07,12,GFS,12,26,69,12,5,9,0ddc8eec9877a8b5,69 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,0ddc8eec9877a8b5
+2025-01-14T13:35:00Z,2025-01-14,12,NAM,13,27,67,14,5,,ab29d4ea12d49fc5,67 CONUS...14 Mexican...and 5 Caribbean raobs available for ingest,ab29d4ea12d49fc5
+2025-01-14T15:06:00Z,2025-01-14,12,GFS,13,27,69,14,5,,f92a7ebab9f845f8,69 CONUS...14 Mexican...and 5 Caribbean raobs available for ingest,f92a7ebab9f845f8
+2025-01-22T01:55:00Z,2025-01-22,00,NAM,13,26,67,15,5,,3c65a54bc7bf1c4d,67 CONUS...15 Mexican...and 5 Caribbean raobs available for ingest,3c65a54bc7bf1c4d
+2025-01-23T01:44:00Z,2025-01-23,00,NAM,13,25,67,15,5,,55797797f45e3413,67 CONUS...15 Mexican...and 5 Caribbean raobs available for ingest,55797797f45e3413
+2025-01-24T01:44:00Z,2025-01-24,00,NAM,12,25,68,15,4,,5e1a592b257ebe8f,68 CONUS...15 Mexican...and 4 Caribbean raobs available for ingest,5e1a592b257ebe8f
+2025-01-24T03:01:00Z,2025-01-24,00,GFS,12,25,69,15,4,,6f57d6da6a9eff7d,69 CONUS...15 Mexican...and 4 Caribbean raobs available for ingest,6f57d6da6a9eff7d
+2025-01-25T01:38:00Z,2025-01-25,00,NAM,13,25,68,14,4,,d661d3d1e56374c7,68 CONUS...14 Mexican...and 4 Caribbean raobs available for ingest,d661d3d1e56374c7
+2025-01-29T15:05:00Z,2025-01-29,12,NAM,11,27,66,12,7,7,83610326b61f1688,66 CONUS...12 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,83610326b61f1688
+2025-01-30T13:27:00Z,2025-01-30,12,NAM,12,27,67,13,5,,b45318c582954d5c,67 CONUS...13 Mexican...and 5 Caribbean raobs available for ingest,b45318c582954d5c
+2025-01-31T13:36:00Z,2025-01-31,12,NAM,3,25,68,13,6,,9389ce773ff80eb8,68 CONUS...13 Mexican...and 6 Caribbean raobs available for ingest,9389ce773ff80eb8
+2025-01-31T15:02:00Z,2025-01-31,12,GFS,3,25,69,13,6,,4f67f4dd7fd4ac79,69 CONUS...13 Mexican...and 6 Caribbean raobs available for ingest,4f67f4dd7fd4ac79
+2025-02-02T13:36:00Z,2025-02-02,12,NAM,11,24,67,13,6,,8c953f91ebbfadd5,67 CONUS...13 Mexican...and 6 Caribbean raobs available for ingest,8c953f91ebbfadd5
+2025-02-04T02:00:00Z,2025-02-04,00,NAM,11,25,65,12,5,,ac829f55996f0289,65 CONUS...12 Mexican...and 5 Caribbean raobs available for ingest,ac829f55996f0289
+2025-02-28T13:46:00Z,2025-02-28,12,NAM,13,24,67,12,8,7,545166d845670f58,67 CONUS...12 Mexican... 8 Caribbean...and 7 Pacific stations available for ingest,545166d845670f58
+2025-02-28T15:22:00Z,2025-02-28,12,GFS,13,24,69,12,8,7,1333f1d25f6ea524,69 CONUS...12 Mexican... 8 Caribbean...and 7 Pacific stations available for ingest,1333f1d25f6ea524
+2025-03-04T14:07:00Z,2025-03-04,12,NAM,12,26,67,10,6,8,d865448a0de94fe2,67 CONUS...10 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,d865448a0de94fe2
+2025-03-04T15:30:00Z,2025-03-04,12,GFS,12,26,67,10,7,8,406fc44af4bba9b6,67 CONUS...10 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,406fc44af4bba9b6
+2025-03-07T13:32:00Z,2025-03-07,12,NAM,12,26,66,10,6,,320c0ba7fc299ac6,66 CONUS...10 Mexican...and 6 Caribbean raobs available for ingest,320c0ba7fc299ac6
+2025-03-07T14:57:00Z,2025-03-07,12,GFS,12,26,67,10,7,,e183c5cf947d2cf6,67 CONUS...10 Mexican...and 7 Caribbean raobs available for ingest,e183c5cf947d2cf6
+2025-03-08T13:37:00Z,2025-03-08,12,NAM,11,25,68,11,6,,350d4216a3d9eaec,68 CONUS...11 Mexican...and 6 Caribbean raobs available for ingest,350d4216a3d9eaec
+2025-03-09T13:36:00Z,2025-03-09,12,NAM,11,25,64,10,6,,c92afb99465518b1,64 CONUS...10 Mexican...and 6 Caribbean raobs available for ingest,c92afb99465518b1
+2025-03-10T13:44:00Z,2025-03-10,12,NAM,9,25,65,10,6,,d779bbb4a47ad0bf,65 CONUS...10 Mexican...and 6 Caribbean raobs available for ingest,d779bbb4a47ad0bf
+2025-03-17T01:40:00Z,2025-03-17,00,NAM,12,25,67,10,5,,694498e8f2e6d045,67 CONUS...10 Mexican...and 5 Caribbean raobs available for ingest,694498e8f2e6d045
+2025-03-17T13:43:00Z,2025-03-17,12,NAM,12,23,63,10,7,7,0ecc0ffde8592053,63 CONUS...10 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,0ecc0ffde8592053
+2025-03-21T01:34:00Z,2025-03-21,00,NAM,12,26,63,13,5,8,10c94c45dd381583,63 CONUS...13 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,10c94c45dd381583
+2025-03-25T13:41:00Z,2025-03-25,12,NAM,11,26,59,13,7,,cfd111e28f247c04,59 CONUS...13 Mexican...and 7 Caribbean raobs available for ingest,cfd111e28f247c04
+2025-03-25T15:12:00Z,2025-03-25,12,GFS,11,26,62,13,8,,9db56f309cdd4c09,62 CONUS...13 Mexican...and 8 Caribbean raobs available for ingest,9db56f309cdd4c09
+2025-03-26T13:48:00Z,2025-03-26,12,NAM,12,27,59,12,7,,16b56ebc11798d31,59 CONUS...12 Mexican...and 7 Caribbean raobs available for ingest,16b56ebc11798d31
+2025-03-26T15:07:00Z,2025-03-26,12,GFS,12,27,61,12,9,,a7e9b12eb185f58c,61 CONUS...12 Mexican...and 9 Caribbean raobs available for ingest,a7e9b12eb185f58c
+2025-03-31T13:36:00Z,2025-03-31,12,NAM,12,27,58,13,7,,ae4438914fb79392,58 CONUS...13 Mexican...and 7 Caribbean raobs available for ingest,ae4438914fb79392
+2025-03-31T15:15:00Z,2025-03-31,12,GFS,12,27,59,13,8,,8162e0475bccdcf5,59 CONUS...13 Mexican...and 8 Caribbean raobs available for ingest,8162e0475bccdcf5
+2025-04-02T01:45:00Z,2025-04-02,00,NAM,13,24,63,15,6,,a7a72327b0c5ef45,63 CONUS...15 Mexican...and 6 Caribbean raobs available for ingest,a7a72327b0c5ef45
+2025-04-03T01:51:00Z,2025-04-03,00,NAM,11,26,62,14,5,,fe2bbb3dc3db1d76,62 CONUS...14 Mexican...and 5 Caribbean raobs available for ingest,fe2bbb3dc3db1d76
+2025-04-04T01:48:00Z,2025-04-04,00,NAM,11,26,63,15,5,,4882b0b70f989a11,63 CONUS...15 Mexican...and 5 Caribbean raobs available for ingest,4882b0b70f989a11
+2025-04-10T13:43:00Z,2025-04-10,12,NAM,13,26,58,14,9,,d7008629016ff0c0,58 CONUS...14 Mexican...and 9 Caribbean raobs available for ingest,d7008629016ff0c0
+2025-04-12T13:32:00Z,2025-04-12,12,NAM,11,26,60,13,8,,5a83b464dcf681b4,60 CONUS...13 Mexican...and 8 Caribbean raobs available for ingest,5a83b464dcf681b4
+2025-04-13T13:37:00Z,2025-04-13,12,NAM,13,26,59,13,8,,7942f7b80e335174,59 CONUS...13 Mexican...and 8 Caribbean raobs available for ingest,7942f7b80e335174
+2025-04-14T13:34:00Z,2025-04-14,12,NAM,12,26,59,13,8,7,14ff0db51b7aa2bb,59 CONUS...13 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,14ff0db51b7aa2bb
+2025-04-14T15:36:00Z,2025-04-14,12,GFS,12,26,60,13,8,7,1c1c889c32275ae0,60 CONUS...13 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,1c1c889c32275ae0
+2025-04-15T01:35:00Z,2025-04-15,00,NAM,12,26,64,13,5,,bc45872d10e6cced,64 CONUS...13 Mexican...and 5 Caribbean raobs available for ingest,bc45872d10e6cced
+2025-04-20T01:30:00Z,2025-04-20,00,NAM,10,25,62,12,5,,973bfdcd150f454c,62 CONUS...12 Mexican...and 5 Caribbean raobs available for ingest,973bfdcd150f454c
+2025-04-20T03:02:00Z,2025-04-20,00,GFS,10,25,63,12,5,,a8bb78d7477f156f,63 CONUS...12 Mexican...and 5 Caribbean raobs available for ingest,a8bb78d7477f156f
+2025-04-21T01:33:00Z,2025-04-21,00,NAM,9,25,62,11,4,,cf42b6e2aad2c32b,62 CONUS...11 Mexican...and 4 Caribbean raobs available for ingest,cf42b6e2aad2c32b
+2025-05-01T01:49:00Z,2025-05-01,00,NAM,11,25,62,14,4,,5c93c23a87ac1e14,62 CONUS...14 Mexican...and 4 Caribbean raobs available for ingest,5c93c23a87ac1e14
+2025-05-03T15:19:00Z,2025-05-03,12,NAM,12,25,58,13,5,9,d7d32d3f3ad77df0,58 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,d7d32d3f3ad77df0
+2025-05-05T13:34:00Z,2025-05-05,12,NAM,13,25,56,12,5,9,48a6add132110917,"56 CONUS, 12 Mexican, 5 Caribbean, and 9 Pacific stations available for ingest",48a6add132110917
+2025-05-05T15:07:00Z,2025-05-05,12,GFS,13,25,58,13,6,9,982ef8a4280e50f5,"58 CONUS, 13 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",982ef8a4280e50f5
+2025-05-07T01:40:00Z,2025-05-07,00,NAM,10,25,62,13,3,9,0d7049bcc96334d4,62 CONUS...13 Mexican...3 Caribbean...and 9 Pacific raobs available for ingest,0d7049bcc96334d4
+2025-05-08T01:35:00Z,2025-05-08,00,NAM,9,25,64,14,4,9,8d793c0fca3f2aec,64 CONUS...14 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,8d793c0fca3f2aec
+2025-05-10T13:40:00Z,2025-05-10,12,NAM,12,27,57,12,4,9,1565d1282e5a8f88,57 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,1565d1282e5a8f88
+2025-05-15T14:02:00Z,2025-05-15,12,NAM,11,24,56,12,6,9,a475f613a860b987,56 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,a475f613a860b987
+2025-05-15T15:08:00Z,2025-05-15,12,GFS,11,24,57,12,7,9,6cc6336ace8a1433,57 CONUS...12 Mexican...7 Caribbean... and 9 Pacific stations available for ingest,6cc6336ace8a1433
+2025-05-16T13:32:00Z,2025-05-16,12,NAM,11,25,53,13,6,7,96b4aea045443c2e,53 CONUS...13 Mexican...6 Caribbean...and 7 Pacific stations available for ingest,96b4aea045443c2e
+2025-05-16T15:30:00Z,2025-05-16,12,GFS,11,25,57,13,7,9,d253770732c6999c,57 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d253770732c6999c
+2025-05-17T13:41:00Z,2025-05-17,12,NAM,11,24,53,11,5,8,712f4ebc5efdcdbd,53 CONUS...11 Mexican...5 Caribbean...and 8 Pacific raobs available for ingest,712f4ebc5efdcdbd
+2025-05-17T15:03:00Z,2025-05-17,12,GFS,11,25,56,13,6,9,33c2e7142092663f,56 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,33c2e7142092663f
+2025-05-18T13:55:00Z,2025-05-18,12,NAM,11,26,53,13,5,9,ef8bffeef4462058,53 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,ef8bffeef4462058
+2025-05-19T13:39:00Z,2025-05-19,12,NAM,10,25,52,13,5,8,ec992478f43a879a,52 CONUS...13 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,ec992478f43a879a
+2025-05-19T15:02:00Z,2025-05-19,12,GFS,10,25,54,13,7,9,0c7612b7f6ee488f,54 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,0c7612b7f6ee488f
+2025-05-20T13:37:00Z,2025-05-20,12,NAM,10,27,51,14,5,9,5d0b92f9f448ba36,51 CONUS...14 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,5d0b92f9f448ba36
+2025-05-20T15:10:00Z,2025-05-20,12,GFS,10,27,52,14,7,9,95017b5205476154,52 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,95017b5205476154
+2025-05-21T13:37:00Z,2025-05-21,12,NAM,12,26,50,11,6,9,098c65b2d7c9f56b,50 CONUS...11 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,098c65b2d7c9f56b
+2025-05-21T15:22:00Z,2025-05-21,12,GFS,12,27,52,11,7,9,0cfc59ff2953ad1b,52 CONUS...11 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,0cfc59ff2953ad1b
+2025-05-22T13:39:00Z,2025-05-22,12,NAM,12,27,51,11,6,8,82e331aee15fab7b,51 CONUS...11 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,82e331aee15fab7b
+2025-05-23T13:51:00Z,2025-05-23,12,NAM,11,26,55,13,5,8,a71f3fc78b48213d,55 CONUS...13 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,a71f3fc78b48213d
+2025-05-24T13:38:00Z,2025-05-24,12,NAM,11,26,54,13,4,7,546e705700cb9de4,54 CONUS...13 Mexican...4 Caribbean...and 7 Pacific stations available for ingest,546e705700cb9de4
+2025-05-25T01:35:00Z,2025-05-25,00,NAM,10,24,65,12,4,8,8e33f382e56060c4,65 CONUS...12 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,8e33f382e56060c4
+2025-05-25T13:29:00Z,2025-05-25,12,NAM,11,25,55,13,4,8,6f1061f824538e94,55 CONUS...13 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,6f1061f824538e94
+2025-05-26T01:45:00Z,2025-05-26,00,NAM,11,25,63,13,4,8,959aa1b462dd8d9c,63 CONUS...13 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,959aa1b462dd8d9c
+2025-05-26T03:21:00Z,2025-05-26,00,GFS,11,25,64,13,4,8,6f95cd4a431f22c8,64 CONUS...13 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,6f95cd4a431f22c8
+2025-05-26T13:32:00Z,2025-05-26,12,NAM,11,26,54,13,5,8,6d011c48d0970f05,54 CONUS...13 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,6d011c48d0970f05
+2025-05-26T15:07:00Z,2025-05-26,12,GFS,11,26,55,13,7,8,188193d0063d2c45,55 CONUS...13 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,188193d0063d2c45
+2025-05-27T13:41:00Z,2025-05-27,12,NAM,12,25,52,14,6,8,d09fe71ecd4a2d88,52 CONUS...14 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,d09fe71ecd4a2d88
+2025-05-27T15:13:00Z,2025-05-27,12,GFS,12,25,55,14,7,8,70f0ae6b0552bf2e,55 CONUS...14 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,70f0ae6b0552bf2e
+2025-05-30T15:16:00Z,2025-05-30,12,GFS,11,25,55,14,7,9,f8f2350ac8f90d66,55 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,f8f2350ac8f90d66
+2025-06-04T02:16:00Z,2025-06-04,00,NAM,11,25,64,15,4,8,67c0e40936ec313d,64 CONUS...15 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,67c0e40936ec313d
+2025-06-04T02:55:00Z,2025-06-04,00,GFS,11,25,64,15,4,9,2d71fef4e1ae1977,64 CONUS...15 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,2d71fef4e1ae1977
+2025-06-04T13:44:00Z,2025-06-04,12,NAM,11,25,54,12,6,8,087595f581f0517e,54 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,087595f581f0517e
+2025-06-04T15:10:00Z,2025-06-04,12,GFS,12,25,55,12,7,9,053eebd582f31e71,55 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,053eebd582f31e71
+2025-06-05T13:40:00Z,2025-06-05,12,NAM,11,26,55,13,6,9,7044a9d7a830db42,55 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,7044a9d7a830db42
+2025-06-05T15:16:00Z,2025-06-05,12,GFS,11,26,55,13,6,9,a7d1f7a97e5a5f6c,55 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,a7d1f7a97e5a5f6c
+2025-06-06T13:57:00Z,2025-06-06,12,NAM,11,26,56,12,6,9,c263e96bb2dd08cd,56 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,c263e96bb2dd08cd
+2025-06-06T15:19:00Z,2025-06-06,12,GFS,11,26,56,12,7,9,c55777bb7dc5923b,56 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,c55777bb7dc5923b
+2025-06-07T13:39:00Z,2025-06-07,12,NAM,11,25,55,11,5,8,165e7fde735f8846,55 CONUS...11 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,165e7fde735f8846
+2025-06-07T15:10:00Z,2025-06-07,12,GFS,11,25,55,12,6,9,3d01c85f2ce9780f,55 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,3d01c85f2ce9780f
+2025-06-08T13:28:00Z,2025-06-08,12,NCEP,12,25,53,12,5,9,9f90ef19a2e88986,53 CONUS...12 Mexican... 5 Caribbean...and 9 Pacific stations available for ingest,9f90ef19a2e88986
+2025-06-09T13:36:00Z,2025-06-09,12,NAM,10,25,54,13,6,9,154ea1af561fa5a8,54 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,154ea1af561fa5a8
+2025-06-09T15:10:00Z,2025-06-09,12,GFS,10,25,55,13,7,9,3b23b56a36bf80a6,55 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,3b23b56a36bf80a6
+2025-06-10T13:41:00Z,2025-06-10,12,NAM,12,25,55,13,7,9,1d5168923c2e45a6,55 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,1d5168923c2e45a6
+2025-06-11T13:43:00Z,2025-06-11,12,NAM,2,26,52,12,6,9,198e8b18c1a671bb,52 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,198e8b18c1a671bb
+2025-06-11T15:15:00Z,2025-06-11,12,GFS,2,26,53,12,6,9,c07669553d5bec05,53 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,c07669553d5bec05
+2025-06-12T13:45:00Z,2025-06-12,12,NAM,9,27,55,13,7,8,9c6c01b5cbc12a7b,55 CONUS...13 Mexican...7 Caribbean...and 8 Pacific raobs available for ingest,9c6c01b5cbc12a7b
+2025-06-12T15:24:00Z,2025-06-12,12,GFS,9,27,55,13,8,9,c47d67daf292a7e5,55 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,c47d67daf292a7e5
+2025-06-13T13:51:00Z,2025-06-13,12,NAM,10,27,53,13,8,9,9b7ba46c5f2e7cdd,53 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,9b7ba46c5f2e7cdd
+2025-06-13T15:07:00Z,2025-06-13,12,GFS,10,27,55,13,8,9,f5e719c9311e6b0b,55 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,f5e719c9311e6b0b
+2025-06-14T13:38:00Z,2025-06-14,12,NAM,11,27,54,11,6,9,9357171ae5c689b4,54 CONUS...11 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,9357171ae5c689b4
+2025-06-16T13:32:00Z,2025-06-16,12,NAM,09,27,54,12,7,8,095b062dc57faf28,54 CONUS...12 Mexican...7 Caribbean...and 8 Pacific raobs available for ingest,095b062dc57faf28
+2025-06-19T14:13:00Z,2025-06-19,12,NAM,12,25,54,13,7,9,18f0dd2dac333c17,54 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,18f0dd2dac333c17
+2025-06-19T15:12:00Z,2025-06-19,12,GFS,12,25,55,13,7,9,7bd45ef2296779df,55 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,7bd45ef2296779df
+2025-06-20T13:34:00Z,2025-06-20,12,NAM,12,27,54,12,8,9,d72a64b4031c9d7a,54 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,d72a64b4031c9d7a
+2025-06-20T15:19:00Z,2025-06-20,12,GFS,12,27,56,13,8,9,f86b59729bc6ab6d,56 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,f86b59729bc6ab6d
+2025-06-21T13:32:00Z,2025-06-21,12,NAM,11,27,56,13,5,9,327c9dceeb5cdc46,56 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,327c9dceeb5cdc46
+2025-06-22T13:33:00Z,2025-06-22,12,NAM,12,27,57,13,6,8,016941d2108c97dd,57 CONUS...13 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,016941d2108c97dd
+2025-06-22T15:05:00Z,2025-06-22,12,GFS,12,27,57,13,6,9,b2b698b9b76b7eeb,57 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,b2b698b9b76b7eeb
+2025-06-23T13:39:00Z,2025-06-23,12,NAM,12,26,54,13,6,8,eb31fed02cf48ca9,54 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,eb31fed02cf48ca9
+2025-06-23T15:11:00Z,2025-06-23,12,GFS,12,26,57,13,8,9,f86d28ac1342489a,57 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,f86d28ac1342489a
+2025-06-24T13:36:00Z,2025-06-24,12,NAM,10,26,56,11,7,7,62aad9a6a84d0f29,56 CONUS...11 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,62aad9a6a84d0f29
+2025-06-24T15:14:00Z,2025-06-24,12,GFS,10,26,57,11,8,9,5dd127d1ccd79fbe,57 CONUS...11 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,5dd127d1ccd79fbe
+2025-06-25T13:48:00Z,2025-06-25,12,NAM,11,25,53,13,7,9,c27b595aec43d789,53 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,c27b595aec43d789
+2025-06-25T15:10:00Z,2025-06-25,12,GFS,12,25,56,13,8,9,e3ceff6025988ed5,56 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,e3ceff6025988ed5
+2025-06-26T03:05:00Z,2025-06-26,00,GFS,10,26,64,14,5,9,5b451c1afb81e3de,64 CONUS...14 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,5b451c1afb81e3de
+2025-06-27T03:03:00Z,2025-06-27,00,GFS,8,26,66,13,6,9,4b4c65b6946d5f60,66 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,4b4c65b6946d5f60
+2025-06-28T03:07:00Z,2025-06-28,00,GFS,9,25,62,13,5,9,797a3d282b33431b,62 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,797a3d282b33431b
+2025-06-29T01:38:00Z,2025-06-29,00,NAM,10,26,61,12,5,9,2ccee32a6811e439,61 CONUS...12 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,2ccee32a6811e439
+2025-06-29T03:01:00Z,2025-06-29,00,GFS,10,26,63,12,5,9,d64cd497d9d6ebb4,63 CONUS...12 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,d64cd497d9d6ebb4
+2025-06-30T01:34:00Z,2025-06-30,00,NAM,10,25,63,11,6,8,5ac4f3cf5f0162b2,63 CONUS...11 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,5ac4f3cf5f0162b2
+2025-06-30T03:01:00Z,2025-06-30,00,GFS,10,25,63,11,6,9,ba9d63633f6dacfa,63 CONUS...11 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,ba9d63633f6dacfa
+2025-07-01T03:05:00Z,2025-07-01,00,GFS,9,24,63,15,7,9,bea64d4c4e45e2cb,63 CONUS...15 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,bea64d4c4e45e2cb
+2025-07-01T13:53:00Z,2025-07-01,12,NAM,13,23,51,14,9,8,dc7735bf15f864e2,51 CONUS...14 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,dc7735bf15f864e2
+2025-07-01T15:23:00Z,2025-07-01,12,GFS,13,23,52,14,9,9,940c0a33f98d583a,52 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,940c0a33f98d583a
+2025-07-02T03:11:00Z,2025-07-02,00,GFS,10,22,59,15,7,9,ba76420ccf3b9700,59 CONUS...15 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,ba76420ccf3b9700
+2025-07-03T03:17:00Z,2025-07-03,00,GFS,8,23,62,15,6,9,6f5f977910521912,62 CONUS...15 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,6f5f977910521912
+2025-07-03T13:50:00Z,2025-07-03,12,NAM,11,24,51,13,8,9,60360900a1190a1f,51 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,60360900a1190a1f
+2025-07-04T03:20:00Z,2025-07-04,00,GFS,10,24,61,13,6,9,a3c4aa1f748a0496,61 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,a3c4aa1f748a0496
+2025-07-04T13:36:00Z,2025-07-04,12,NAM,12,24,51,14,9,6,49d07f28d8d27a78,51 CONUS...14 Mexican...9 Caribbean...and 6 Pacific stations available for ingest,49d07f28d8d27a78
+2025-07-05T13:39:00Z,2025-07-05,12,NAM,11,23,49,12,6,9,2cb46083fc4940dd,49 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,2cb46083fc4940dd
+2025-07-05T15:11:00Z,2025-07-05,12,GFS,12,23,51,12,7,9,9171c8d91de5ed12,51 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,9171c8d91de5ed12
+2025-07-08T13:42:00Z,2025-07-08,12,NAM,12,24,52,13,8,9,a2b897a9b680db9b,52 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,a2b897a9b680db9b
+2025-07-09T13:43:00Z,2025-07-09,12,NAM,11,25,51,13,8,8,24458ba878427879,51 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,24458ba878427879
+2025-07-09T15:09:00Z,2025-07-09,12,GFS,11,25,53,13,9,8,e952362b74d78085,53 CONUS...13 Mexican...9 Caribbean...and 8 Pacific raobs available for ingest,e952362b74d78085
+2025-07-10T13:33:00Z,2025-07-10,12,NAM,12,25,52,14,9,8,d509f1f7acd3e63a,52 CONUS...14 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,d509f1f7acd3e63a
+2025-07-10T15:12:00Z,2025-07-10,12,GFS,12,25,54,14,9,8,601d8ccd675a4f19,54 CONUS...14 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,601d8ccd675a4f19
+2025-07-11T13:46:00Z,2025-07-11,12,NAM,13,25,52,13,9,8,0cbfd9d2eceb83f8,52 CONUS...13 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,0cbfd9d2eceb83f8
+2025-07-11T15:26:00Z,2025-07-11,12,GFS,13,25,53,13,9,8,a174678cf3c548c4,53 CONUS...13 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,a174678cf3c548c4
+2025-07-12T13:41:00Z,2025-07-12,12,NAM,11,23,49,12,8,7,e457f8d5812aa32f,49 CONUS...12 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,e457f8d5812aa32f
+2025-07-12T15:09:00Z,2025-07-12,12,GFS,11,23,51,12,8,8,3c6e781e54b5a873,51 CONUS...12 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,3c6e781e54b5a873
+2025-07-13T15:24:00Z,2025-07-13,12,GFS,12,23,49,12,8,8,e581f7b10b64eac8,49 CONUS...12 Mexican...8 Caribbean... and 8 Pacific stations available for ingest,e581f7b10b64eac8
+2025-07-14T13:43:00Z,2025-07-14,12,NAM,10,23,49,14,8,8,08cc65aac8bec9c0,49 CONUS...14 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,08cc65aac8bec9c0
+2025-07-14T15:11:00Z,2025-07-14,12,GFS,11,23,50,14,9,8,909e5547f584ea27,50 CONUS...14 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,909e5547f584ea27
+2025-07-15T13:51:00Z,2025-07-15,12,NAM,10,24,47,14,8,7,eb9b2f35ba7653d6,47 CONUS...14 Mexican...8 Caribbean...and 7 Pacific raobs available for ingest,eb9b2f35ba7653d6
+2025-07-15T15:16:00Z,2025-07-15,12,GFS,10,24,48,14,9,8,1e5a523f6137e380,48 CONUS...14 Mexican...9 Caribbean...and 8 Pacific raobs available for ingest,1e5a523f6137e380
+2025-07-16T13:47:00Z,2025-07-16,12,NAM,10,24,49,13,7,8,067db1866608da61,49 CONUS...13 Mexican...7 Caribbean...and 8 Pacific raobs available for ingest,067db1866608da61
+2025-07-16T15:08:00Z,2025-07-16,12,GFS,10,24,50,13,8,8,b89df353579c2258,50 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,b89df353579c2258
+2025-07-17T13:36:00Z,2025-07-17,12,NAM,12,23,50,13,8,8,f7990abd9347c046,50 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,f7990abd9347c046
+2025-07-18T01:39:00Z,2025-07-18,00,NAM,10,24,61,12,6,8,0bb44149ea02927d,61 CONUS...12 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,0bb44149ea02927d
+2025-07-18T13:39:00Z,2025-07-18,12,NAM,11,23,51,13,9,8,526c77c84f3475ef,51 CONUS...13 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,526c77c84f3475ef
+2025-07-18T15:09:00Z,2025-07-18,12,GFS,11,23,51,13,9,8,db3ba7078fa68a0d,51 CONUS...13 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,db3ba7078fa68a0d
+2025-07-19T01:35:00Z,2025-07-19,00,NAM,10,24,65,12,6,9,57dceee88c17573d,65 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,57dceee88c17573d
+2025-07-19T13:37:00Z,2025-07-19,12,NAM,12,24,51,11,8,8,9c21d31c02ee8c3b,51 CONUS...11 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,9c21d31c02ee8c3b
+2025-07-19T15:03:00Z,2025-07-19,12,GFS,12,24,51,11,8,8,d7cbfeb4a77b76d3,51 CONUS...11 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,d7cbfeb4a77b76d3
+2025-07-20T13:33:00Z,2025-07-20,12,NAM,11,24,51,9,7,8,a8154524557a5f18,51 CONUS...9 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,a8154524557a5f18
+2025-07-20T15:05:00Z,2025-07-20,12,GFS,11,24,51,10,8,8,cc9196aaac1f2747,51 CONUS...10 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,cc9196aaac1f2747
+2025-07-27T01:42:00Z,2025-07-27,00,NAM,10,26,65,13,6,9,a57481dea44ce0ad,65 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,a57481dea44ce0ad
+2025-07-28T01:26:00Z,2025-07-28,00,NCEP,10,26,62,11,6,9,c7b06cc861deffd3,62 CONUS...11 Mexican... 6 Caribbean...and 9 Pacific RAOBs available for ingest,c7b06cc861deffd3
+2025-08-03T01:44:00Z,2025-08-03,00,NAM,10,24,64,14,6,8,9cfc88bd3d8e5344,64 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,9cfc88bd3d8e5344
+2025-08-04T01:50:00Z,2025-08-04,00,NAM,9,24,65,12,8,9,ad1024db5ba4fef8,65 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,ad1024db5ba4fef8
+2025-08-04T13:52:00Z,2025-08-04,12,NAM,13,25,52,13,9,8,731a6da913376780,52 CONUS..13 Mexican..9 Caribbean and 8 Pacific raobs available for ingest,731a6da913376780
+2025-08-06T13:37:00Z,2025-08-06,12,NAM,12,25,50,13,8,7,d89a7ff5549f63eb,50 CONUS...13 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,d89a7ff5549f63eb
+2025-08-06T15:07:00Z,2025-08-06,12,GFS,12,25,51,13,8,7,c3bfc6d687d7d625,51 CONUS...13 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,c3bfc6d687d7d625
+2025-08-12T13:45:00Z,2025-08-12,12,NAM,13,24,51,14,7,7,7a84f18c718b1ea4,51 CONUS...14 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,7a84f18c718b1ea4
+2025-08-12T15:09:00Z,2025-08-12,12,GFS,13,25,52,14,8,7,8d8dba1cc6d30172,52 CONUS...14 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,8d8dba1cc6d30172
+2025-08-13T01:42:00Z,2025-08-13,00,NAM,10,24,64,14,4,8,440777a3bb288417,64 CONUS...14 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,440777a3bb288417
+2025-08-13T13:39:00Z,2025-08-13,12,NAM,12,25,55,13,7,7,20eed2e68e4fde52,55 CONUS...13 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,20eed2e68e4fde52
+2025-08-13T15:08:00Z,2025-08-13,12,GFS,12,25,56,13,8,7,844849466866c225,56 CONUS...13 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,844849466866c225
+2025-08-14T01:45:00Z,2025-08-14,00,NAM,9,26,65,13,6,7,716fe1017f7d0430,65 CONUS...13 Mexican...6 Caribbean...and 7 Pacific raobs available for ingest,716fe1017f7d0430
+2025-08-14T13:48:00Z,2025-08-14,12,NAM,11,25,54,14,8,7,ff474e260c3caf86,54 CONUS...14 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,ff474e260c3caf86
+2025-08-14T15:04:00Z,2025-08-14,12,GFS,11,25,54,14,8,7,6fc8b97af3d46f86,54 CONUS...14 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,6fc8b97af3d46f86
+2025-08-15T15:15:00Z,2025-08-15,12,NAM,13,26,54,14,8,7,8d96e82628abab46,54 CONUS...14 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,8d96e82628abab46
+2025-08-16T13:34:00Z,2025-08-16,12,NAM,11,25,51,13,7,7,b0d5d0b99790cd2f,51 CONUS...13 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,b0d5d0b99790cd2f
+2025-08-16T15:07:00Z,2025-08-16,12,GFS,11,25,51,13,7,7,8387714827eb9e53,51 CONUS...13 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,8387714827eb9e53
+2025-08-17T01:49:00Z,2025-08-17,00,NAM,11,26,64,12,5,7,bb6c225581b47b2e,64 CONUS...12 Mexican...5 Caribbean...and 7 Pacific stations available for ingest,bb6c225581b47b2e
+2025-08-17T03:16:00Z,2025-08-17,00,NCEP,11,26,65,12,5,7,8c16290511cea21b,65 CONUS...12 Mexican...5 Caribbean...and 7 Pacific stations available for ingest,8c16290511cea21b
+2025-08-18T03:16:00Z,2025-08-18,00,NCEP,10,56,66,11,8,7,45c5cd10240937fc,66 CONUS...11 Mexican...8 Caribbean...and 7 Pacific stations available for ingest,45c5cd10240937fc
+2025-08-18T13:40:00Z,2025-08-18,12,NAM,11,27,51,11,9,6,ccab6fa00ac191fa,51 CONUS...11 Mexican...9 Caribbean...and 6 Pacific raobs available for ingest,ccab6fa00ac191fa
+2025-08-18T15:25:00Z,2025-08-18,12,GFS,11,27,53,11,9,6,1403c2f12ddc8d3a,53 CONUS...11 Mexican...9 Caribbean...and 6 Pacific raobs available for ingest,1403c2f12ddc8d3a
+2025-08-19T13:56:00Z,2025-08-19,12,NAM,11,27,54,12,9,7,4ed94eab31ca23dc,54 CONUS...12 Mexican...9 Caribbean...and 7 Pacific raobs available for ingest,4ed94eab31ca23dc
+2025-08-20T02:07:00Z,2025-08-20,00,NAM,11,27,67,13,8,8,0202933efdda84fd,67 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,0202933efdda84fd
+2025-08-20T03:22:00Z,2025-08-20,00,NCEP,11,27,67,13,8,8,00de4c6344da56de,67 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,00de4c6344da56de
+2025-08-20T13:40:00Z,2025-08-20,12,NAM,11,27,53,11,9,8,eb9d5dbf269af838,53 CONUS...11 Mexican...9 Caribbean...and 8 Pacific raobs available for ingest,eb9d5dbf269af838
+2025-08-21T14:00:00Z,2025-08-21,12,NAM,10,26,54,12,8,8,772ea2a19632ff09,54 CONUS...12 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,772ea2a19632ff09
+2025-08-21T15:27:00Z,2025-08-21,12,GFS,10,26,54,12,9,8,f9eb3e52a9bbd8c6,54 CONUS...12 Mexican...9 Caribbean...and 8 Pacific raobs available for ingest,f9eb3e52a9bbd8c6
+2025-08-22T01:32:00Z,2025-08-22,00,NAM,9,27,66,12,7,9,1c9112d70c221ccb,66 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,1c9112d70c221ccb
+2025-08-23T01:57:00Z,2025-08-23,00,NAM,8,27,64,12,8,8,c61a2b4dbb0464de,64 CONUS...12 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,c61a2b4dbb0464de
+2025-08-23T13:35:00Z,2025-08-23,12,NAM,11,26,51,12,7,,a7de3638c612b766,51 CONUS..12 Mexican...7 Caribbean...and 8 Pacifici stations available for ingest,a7de3638c612b766
+2025-08-23T15:17:00Z,2025-08-23,12,GFS,11,26,53,12,7,8,fb5fffc99150951a,53 CONUS..12 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,fb5fffc99150951a
+2025-08-24T01:20:00Z,2025-08-24,00,NAM,11,25,63,12,9,8,4eaec39d5525c0fc,63 CONUS..12 Mexican 9 Caribbean..and 8 Pacific stations available for ingest,4eaec39d5525c0fc
+2025-08-25T01:30:00Z,2025-08-25,00,NAM,10,24,62,11,5,8,cb3d736adbbaa175,62 CONUS..11 Mexican 5 Caribbean..and 8 Pacific stations available for ingest,cb3d736adbbaa175
+2025-08-26T14:15:00Z,2025-08-26,12,NAM,11,25,53,13,8,8,26c54f1f169317d4,53 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,26c54f1f169317d4
+2025-08-26T15:14:00Z,2025-08-26,12,GFS,11,25,53,13,8,8,5149b6d985ffc0b6,53 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,5149b6d985ffc0b6
+2025-08-27T13:33:00Z,2025-08-27,12,NAM,10,26,52,12,7,7,4cf6c1e19549d184,52 CONUS...12 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,4cf6c1e19549d184
+2025-08-27T15:10:00Z,2025-08-27,12,GFS,10,26,52,12,8,8,2493bf0164fba6df,52 CONUS...12 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,2493bf0164fba6df
+2025-08-28T13:36:00Z,2025-08-28,12,NAM,10,26,50,13,7,8,b5853cfef9776464,50 CONUS...13 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,b5853cfef9776464
+2025-08-28T15:21:00Z,2025-08-28,12,GFS,10,26,50,13,8,8,e953af350cf2ab92,50 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,e953af350cf2ab92
+2025-08-29T13:50:00Z,2025-08-29,12,NAM,10,26,52,10,8,8,9c6e4620422d5fdb,52 CONUS...10 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,9c6e4620422d5fdb
+2025-08-29T15:13:00Z,2025-08-29,12,GFS,10,26,53,10,8,8,09e4b6da5594f899,53 CONUS...10 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,09e4b6da5594f899
+2025-08-30T13:38:00Z,2025-08-30,12,NAM,11,25,50,12,7,8,ea722642c4d30d24,50 CONUS...12 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,ea722642c4d30d24
+2025-08-30T15:13:00Z,2025-08-30,12,GFS,11,25,50,12,7,8,0d12ffc3d6ff4c8f,50 CONUS...12 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,0d12ffc3d6ff4c8f
+2025-08-31T01:33:00Z,2025-08-31,00,NAM,9,23,62,12,6,8,ed02e70392e905db,62 CONUS...12 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,ed02e70392e905db
+2025-09-05T14:01:00Z,2025-09-05,12,NAM,11,25,52,11,7,8,037645290b2c5676,52 CONUS...11 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,037645290b2c5676
+2025-09-05T15:25:00Z,2025-09-05,12,NCEP,11,25,52,11,7,8,3c05cb7ff4cf0bc5,52 CONUS...11 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,3c05cb7ff4cf0bc5
+2025-09-07T01:37:00Z,2025-09-07,00,NAM,10,25,63,12,6,8,63718a3113cc889e,63 CONUS...12 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,63718a3113cc889e
+2025-09-08T01:45:00Z,2025-09-08,00,NAM,10,25,63,10,5,8,d3a6860b9433429c,63 CONUS...10 Mexican...5 Caribbean...and 8 Pacific raobs available for ingest,d3a6860b9433429c
+2025-09-08T13:49:00Z,2025-09-08,12,NAM,12,26,51,11,7,8,0ff3f35797a671e2,51 CONUS...11 Mexican...7 Caribbean...and 8 Pacific raobs available for ingest,0ff3f35797a671e2
+2025-09-08T15:14:00Z,2025-09-08,12,GFS,12,26,51,13,8,8,91d1f5ff0c24f318,51 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,91d1f5ff0c24f318
+2025-09-09T13:53:00Z,2025-09-09,12,NAM,10,25,52,14,6,8,26268f923d76719c,52 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,26268f923d76719c
+2025-09-09T15:14:00Z,2025-09-09,12,GFS,10,25,53,14,6,8,a2a71a379d3a5c84,53 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,a2a71a379d3a5c84
+2025-09-10T14:08:00Z,2025-09-10,12,NAM,10,25,52,14,6,8,9a823f6d3e18d70d,52 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,9a823f6d3e18d70d
+2025-09-10T15:02:00Z,2025-09-10,12,GFS,10,25,54,14,6,8,db43a95440ff82e7,54 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,db43a95440ff82e7
+2025-09-11T14:18:00Z,2025-09-11,12,NAM,11,25,51,14,6,7,88e923681481ea92,51 CONUS...14 Mexican...6 Caribbean...and 7 Pacific raobs available for ingest,88e923681481ea92
+2025-09-11T15:10:00Z,2025-09-11,12,GFS,11,25,51,14,6,7,f6f0393165599660,51 CONUS...14 Mexican...6 Caribbean...and 7 Pacific raobs available for ingest,f6f0393165599660
+2025-09-12T13:55:00Z,2025-09-12,12,NAM,11,24,52,14,6,8,cff80f345ac97d07,52 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,cff80f345ac97d07
+2025-09-12T15:14:00Z,2025-09-12,12,GFS,11,25,52,14,6,8,f06145e90927e8ce,52 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,f06145e90927e8ce
+2025-09-13T01:26:00Z,2025-09-13,00,NAM,10,25,63,10,4,8,8a01cb9a72e70d26,63 CONUS..10 Mexican 4 Caribbean..and 8 Pacific stations available for ingest,8a01cb9a72e70d26
+2025-09-15T13:45:00Z,2025-09-15,12,NAM,10,25,51,11,6,8,8b997c07ab07ed7d,51 CONUS...11 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,8b997c07ab07ed7d
+2025-09-15T15:15:00Z,2025-09-15,12,GFS,10,25,51,11,6,8,a20eb1062b654c87,51 CONUS...11 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,a20eb1062b654c87
+2025-09-16T01:56:00Z,2025-09-16,00,NAM,9,24,60,11,4,8,3f25d5d4b6e84fd8,60 CONUS...11 Mexican...4 Caribbean...and 8 Pacific stations available for ingest,3f25d5d4b6e84fd8
+2025-09-17T01:38:00Z,2025-09-17,00,NAM,11,25,64,13,4,8,33fbf0cfd5758bae,64 CONUS...13 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,33fbf0cfd5758bae
+2025-09-17T03:14:00Z,2025-09-17,00,GFS,11,25,64,13,4,8,1242891a72926e3e,64 CONUS...13 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,1242891a72926e3e
+2025-09-18T01:36:00Z,2025-09-18,00,NAM,10,24,63,15,4,8,36913c155925a9ad,63 CONUS...15 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,36913c155925a9ad
+2025-09-18T03:26:00Z,2025-09-18,00,GFS,10,24,64,15,4,8,7d1df154a3e334f1,64 CONUS...15 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,7d1df154a3e334f1
+2025-09-18T13:47:00Z,2025-09-18,12,NAM,12,23,53,13,7,6,ebf1cafa17beb9a6,53 CONUS...13 Mexican...7 Caribbean...and 6 Pacific stations available for ingest,ebf1cafa17beb9a6
+2025-09-18T15:11:00Z,2025-09-18,12,GFS,12,23,53,13,7,7,ed5d84271c6ea88a,53 CONUS...13 Mexican...7 Caribbean...and 7 Pacific stations available for ingest,ed5d84271c6ea88a
+2025-09-19T01:32:00Z,2025-09-19,00,NAM,10,25,65,14,4,8,cdc59bac827fbce7,65 CONUS...14 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,cdc59bac827fbce7
+2025-09-19T03:21:00Z,2025-09-19,00,GFS,10,25,67,14,4,8,07dda2c88cec8da5,67 CONUS...14 Mexican...4 Caribbean...and 8 Pacific raobs available for ingest,07dda2c88cec8da5
+2025-09-19T13:46:00Z,2025-09-19,12,NAM,9,25,50,12,7,6,5ab5c4069e31f963,50 CONUS...12 Mexican...7 Caribbean...and 6 Pacific stations available for ingest,5ab5c4069e31f963
+2025-09-19T15:19:00Z,2025-09-19,12,GFS,9,25,51,12,7,6,3c5950b52331c4d1,51 CONUS...12 Mexican...7 Caribbean...and 6 Pacific stations available for ingest,3c5950b52331c4d1
+2025-09-20T13:47:00Z,2025-09-20,12,NAM,8,25,51,11,6,7,5ad23f16833bf1e8,51 CONUS...11 Mexican...6 Caribbean...and 7 Pacific raobs available for ingest,5ad23f16833bf1e8
+2025-09-21T13:47:00Z,2025-09-21,12,NAM,10,25,49,11,6,5,2b30fcd573e2453e,49 CONUS...11 Mexican...6 Caribbean...and 5 Pacific stations available for ingest,2b30fcd573e2453e
+2025-09-21T15:13:00Z,2025-09-21,12,GFS,10,25,49,11,6,7,4dd5b5766df8434f,49 CONUS...11 Mexican...6 Caribbean...and 7 Pacific stations available for ingest,4dd5b5766df8434f
+2025-09-22T13:49:00Z,2025-09-22,12,NAM,10,24,49,11,7,7,18a88804f9e3b790,49 CONUS...11 Mexican...7 Caribbean...and 7 Pacific raobs available for ingest,18a88804f9e3b790
+2025-09-22T15:17:00Z,2025-09-22,12,GFS,10,25,51,11,7,7,e81862c95d31ae2d,51 CONUS...11 Mexican...7 Caribbean...and 7 Pacific raobs available for ingest,e81862c95d31ae2d
+2025-09-24T13:32:00Z,2025-09-24,12,NCEP,11,24,49,13,7,7,1dd5c47a3c15a105,49 CONUS..13 Mexican 7 Caribbean..and 7 Pacific stations available for ingest,1dd5c47a3c15a105
+2025-09-24T15:10:00Z,2025-09-24,12,GFS,11,24,50,13,7,7,9146f8a642947ba8,50 CONUS..13 Mexican 7 Caribbean..and 7 Pacific stations available for ingest,9146f8a642947ba8
+2025-09-25T02:44:00Z,2025-09-25,00,NAM,10,26,65,14,5,8,f77f2a1193019df2,65 CONUS...14 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,f77f2a1193019df2
+2025-09-25T03:21:00Z,2025-09-25,00,GFS,10,26,66,14,5,8,1ea00f3bb4d25320,66 CONUS...14 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,1ea00f3bb4d25320
+2025-09-26T03:19:00Z,2025-09-26,00,GFS,11,25,65,15,4,8,3a964b72bc71d973,65 CONUS...15 Mexican...4 Caribbean...and 8 Pacific stations available for ingest,3a964b72bc71d973
+2025-09-26T13:26:00Z,2025-09-26,12,NCEP,12,24,50,12,5,8,fd7b933b4af9fa47,50 CONUS..12 Mexican 5 Caribbean..and 8 Pacific stations available for ingest,fd7b933b4af9fa47
+2025-09-27T13:23:00Z,2025-09-27,12,NCEP,12,22,48,12,6,9,347cea07a136e887,48 CONUS..12 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,347cea07a136e887
+2025-09-28T01:38:00Z,2025-09-28,00,NAM,10,25,63,13,5,9,e03e925647bddcdc,63 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,e03e925647bddcdc
+2025-09-28T03:18:00Z,2025-09-28,00,GFS,10,25,64,13,5,9,955e20aafd91b308,64 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,955e20aafd91b308
+2025-09-29T02:04:00Z,2025-09-29,00,NAM,9,24,65,12,5,9,79a0ea0d09437305,65 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,79a0ea0d09437305
+2025-09-29T03:17:00Z,2025-09-29,00,GFS,9,24,65,12,5,9,98b33e8389d060bb,65 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,98b33e8389d060bb
+2025-10-01T03:17:00Z,2025-10-01,00,GFS,10,27,63,13,5,9,4448fd177d099b16,63 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,4448fd177d099b16
+2025-10-02T13:36:00Z,2025-10-02,12,NAM,12,26,49,12,5,9,64f52ca7a27c180f,49 CONUS...12 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,64f52ca7a27c180f
+2025-10-03T03:13:00Z,2025-10-03,00,GFS,10,27,62,14,4,9,a7e4aa33f726b7d6,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,a7e4aa33f726b7d6
+2025-10-03T13:53:00Z,2025-10-03,12,NAM,12,26,51,13,7,9,2248ce3ae5227f29,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,2248ce3ae5227f29
+2025-10-04T03:15:00Z,2025-10-04,00,GFS,09,28,62,12,4,9,ed613982fd466971,62 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,ed613982fd466971
+2025-10-04T13:35:00Z,2025-10-04,12,NAM,12,24,49,11,6,8,c629eb519d2dbe56,49 CONUS...11 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,c629eb519d2dbe56
+2025-10-05T03:15:00Z,2025-10-04,12,GFS,10,26,63,12,4,9,c1a9ddbe13cddd0f,63 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,c1a9ddbe13cddd0f
+2025-10-05T01:39:00Z,2025-10-05,00,NAM,10,26,63,12,4,9,3c75c4d6fdbdd07a,63 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,3c75c4d6fdbdd07a
+2025-10-05T13:33:00Z,2025-10-05,12,NAM,12,24,49,11,5,7,d8b123454b539546,49 CONUS...11 Mexican...5 Caribbean...and 7 Pacific raobs available for ingest,d8b123454b539546
+2025-10-06T01:39:00Z,2025-10-06,00,NAM,10,25,61,12,4,9,ea1ae5e1dfdcce59,61 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,ea1ae5e1dfdcce59
+2025-10-06T03:13:00Z,2025-10-06,00,GFS,10,25,62,12,4,9,0b11074cb35f94c6,62 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,0b11074cb35f94c6
+2025-10-07T01:43:00Z,2025-10-07,00,NAM,7,27,63,13,3,9,3c3fce8aeae817c3,63 CONUS...13 Mexican...3 Caribbean...and 9 Pacific stations available for ingest,3c3fce8aeae817c3
+2025-10-07T03:25:00Z,2025-10-07,00,GFS,7,27,63,13,4,9,a35f8580ec2452bb,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,a35f8580ec2452bb
+2025-10-08T01:38:00Z,2025-10-08,00,NAM,9,25,62,14,4,9,d2a42125af062028,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,d2a42125af062028
+2025-10-08T03:23:00Z,2025-10-08,00,GFS,9,25,62,14,4,9,9f20a7910051b53a,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,9f20a7910051b53a
+2025-10-09T01:27:00Z,2025-10-09,00,NAM,7,27,61,14,3,9,87361c61130eee58,61 CONUS..14 Mexican 3 Caribbean..and 9 Pacific stations available for ingest,87361c61130eee58
+2025-10-10T13:23:00Z,2025-10-10,12,NCEP,10,26,51,13,5,9,790da5dee455375b,51 CONUS..13 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,790da5dee455375b
+2025-10-11T13:39:00Z,2025-10-11,12,NCEP,11,24,51,12,6,9,832d98977137e078,51 CONUS..12 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,832d98977137e078
+2025-10-12T01:39:00Z,2025-10-12,00,NAM,10,24,61,12,3,9,bd5fa4c3245fcc68,61 CONUS...12 Mexican...3 Caribbean...and 9 Pacific raobs available for ingest,bd5fa4c3245fcc68
+2025-10-12T03:18:00Z,2025-10-12,00,GFS,10,24,62,12,4,9,2a169e02f47f3604,62 CONUS...12 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,2a169e02f47f3604
+2025-10-12T13:48:00Z,2025-10-12,12,NAM,9,25,52,12,6,9,d7269c19e284caa1,52 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,d7269c19e284caa1
+2025-10-12T15:37:00Z,2025-10-12,12,GFS,9,25,52,12,6,9,5b6c888b5c0258e9,52 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,5b6c888b5c0258e9
+2025-10-13T01:44:00Z,2025-10-13,00,NAM,9,24,62,11,4,9,bbaadbf940751a74,62 CONUS...11 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,bbaadbf940751a74
+2025-10-13T14:06:00Z,2025-10-13,12,NAM,8,26,51,13,7,9,9635febd7d370b5b,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,9635febd7d370b5b
+2025-10-13T15:30:00Z,2025-10-13,12,GFS,8,26,51,13,7,9,229959d771cab252,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,229959d771cab252
+2025-10-14T01:34:00Z,2025-10-14,00,NAM,9,26,63,12,4,9,dc3f4e12f824c3f8,63 CONUS..12 Mexican 4 Caribbean..and 9 Pacific stations available for ingest,dc3f4e12f824c3f8
+2025-10-14T13:42:00Z,2025-10-14,12,NAM,10,25,52,12,7,9,d7840937c2f3d1d9,52 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d7840937c2f3d1d9
+2025-10-14T15:17:00Z,2025-10-14,12,GFS,10,25,52,12,7,9,87bbbec222c6bea4,52 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,87bbbec222c6bea4
+2025-10-15T01:40:00Z,2025-10-15,00,NAM,9,26,63,11,4,9,c1b48324a18706d9,63 CONUS...11 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,c1b48324a18706d9
+2025-10-15T03:09:00Z,2025-10-15,00,GFS,9,26,64,11,4,9,34333488e24e5ac3,64 CONUS...11 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,34333488e24e5ac3
+2025-10-15T13:40:00Z,2025-10-15,12,NAM,8,26,50,10,7,9,165a80fafc4c1275,50 CONUS...10 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,165a80fafc4c1275
+2025-10-15T15:23:00Z,2025-10-15,12,GFS,8,26,50,10,7,9,e743a15203eec6b1,50 CONUS...10 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,e743a15203eec6b1
+2025-10-16T01:39:00Z,2025-10-16,00,NAM,9,27,62,12,4,9,5b7daf2ad39208cf,62 CONUS...12 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,5b7daf2ad39208cf
+2025-10-16T03:04:00Z,2025-10-16,00,GFS,9,27,62,12,4,9,75e6fb23542f2ae2,62 CONUS...12 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,75e6fb23542f2ae2
+2025-10-17T01:40:00Z,2025-10-17,00,NAM,10,27,64,11,4,9,f23837f48f23796e,64 CONUS...11 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,f23837f48f23796e
+2025-10-20T13:23:00Z,2025-10-20,12,NCEP,12,26,49,11,5,9,b3326781902ca5a7,49 CONUS..11 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,b3326781902ca5a7
+2025-10-21T01:33:00Z,2025-10-21,00,NAM,11,26,63,13,4,9,1ee2b6d573855536,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,1ee2b6d573855536
+2025-10-21T13:50:00Z,2025-10-21,12,NAM,11,26,50,12,7,9,b072d8ef08a5113b,50 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,b072d8ef08a5113b
+2025-10-21T15:19:00Z,2025-10-21,12,GFS,11,26,50,12,7,9,8bd3e98dfbcd9cb7,50 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,8bd3e98dfbcd9cb7
+2025-10-22T01:39:00Z,2025-10-22,00,NAM,11,26,63,13,3,9,ed5cd72c96e27e44,63 CONUS...13 Mexican...3 Caribbean...and 9 Pacific raobs available for ingest,ed5cd72c96e27e44
+2025-10-22T13:40:00Z,2025-10-22,12,NAM,11,26,52,13,7,9,2f32ad61b1a79005,52 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2f32ad61b1a79005
+2025-10-22T15:18:00Z,2025-10-22,12,GFS,11,26,52,13,7,9,25127ccd91f37944,52 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,25127ccd91f37944
+2025-10-23T13:46:00Z,2025-10-23,12,NAM,12,26,50,12,6,8,bb14f9b3bc15d286,50 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,bb14f9b3bc15d286
+2025-10-23T15:31:00Z,2025-10-23,12,GFS,12,26,51,12,6,8,e7f72035bc6e8543,51 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,e7f72035bc6e8543
+2025-10-24T03:20:00Z,2025-10-24,00,NAM,11,26,63,14,5,9,56c6a3e639a38368,63 CONUS...14 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,56c6a3e639a38368
+2025-10-24T13:44:00Z,2025-10-24,12,NAM,11,24,51,13,6,8,6d8a71855132ffb3,51 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,6d8a71855132ffb3
+2025-10-24T15:11:00Z,2025-10-24,12,GFS,11,24,51,13,6,8,21f41e297e91b649,51 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,21f41e297e91b649
+2025-10-25T03:32:00Z,2025-10-25,00,NAM,10,25,63,14,4,8,66d2d01df5523037,63 CONUS...14 Mexican...4 Caribbean...and 8 Pacific stations available for ingest,66d2d01df5523037
+2025-10-25T13:56:00Z,2025-10-25,12,NAM,12,23,51,12,6,9,4ee4f2fcc63fe00e,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,4ee4f2fcc63fe00e
+2025-10-25T15:22:00Z,2025-10-25,12,GFS,12,23,52,12,6,9,4857d1a5690ec740,52 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,4857d1a5690ec740
+2025-10-26T03:17:00Z,2025-10-26,00,GFS,9,24,63,12,4,9,ca2b069a12258735,63 CONUS...12 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,ca2b069a12258735
+2025-10-26T13:50:00Z,2025-10-26,12,NAM,11,25,50,11,6,9,d80d3eda6016cd05,50 CONUS...11 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,d80d3eda6016cd05
+2025-10-26T15:22:00Z,2025-10-26,12,GFS,11,25,50,11,6,9,8a408db5d648d039,50 CONUS...11 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,8a408db5d648d039
+2025-10-27T13:52:00Z,2025-10-27,12,NAM,11,26,51,12,6,9,c0ba72d750d69328,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,c0ba72d750d69328
+2025-10-28T13:50:00Z,2025-10-28,12,NAM,12,26,52,12,6,9,22ed6a4ac967ad48,52 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,22ed6a4ac967ad48
+2025-10-29T13:40:00Z,2025-10-29,12,NAM,12,27,51,12,6,9,870c603d690523a5,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,870c603d690523a5
+2025-10-31T01:40:00Z,2025-10-31,00,NAM,10,26,61,13,5,9,ad15f2c6a5ceb02a,61 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,ad15f2c6a5ceb02a
+2025-10-31T02:50:00Z,2025-10-31,00,GFS,10,26,63,13,5,9,bd5c36c670810eb8,63 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,bd5c36c670810eb8
+2025-11-01T01:39:00Z,2025-11-01,00,NAM,10,26,63,15,4,9,c7d099251c55e8f6,63 CONUS...15 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,c7d099251c55e8f6
+2025-11-01T03:34:00Z,2025-11-01,00,GFS,10,26,63,15,4,9,89653c8a63f1ec18,63 CONUS...15 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,89653c8a63f1ec18
+2025-11-01T13:38:00Z,2025-11-01,12,NAM,12,26,50,13,6,8,07190f2bcd5f74e2,50 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,07190f2bcd5f74e2
+2025-11-01T15:12:00Z,2025-11-01,12,GFS,12,26,51,13,6,8,8c5954320063d10d,51 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,8c5954320063d10d
+2025-11-02T01:38:00Z,2025-11-02,00,NAM,10,24,62,14,4,8,3489208cb66786f1,62 CONUS...14 Mexican...4 Caribbean...and 8 Pacific stations available for ingest,3489208cb66786f1
+2025-11-02T03:30:00Z,2025-11-02,00,GFS,10,25,62,14,4,9,2a7a702bfc77ff83,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,2a7a702bfc77ff83
+2025-11-02T13:48:00Z,2025-11-02,12,NAM,10,25,50,10,6,9,a9abd0b11cd2a9c9,50 CONUS...10 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,a9abd0b11cd2a9c9
+2025-11-02T15:23:00Z,2025-11-02,12,GFS,10,25,50,10,6,9,1df50bb79e945621,50 CONUS...10 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,1df50bb79e945621
+2025-11-03T01:33:00Z,2025-11-03,00,NAM,9,25,63,14,4,9,02b277dc9ace240e,63 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,02b277dc9ace240e
+2025-11-03T03:16:00Z,2025-11-03,00,GFS,9,25,63,14,4,9,a60f45a6cad065af,63 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,a60f45a6cad065af
+2025-11-03T13:46:00Z,2025-11-03,12,NAM,11,25,51,12,6,8,17cccc0c688932fc,51 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,17cccc0c688932fc
+2025-11-03T15:27:00Z,2025-11-03,12,NCEP,11,25,51,12,6,9,c03603af0d854238,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,c03603af0d854238
+2025-11-04T13:45:00Z,2025-11-04,12,NAM,11,23,50,13,6,9,393c2fb37a96c345,50 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,393c2fb37a96c345
+2025-11-05T14:06:00Z,2025-11-05,12,NAM,11,22,50,13,6,9,91fc965ccdf03fd5,50 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,91fc965ccdf03fd5
+2025-11-06T13:28:00Z,2025-11-06,12,NAM,12,24,49,14,6,9,00408cbe87ebcf09,49 CONUS...14 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,00408cbe87ebcf09
+2025-11-07T02:00:00Z,2025-11-07,00,NAM,10,24,62,15,4,9,75f48cceb4c04533,62 CONUS...15 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,75f48cceb4c04533
+2025-11-07T13:34:00Z,2025-11-07,12,NAM,11,24,51,13,6,9,81e7978d47b53f2e,51 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,81e7978d47b53f2e
+2025-11-08T13:38:00Z,2025-11-08,12,NAM,11,23,51,13,5,9,e0d043ec0a8c7978,51 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,e0d043ec0a8c7978
+2025-11-09T02:03:00Z,2025-11-09,00,NAM,9,24,63,13,4,9,61f1fe985171351a,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,61f1fe985171351a
+2025-11-09T03:10:00Z,2025-11-09,00,GFS,9,24,63,13,4,9,89dbabe31498a88e,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,89dbabe31498a88e
+2025-11-09T13:35:00Z,2025-11-09,12,NAM,11,24,51,12,6,9,33fa7c17db0dbd27,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,33fa7c17db0dbd27
+2025-11-10T01:42:00Z,2025-11-10,00,NAM,10,23,63,14,4,9,6c2deb7e46819e7b,63 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,6c2deb7e46819e7b
+2025-11-10T03:24:00Z,2025-11-10,00,GFS,10,23,63,14,4,9,da2f4a5bbe8b0018,63 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,da2f4a5bbe8b0018
+2025-11-11T01:37:00Z,2025-11-11,00,NAM,9,25,62,14,4,9,fcf371b13927f6fd,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,fcf371b13927f6fd
+2025-11-13T01:44:00Z,2025-11-13,00,NAM,9,25,61,14,4,9,07668c309a22543c,61 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,07668c309a22543c
+2025-11-13T03:23:00Z,2025-11-13,00,GFS,9,25,62,14,4,9,2e8b211c0b0aefa0,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,2e8b211c0b0aefa0
+2025-11-13T13:46:00Z,2025-11-13,12,NAM,11,25,51,13,6,8,a5e98fb1040c2b1a,51 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,a5e98fb1040c2b1a
+2025-11-14T14:34:00Z,2025-11-14,12,NAM,11,24,50,14,6,9,678d1c0b8f96d44f,50 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,678d1c0b8f96d44f
+2025-11-15T13:45:00Z,2025-11-15,12,NAM,10,24,51,12,6,9,b5c8888a8926f1bb,51 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,b5c8888a8926f1bb
+2025-11-16T01:40:00Z,2025-11-16,00,NAM,10,25,62,13,4,9,70cdcb6820e963a6,62 CONUS...13 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,70cdcb6820e963a6
+2025-11-16T14:09:00Z,2025-11-16,12,NAM,12,25,49,13,6,9,e72db363a615b03a,49 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,e72db363a615b03a
+2025-11-16T15:59:00Z,2025-11-16,12,GFS,12,25,49,13,6,9,b21e948ff78630f7,49 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,b21e948ff78630f7
+2025-11-17T13:40:00Z,2025-11-17,12,NAM,10,26,51,13,6,8,ba91ee4e45bf1d68,51 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,ba91ee4e45bf1d68
+2025-11-17T15:22:00Z,2025-11-17,12,GFS,10,26,51,13,6,9,3a8c5c145157aefe,51 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,3a8c5c145157aefe
+2025-11-18T01:37:00Z,2025-11-18,00,NAM,10,26,63,13,4,9,4398b364a203cc9a,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,4398b364a203cc9a
+2025-11-18T03:15:00Z,2025-11-18,00,GFS,10,26,63,13,4,9,c20aaac81fd28ef9,63 CONUS...13 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,c20aaac81fd28ef9
+2025-11-18T14:05:00Z,2025-11-18,12,NAM,11,25,50,14,7,9,9d304ccf32d42428,50 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,9d304ccf32d42428
+2025-11-18T15:50:00Z,2025-11-18,12,GFS,11,25,50,14,7,9,6d6b8a1230fd1eca,50 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6d6b8a1230fd1eca
+2025-11-19T01:52:00Z,2025-11-19,00,NAM,9,26,63,12,5,9,b5cb1ade99522d60,63 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,b5cb1ade99522d60
+2025-11-19T03:27:00Z,2025-11-19,00,GFS,9,26,63,12,5,9,0a765a52a84f6720,63 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,0a765a52a84f6720
+2025-11-19T13:56:00Z,2025-11-19,12,NAM,12,25,50,13,7,9,d0bd687f5570af30,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d0bd687f5570af30
+2025-11-19T16:06:00Z,2025-11-19,12,GFS,12,25,51,13,7,9,ca6c0c838c348791,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,ca6c0c838c348791
+2025-11-20T03:46:00Z,2025-11-20,00,NAM,9,25,62,14,5,9,cc568344c3385b9a,62 CONUS...14 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,cc568344c3385b9a
+2025-11-21T01:44:00Z,2025-11-21,00,NAM,9,26,61,15,5,9,2c745390175f2a1f,61 CONUS...15 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,2c745390175f2a1f
+2025-11-21T03:36:00Z,2025-11-21,00,GFS,9,26,61,15,5,9,ac068c0680311255,61 CONUS...15 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,ac068c0680311255
+2025-11-22T01:57:00Z,2025-11-22,00,NAM,10,26,63,14,5,9,fe198e941bf104a1,63 CONUS...14 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,fe198e941bf104a1
+2025-11-22T03:28:00Z,2025-11-22,00,GFS,10,26,63,14,5,9,ce4d83614e4f4eb4,63 CONUS...14 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,ce4d83614e4f4eb4
+2025-11-23T01:46:00Z,2025-11-23,00,NAM,9,26,61,12,5,9,fba3ebabcc1db2db,61 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,fba3ebabcc1db2db
+2025-11-24T15:14:00Z,2025-11-24,12,NAM,11,25,50,13,7,9,2d53a6651c57552c,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2d53a6651c57552c
+2025-11-25T01:34:00Z,2025-11-25,00,NAM,8,26,60,14,5,9,2c345294c01371c8,60 CONUS...14 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,2c345294c01371c8
+2025-11-25T13:40:00Z,2025-11-25,12,NAM,11,25,48,13,7,9,2c54f19f09f491a1,48 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2c54f19f09f491a1
+2025-11-25T15:46:00Z,2025-11-25,12,GFS,11,25,50,13,7,9,b8c723304a9774cd,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,b8c723304a9774cd
+2025-11-26T01:37:00Z,2025-11-26,00,NAM,9,26,59,12,5,9,8d0abc3d4338d689,59 CONUS...12 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,8d0abc3d4338d689
+2025-11-26T13:43:00Z,2025-11-26,12,NAM,11,25,48,14,7,9,65fcdfacec2c4e70,48 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,65fcdfacec2c4e70
+2025-11-26T15:27:00Z,2025-11-26,12,GFS,11,25,50,14,7,9,7b985ebbb921f3f3,50 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,7b985ebbb921f3f3
+2025-11-27T01:30:00Z,2025-11-27,00,NAM,9,26,60,14,5,9,2613a39506c4158e,60 CONUS..14 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,2613a39506c4158e
+2025-11-27T13:49:00Z,2025-11-27,12,NAM,12,26,51,14,7,9,d7fd5d10eae567a7,51 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d7fd5d10eae567a7
+2025-11-27T15:25:00Z,2025-11-27,12,GFS,12,26,51,14,7,9,6b3fc07885d5cc78,51 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6b3fc07885d5cc78
+2025-11-28T01:22:00Z,2025-11-28,00,NCEP,10,26,61,15,5,9,310e64a40fb3feb0,61 CONUS..15 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,310e64a40fb3feb0
+2025-11-28T13:46:00Z,2025-11-28,12,NAM,12,26,47,14,7,9,cea9dc73a9f3c728,47 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,cea9dc73a9f3c728
+2025-11-28T15:27:00Z,2025-11-28,12,GFS,12,26,48,14,7,9,59a80c3116b1947b,48 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,59a80c3116b1947b
+2025-11-29T13:38:00Z,2025-11-29,12,NAM,11,25,50,11,7,9,d247836fe35bbe9d,50 CONUS...11 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d247836fe35bbe9d
+2025-11-29T15:17:00Z,2025-11-29,12,GFS,11,25,50,12,7,9,69f3de279f198358,50 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,69f3de279f198358
+2025-11-30T13:46:00Z,2025-11-30,12,NAM,12,25,48,12,6,9,82041d964633dee7,48 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,82041d964633dee7
+2025-11-30T15:28:00Z,2025-11-30,12,GFS,12,25,48,12,6,9,25ae3443d11d95d9,48 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,25ae3443d11d95d9
+2025-12-01T13:42:00Z,2025-12-01,12,NAM,11,25,50,12,6,9,b09da5fdec3bb271,50 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,b09da5fdec3bb271
+2025-12-02T14:01:00Z,2025-12-02,12,NAM,11,25,49,13,7,9,e618b5dbdc92557e,49 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,e618b5dbdc92557e
+2025-12-03T13:36:00Z,2025-12-03,12,NAM,12,26,48,14,6,9,c60f75fcd4c92b04,48 CONUS...14 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,c60f75fcd4c92b04
+2025-12-04T01:47:00Z,2025-12-04,00,NAM,9,25,61,13,5,9,e98b1f9270cb190f,61 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,e98b1f9270cb190f
+2025-12-04T03:18:00Z,2025-12-04,00,GFS,9,25,62,13,5,9,5fdc9cc8f5caf59a,62 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,5fdc9cc8f5caf59a
+2025-12-04T13:52:00Z,2025-12-04,12,NAM,11,26,48,14,7,9,739c5bebc1f66506,48 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,739c5bebc1f66506
+2025-12-04T15:15:00Z,2025-12-04,12,GFS,11,26,49,14,7,9,48d639f4f859bc35,49 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,48d639f4f859bc35
+2025-12-05T01:33:00Z,2025-12-05,00,NAM,8,26,62,14,4,9,7cd8b6d2a5f53513,62 CONUS...14 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,7cd8b6d2a5f53513
+2025-12-05T13:43:00Z,2025-12-05,12,NAM,12,26,50,12,7,9,43a5ccab2ad45693,50 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,43a5ccab2ad45693
+2025-12-05T15:22:00Z,2025-12-05,12,GFS,12,26,51,12,7,9,2c477547d26ef156,51 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2c477547d26ef156
+2025-12-06T01:34:00Z,2025-12-06,00,NAM,10,25,63,13,5,9,b3eb541d9a30fbc3,63 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,b3eb541d9a30fbc3
+2025-12-06T03:18:00Z,2025-12-06,00,GFS,10,25,63,13,5,9,c0eaa9b9c411505f,63 CONUS...13 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,c0eaa9b9c411505f
+2025-12-06T13:40:00Z,2025-12-06,12,NAM,12,24,47,13,7,9,2a5df922fabd44bb,47 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2a5df922fabd44bb
+2025-12-06T15:12:00Z,2025-12-06,12,GFS,12,24,48,13,7,9,d7e1cc7360eedb7e,48 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d7e1cc7360eedb7e
+2025-12-07T01:28:00Z,2025-12-07,00,NAM,10,25,60,12,4,9,7c31032e668008ec,60 CONUS..12 Mexican 4 Caribbean..and 9 Pacific stations available for ingest,7c31032e668008ec
+2025-12-07T13:48:00Z,2025-12-07,12,NAM,12,24,50,13,7,9,e19223b4becfcdde,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,e19223b4becfcdde
+2025-12-07T15:13:00Z,2025-12-07,12,GFS,12,24,50,13,7,9,3913c6415af6587f,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,3913c6415af6587f
+2025-12-08T13:38:00Z,2025-12-08,12,NAM,11,26,51,12,7,9,2e8d8ec642ae4203,51 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2e8d8ec642ae4203
+2025-12-09T01:28:00Z,2025-12-09,00,NAM,9,25,62,12,6,9,ae9918507f546659,62 CONUS..12 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,ae9918507f546659
+2025-12-09T03:37:00Z,2025-12-09,00,GFS,9,25,62,12,6,9,4ff6b4cd702e5711,62 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,4ff6b4cd702e5711
+2025-12-09T13:52:00Z,2025-12-09,12,NAM,11,25,51,13,7,9,2c4444ad557120aa,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2c4444ad557120aa
+2025-12-10T03:32:00Z,2025-12-10,00,NCEP,8,26,63,11,5,8,136662d73e1666b5,63 CONUS...11 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,136662d73e1666b5
+2025-12-10T13:53:00Z,2025-12-10,12,NAM,8,26,51,13,7,9,892eabb6433bafd9,51 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,892eabb6433bafd9
+2025-12-11T03:24:00Z,2025-12-11,00,NAM,7,26,62,3,5,9,872dadb9e599c8fc,62 CONUS...3 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,872dadb9e599c8fc
+2025-12-11T13:55:00Z,2025-12-11,12,NAM,10,26,50,12,7,9,c93f47cc84db2c97,50 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,c93f47cc84db2c97
+2025-12-12T01:57:00Z,2025-12-12,00,NAM,9,25,62,2,5,9,df0f9434dcd904db,62 CONUS...2 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,df0f9434dcd904db
+2025-12-12T13:36:00Z,2025-12-12,12,NAM,9,25,49,12,7,9,99ddec6ee8e305f9,49 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,99ddec6ee8e305f9
+2025-12-13T02:08:00Z,2025-12-13,00,NAM,8,26,62,1,4,9,5d1e17bc4536920d,62 CONUS...1 Mexican...4 Caribbean...and 9 Pacific raobs available for ingest,5d1e17bc4536920d
+2025-12-13T13:34:00Z,2025-12-13,12,NAM,8,26,48,12,6,9,8e287e54a4842c7a,48 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,8e287e54a4842c7a
+2025-12-13T15:20:00Z,2025-12-13,12,GFS,9,26,49,12,7,9,645050dd35b520c2,49 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,645050dd35b520c2
+2025-12-14T01:39:00Z,2025-12-14,00,NAM,8,26,63,1,5,9,8f386c2a2a61cf7b,63 CONUS...1 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,8f386c2a2a61cf7b
+2025-12-14T03:10:00Z,2025-12-14,00,GFS,8,26,63,1,5,9,fd8564239d40e812,63 CONUS...1 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,fd8564239d40e812
+2025-12-14T13:27:00Z,2025-12-14,12,NCEP,10,26,46,10,7,9,c4fce9ae0caac87f,46 CONUS..10 Mexican 7 Caribbean..and 9 Pacific stations available for ingest,c4fce9ae0caac87f
+2025-12-15T13:24:00Z,2025-12-15,12,NCEP,9,25,49,9,6,9,f9a4cc26c29853ec,49 CONUS..9 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,f9a4cc26c29853ec
+2025-12-16T01:44:00Z,2025-12-16,00,NAM,7,25,60,1,5,9,cd006ab02bca4087,60 CONUS...1 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,cd006ab02bca4087
+2025-12-16T03:11:00Z,2025-12-16,00,GFS,7,25,62,1,5,9,dd38fcf51ecc42c3,62 CONUS...1 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,dd38fcf51ecc42c3
+2025-12-17T01:49:00Z,2025-12-17,00,NAM,9,25,62,2,5,9,a0ad984028cc3c1c,62 CONUS...2 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,a0ad984028cc3c1c
+2025-12-17T03:44:00Z,2025-12-17,00,GFS,9,25,62,2,5,9,6eb77111606c164f,62 CONUS...2 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,6eb77111606c164f
+2025-12-17T13:51:00Z,2025-12-17,12,NAM,9,26,47,12,6,9,801dd085d419e3ed,47 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,801dd085d419e3ed
+2025-12-18T14:37:00Z,2025-12-18,12,NAM,11,26,48,12,7,9,bb1264ac0d06c9a1,48 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,bb1264ac0d06c9a1
+2025-12-19T01:36:00Z,2025-12-19,00,NCEP,9,26,62,1,5,9,9e43cfab32026988,62 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,9e43cfab32026988
+2025-12-19T14:28:00Z,2025-12-19,12,NAM,10,25,50,12,7,9,170b1df84cf27413,50 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,170b1df84cf27413
+2025-12-20T13:45:00Z,2025-12-20,12,NAM,11,23,49,12,7,9,73d55569d00347a5,49 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,73d55569d00347a5
+2025-12-21T13:52:00Z,2025-12-21,12,NAM,11,24,50,12,7,9,bef6ca15caa7361c,50 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,bef6ca15caa7361c
+2025-12-22T13:50:00Z,2025-12-22,12,NAM,8,25,50,11,7,9,3f19044a243a4a24,50 CONUS..11 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,3f19044a243a4a24
+2025-12-22T15:20:00Z,2025-12-22,12,GFS,8,25,51,11,7,9,6cd330ff6e58138b,51 CONUS..11 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,6cd330ff6e58138b
+2025-12-23T01:24:00Z,2025-12-23,00,NAM,8,25,61,1,5,9,f80dea3fabcbf737,61 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,f80dea3fabcbf737
+2025-12-23T13:46:00Z,2025-12-23,12,NAM,9,25,49,12,7,9,d8b2f4fd7cbb80a4,49 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,d8b2f4fd7cbb80a4
+2025-12-23T15:15:00Z,2025-12-23,12,GFS,9,25,50,12,7,9,60d506bd2fb155d9,50 CONUS..12 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,60d506bd2fb155d9
+2025-12-24T01:27:00Z,2025-12-24,00,NCEP,9,26,62,1,4,9,d27ada0c294b8baa,62 CONUS..1 Mexican 4 Caribbean..and 9 Pacific stations available for ingest,d27ada0c294b8baa
+2025-12-24T13:41:00Z,2025-12-24,12,NAM,10,26,48,10,7,9,9e56019e43a121b1,48 CONUS..10 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,9e56019e43a121b1
+2025-12-24T15:19:00Z,2025-12-24,12,GFS,10,26,50,11,7,9,18ced578d14b2682,50 CONUS..11 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,18ced578d14b2682
+2025-12-25T01:21:00Z,2025-12-25,00,NCEP,8,26,59,1,4,8,1e9250420b78b4c4,59 CONUS..1 Mexican 4 Caribbean..and 8 Pacific stations available for ingest,1e9250420b78b4c4
+2025-12-26T01:48:00Z,2025-12-26,00,NAM,9,26,63,0,4,9,75a016da22dae1cf,63 CONUS...0 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,75a016da22dae1cf
+2025-12-26T03:09:00Z,2025-12-26,00,GFS,9,26,63,0,4,9,b30148ee3cd6d788,63 CONUS...0 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,b30148ee3cd6d788
+2025-12-27T01:42:00Z,2025-12-27,00,NAM,8,26,61,1,4,9,7a229e82bcc08c27,61 CONUS...1 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,7a229e82bcc08c27
+2025-12-27T03:24:00Z,2025-12-27,00,GFS,8,26,62,1,4,9,8a9bdd438aadabd4,62 CONUS...1 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,8a9bdd438aadabd4
+2025-12-28T01:30:00Z,2025-12-28,00,NAM,7,25,61,1,4,9,4ede0f4bbd2def70,61 CONUS...1 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,4ede0f4bbd2def70
+2025-12-28T03:43:00Z,2025-12-28,00,NCEP,8,26,62,1,4,9,1b4686211bc78f60,62 CONUS...1 Mexican...4 Caribbean...and 9 Pacific stations available for ingest,1b4686211bc78f60
+2025-12-29T01:50:00Z,2025-12-29,00,NAM,6,25,62,1,4,9,8e98194a8b73ff9a,62 CONUS..1 Mexican..4 Caribbean..and 9 Pacific stations available for ingest,8e98194a8b73ff9a
+2025-12-29T13:29:00Z,2025-12-29,12,NCEP,6,25,47,8,7,8,cf68c807775f1d29,47 CONUS..8 Mexican 7 Caribbean..and 8 Pacific stations available for ingest,cf68c807775f1d29
+2025-12-30T13:23:00Z,2025-12-30,12,NCEP,7,24,46,10,7,8,cadc15a909f9932e,46 CONUS..10 Mexican 7 Caribbean..and 8 Pacific stations available for ingest,cadc15a909f9932e
+2026-01-01T13:39:00Z,2026-01-01,12,NAM,9,22,48,8,7,8,3a625029127f10ea,48 CONUS...8 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,3a625029127f10ea
+2026-01-01T15:15:00Z,2026-01-01,12,GFS,10,22,48,8,7,9,8cba7b1ea3ad598e,48 CONUS...8 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,8cba7b1ea3ad598e
+2026-01-02T13:48:00Z,2026-01-02,12,NAM,9,24,50,10,6,9,3324fb3f6bc47d45,50 CONUS...10 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,3324fb3f6bc47d45
+2026-01-02T15:15:00Z,2026-01-02,12,GFS,10,24,50,10,6,9,c02f57f030106e6d,50 CONUS...10 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,c02f57f030106e6d
+2026-01-03T01:22:00Z,2026-01-03,00,NCEP,6,24,61,1,5,9,f1c5e0ae093c0129,61 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,f1c5e0ae093c0129
+2026-01-03T13:47:00Z,2026-01-03,12,NAM,8,23,49,10,7,9,93a64972008bd433,49 CONUS...10 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,93a64972008bd433
+2026-01-03T15:49:00Z,2026-01-03,12,GFS,8,24,49,10,7,9,b7282fd46c1b20a1,49 CONUS...10 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,b7282fd46c1b20a1
+2026-01-04T13:38:00Z,2026-01-04,12,NAM,8,24,51,11,7,9,de43c722ae6f0374,51 CONUS...11 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,de43c722ae6f0374
+2026-01-04T15:41:00Z,2026-01-04,12,GFS,9,24,51,11,7,9,e5cddfb1c3772d21,51 CONUS...11 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,e5cddfb1c3772d21
+2026-01-05T13:39:00Z,2026-01-05,12,NAM,9,23,50,10,7,9,6197f803556ca31b,50 CONUS...10 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,6197f803556ca31b
+2026-01-05T15:06:00Z,2026-01-05,12,GFS,10,23,50,11,7,9,d33c6b4d88c3bff0,50 CONUS...11 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,d33c6b4d88c3bff0
+2026-01-06T01:33:00Z,2026-01-06,00,NCEP,7,25,63,1,6,9,36738314bb70fc1f,63 CONUS..1 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,36738314bb70fc1f
+2026-01-06T13:39:00Z,2026-01-06,12,NAM,10,25,49,11,8,9,33d432730828b9a8,49 CONUS...11 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,33d432730828b9a8
+2026-01-06T15:07:00Z,2026-01-06,12,GFS,11,25,51,11,9,9,39216b18c6fcf73c,51 CONUS...11 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,39216b18c6fcf73c
+2026-01-07T01:26:00Z,2026-01-07,00,NAM,7,25,65,1,6,9,4d26b08a765fa4de,65 CONUS..1 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,4d26b08a765fa4de
+2026-01-07T13:41:00Z,2026-01-07,12,NAM,10,25,49,10,9,9,ee8966b9338d273c,49 CONUS...10 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,ee8966b9338d273c
+2026-01-07T15:12:00Z,2026-01-07,12,GFS,11,25,50,10,9,9,a2a9e51a90d87fa1,50 CONUS...10 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,a2a9e51a90d87fa1
+2026-01-08T01:21:00Z,2026-01-08,00,NAM,9,25,63,1,5,9,e2111fdc7aed6faf,63 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,e2111fdc7aed6faf
+2026-01-08T03:26:00Z,2026-01-08,00,GFS,9,25,64,1,6,9,2d79a020a5aa563a,64 CONUS..1 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,2d79a020a5aa563a
+2026-01-08T13:45:00Z,2026-01-08,12,NAM,9,24,52,11,8,9,5130b373b39f74f4,52 CONUS...11 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,5130b373b39f74f4
+2026-01-08T15:21:00Z,2026-01-08,12,GFS,9,24,52,12,8,9,382e50483ba93b63,52 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,382e50483ba93b63
+2026-01-09T01:47:00Z,2026-01-09,00,NAM,8,25,62,3,6,9,f887f651b9fd32d9,62 CONUS...3 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,f887f651b9fd32d9
+2026-01-09T03:04:00Z,2026-01-09,00,GFS,8,25,63,3,6,9,416fc46b0b4a9436,63 CONUS...3 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,416fc46b0b4a9436
+2026-01-10T01:58:00Z,2026-01-10,00,NAM,8,24,62,2,6,8,bad8079546cdbc09,62 CONUS...2 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,bad8079546cdbc09
+2026-01-10T03:38:00Z,2026-01-10,00,GFS,8,24,62,2,6,9,d6fb239c2433084f,62 CONUS...2 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,d6fb239c2433084f
+2026-01-10T13:42:00Z,2026-01-10,12,NAM,11,24,49,12,7,9,e7657e470e2c7d06,49 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,e7657e470e2c7d06
+2026-01-10T15:24:00Z,2026-01-10,12,GFS,11,24,50,13,7,9,f64ccddb36ec4d67,50 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,f64ccddb36ec4d67
+2026-01-11T02:01:00Z,2026-01-11,00,NAM,9,25,63,2,6,9,397fe3b3a2d0cb9c,63 CONUS...2 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,397fe3b3a2d0cb9c
+2026-01-11T03:13:00Z,2026-01-11,00,GFS,9,25,63,2,6,9,739e8e395e268cdf,63 CONUS...2 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,739e8e395e268cdf
+2026-01-11T13:40:00Z,2026-01-11,12,NAM,10,24,49,10,7,9,7a95825cb3a7f788,49 CONUS...10 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,7a95825cb3a7f788
+2026-01-11T15:19:00Z,2026-01-11,12,GFS,10,24,49,10,8,9,26ef9e34df4c3376,49 CONUS...10 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,26ef9e34df4c3376
+2026-01-12T01:45:00Z,2026-01-12,00,NAM,8,25,61,1,6,9,5c47d963628c0864,61 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,5c47d963628c0864
+2026-01-12T03:10:00Z,2026-01-12,00,GFS,9,25,61,1,7,9,d6d1446e0125e4eb,61 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d6d1446e0125e4eb
+2026-01-12T15:15:00Z,2026-01-12,12,GFS,10,23,50,13,8,9,1279416e330a5938,50 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,1279416e330a5938
+2026-01-13T01:20:00Z,2026-01-13,00,NAM,8,25,63,2,5,2,5a0a39285b7cd6bd,63 CONUS..2 Mexican 5 Caribbean..and 2 Pacific stations available for ingest,5a0a39285b7cd6bd
+2026-01-13T13:43:00Z,2026-01-13,12,NCEP,8,25,49,12,9,9,eebc4d9f8bf47af8,49 CONUS..12 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,eebc4d9f8bf47af8
+2026-01-14T01:25:00Z,2026-01-14,00,NAM,9,26,62,2,7,9,d537ac8bb041dcbc,62 CONUS..2 Mexican 7 Caribbean..and 9 Pacific stations available for ingest,d537ac8bb041dcbc
+2026-01-14T13:35:00Z,2026-01-14,12,NCEP,10,26,50,13,7,9,2e93dddd1a168547,50 CONUS..13 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,2e93dddd1a168547
+2026-01-14T15:13:00Z,2026-01-14,12,GFS,10,26,50,13,8,9,8fc5fc3b2e496a6e,50 CONUS..13 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,8fc5fc3b2e496a6e
+2026-01-15T01:25:00Z,2026-01-15,00,NCEP,9,26,61,3,6,9,01383d68596166f8,61 CONUS..3 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,01383d68596166f8
+2026-01-15T13:37:00Z,2026-01-15,12,NAM,10,25,47,13,8,9,48b4a255e5eaf020,47 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,48b4a255e5eaf020
+2026-01-16T01:40:00Z,2026-01-16,00,NCEP,10,26,62,2,6,7,f8c3bb66bb6a4466,62 CONUS..2 Mexican..6 Caribbean..and 7 Pacific stations available for ingest,f8c3bb66bb6a4466
+2026-01-16T13:36:00Z,2026-01-16,12,NAM,10,25,49,12,8,8,2732cac6c0ddf47e,49 CONUS...12 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,2732cac6c0ddf47e
+2026-01-17T01:33:00Z,2026-01-17,00,NAM,10,26,63,2,7,8,a0cac1e8f52bf130,63 CONUS..2 Mexican..7 Caribbean..and 8 Pacific stations available for ingest,a0cac1e8f52bf130
+2026-01-17T13:37:00Z,2026-01-17,12,NAM,10,24,50,11,7,9,6ee708cf41a043be,50 CONUS...11 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,6ee708cf41a043be
+2026-01-18T01:45:00Z,2026-01-18,00,NAM,10,24,61,1,6,9,ddec5bff15ed0dfb,61 CONUS..1 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,ddec5bff15ed0dfb
+2026-01-18T03:12:00Z,2026-01-18,00,GFS,10,24,62,1,7,9,d5a77656587e0a26,62 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,d5a77656587e0a26
+2026-01-18T13:36:00Z,2026-01-18,12,NAM,9,24,50,10,7,9,76bce55fd4cd9ac5,50 CONUS...10 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,76bce55fd4cd9ac5
+2026-01-18T15:01:00Z,2026-01-18,12,GFS,9,24,51,10,8,9,d792c0acc86a1dca,51 CONUS...10 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,d792c0acc86a1dca
+2026-01-19T01:37:00Z,2026-01-19,00,NAM,10,24,63,2,6,8,265a21e3e3f81e53,63 CONUS..2 Mexican..6 Caribbean..and 8 Pacific stations available for ingest,265a21e3e3f81e53
+2026-01-19T03:15:00Z,2026-01-19,00,GFS,10,24,63,2,7,8,f716d5d891712cd7,63 CONUS..2 Mexican..7 Caribbean..and 8 Pacific stations available for ingest,f716d5d891712cd7
+2026-01-20T01:48:00Z,2026-01-20,00,NAM,10,26,60,1,7,9,12f8c9f486f5b064,60 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,12f8c9f486f5b064
+2026-01-20T03:16:00Z,2026-01-20,00,GFS,10,26,62,1,7,9,72ba8e6a4e2938c2,62 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,72ba8e6a4e2938c2
+2026-01-20T13:45:00Z,2026-01-20,12,NAM,9,25,51,13,7,9,0b3c7a5aa3c4018d,51 CONUS..13 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,0b3c7a5aa3c4018d
+2026-01-20T15:30:00Z,2026-01-20,12,GFS,10,25,52,13,8,9,f1904e2e464ec40d,52 CONUS..13 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,f1904e2e464ec40d
+2026-01-21T01:32:00Z,2026-01-21,00,NAM,10,26,64,2,7,9,5d882f342cd55273,64 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,5d882f342cd55273
+2026-01-21T03:21:00Z,2026-01-21,00,GFS,10,26,65,2,7,9,6d54b2fbd28d619f,65 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6d54b2fbd28d619f
+2026-01-22T01:35:00Z,2026-01-22,00,NAM,9,26,63,2,7,9,07370579ea6d9457,63 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,07370579ea6d9457
+2026-01-22T03:13:00Z,2026-01-22,00,GFS,9,26,63,2,7,9,743a7a358ee64814,63 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,743a7a358ee64814
+2026-01-22T13:37:00Z,2026-01-22,12,NCEP,10,25,49,12,8,7,bbbaa948259ac57d,49 CONUS..12 Mexican 8 Caribbean..and 7 Pacific stations available for ingest,bbbaa948259ac57d
+2026-01-23T13:30:00Z,2026-01-23,12,NAM,11,26,50,14,8,9,e53103d78c378d18,50 CONUS...14 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,e53103d78c378d18
+2026-01-25T01:35:00Z,2026-01-25,00,NAM,10,25,63,1,5,9,138fa680df16f3ad,63 CONUS...1 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,138fa680df16f3ad
+2026-01-25T03:50:00Z,2026-01-25,00,GFS,10,25,63,1,6,9,c2ea02a5c88a5498,63 CONUS...1 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,c2ea02a5c88a5498
+2026-01-26T01:35:00Z,2026-01-26,00,NAM,10,23,63,1,6,9,78a50f60c6c67d7d,63 CONUS...1 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,78a50f60c6c67d7d
+2026-01-26T15:30:00Z,2026-01-26,12,NAM,11,24,50,14,8,9,e21ae6dbd2b289fb,50 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,e21ae6dbd2b289fb
+2026-01-27T01:45:00Z,2026-01-27,00,NAM,8,25,64,1,7,9,1b22c109f61e2c67,64 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,1b22c109f61e2c67
+2026-01-27T03:15:00Z,2026-01-27,00,GFS,8,25,64,1,7,9,638962a1c1c12578,64 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,638962a1c1c12578
+2026-01-27T14:07:00Z,2026-01-27,12,NAM,10,26,49,12,7,9,ea4164006aa41ddd,49 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,ea4164006aa41ddd
+2026-01-27T15:36:00Z,2026-01-27,12,GFS,10,26,49,12,7,9,bf057ce773e3b3d6,49 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,bf057ce773e3b3d6
+2026-01-28T01:37:00Z,2026-01-28,00,NAM,9,25,61,2,7,9,251b8e92c8c8f19b,61 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,251b8e92c8c8f19b
+2026-01-28T03:14:00Z,2026-01-28,00,GFS,9,25,62,2,7,9,47ab635b7d2ffa7c,62 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,47ab635b7d2ffa7c
+2026-01-28T13:42:00Z,2026-01-28,12,NAM,11,26,49,12,8,8,e59f9ccc2ad91eb9,49 CONUS...12 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,e59f9ccc2ad91eb9
+2026-01-28T15:26:00Z,2026-01-28,12,GFS,11,26,49,12,8,8,50b48d351d3f7f85,49 CONUS...12 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,50b48d351d3f7f85
+2026-01-29T02:24:00Z,2026-01-29,00,NAM,10,25,61,2,7,9,8f50c8ba4c14702e,61 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,8f50c8ba4c14702e
+2026-01-29T03:13:00Z,2026-01-29,00,GFS,10,25,61,2,7,9,5d9d8fdad6ea53cc,61 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,5d9d8fdad6ea53cc
+2026-01-30T01:38:00Z,2026-01-30,00,NAM,9,26,62,2,7,9,774638923dffc6f5,62 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,774638923dffc6f5
+2026-01-30T03:11:00Z,2026-01-30,00,GFS,9,26,62,2,7,9,304c26daccd30280,62 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,304c26daccd30280
+2026-01-31T01:41:00Z,2026-01-31,00,NAM,10,24,61,1,7,9,b2d96e850f143be7,61 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,b2d96e850f143be7
+2026-01-31T03:10:00Z,2026-01-31,00,GFS,10,24,62,1,7,9,5872f12c6b9563ba,62 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,5872f12c6b9563ba
+2026-02-02T13:42:00Z,2026-02-02,12,NAM,9,24,48,14,9,9,f9d38b29f74b5afa,48 CONUS..14 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,f9d38b29f74b5afa
+2026-02-02T15:23:00Z,2026-02-02,12,GFS,9,24,48,14,9,9,6440de32b1f7fdee,48 CONUS..14 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,6440de32b1f7fdee
+2026-02-03T01:31:00Z,2026-02-03,00,NCEP,8,23,57,1,5,9,182842d37c8bdff7,57 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,182842d37c8bdff7
+2026-02-03T13:40:00Z,2026-02-03,12,NAM,8,24,48,14,9,9,afec11f85e037257,48 CONUS..14 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,afec11f85e037257
+2026-02-03T15:10:00Z,2026-02-03,12,GFS,8,24,48,14,9,9,b39fbad6b2695d37,48 CONUS..14 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,b39fbad6b2695d37
+2026-02-04T01:26:00Z,2026-02-04,00,NAM,8,25,63,2,5,9,d59c87ea24f858d9,63 CONUS..2 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,d59c87ea24f858d9
+2026-02-04T13:43:00Z,2026-02-04,12,NAM,9,26,48,12,8,9,02c7cdd7085d4254,48 CONUS..12 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,02c7cdd7085d4254
+2026-02-04T15:28:00Z,2026-02-04,12,GFS,9,26,48,12,8,9,3693f2e4bc683613,48 CONUS..12 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,3693f2e4bc683613
+2026-02-05T01:21:00Z,2026-02-05,00,NCEP,8,24,58,2,6,9,4814cbdbbf2a2a43,58 CONUS..2 Mexican 6 Caribbean..and 9 Pacific stations available for ingest,4814cbdbbf2a2a43
+2026-02-05T03:25:00Z,2026-02-05,00,GFS,8,24,61,2,7,9,d79e0bb3f7d571d7,61 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d79e0bb3f7d571d7
+2026-02-05T13:45:00Z,2026-02-05,12,NAM,10,24,49,14,7,9,a7fae1bc438d35c9,49 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,a7fae1bc438d35c9
+2026-02-05T15:10:00Z,2026-02-05,12,GFS,10,24,49,14,8,9,411a11e0c86d511c,49 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,411a11e0c86d511c
+2026-02-06T01:37:00Z,2026-02-06,00,NAM,9,26,61,2,7,9,ec6c520b1e196981,61 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,ec6c520b1e196981
+2026-02-06T03:21:00Z,2026-02-06,00,GFS,9,26,62,2,7,9,a5a3727f2a6a2b6d,62 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,a5a3727f2a6a2b6d
+2026-02-06T13:36:00Z,2026-02-06,12,NAM,10,26,46,13,7,9,f1e1b5b8073157cf,46 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,f1e1b5b8073157cf
+2026-02-06T15:17:00Z,2026-02-06,12,GFS,10,26,46,13,8,9,92e165761bcb53e1,46 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,92e165761bcb53e1
+2026-02-07T01:39:00Z,2026-02-07,00,NAM,9,26,59,2,7,9,a7cae4a302e51282,59 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,a7cae4a302e51282
+2026-02-07T03:11:00Z,2026-02-07,00,GFS,9,26,59,2,7,9,8ed2783edf1c88fd,59 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,8ed2783edf1c88fd
+2026-02-07T13:38:00Z,2026-02-07,12,NAM,11,24,46,14,7,8,5382e6f10bf8e5df,46 CONUS...14 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,5382e6f10bf8e5df
+2026-02-07T15:06:00Z,2026-02-07,12,GFS,11,24,47,14,8,8,5df5091fd95ed017,47 CONUS...14 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,5df5091fd95ed017
+2026-02-08T03:32:00Z,2026-02-08,00,NCEP,13,26,59,1,7,9,d9f3d0c4e146c4f7,59 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,d9f3d0c4e146c4f7
+2026-02-08T13:52:00Z,2026-02-08,12,NAM,11,26,44,13,8,9,53cb3c4cc7cea17c,44 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,53cb3c4cc7cea17c
+2026-02-08T15:42:00Z,2026-02-08,12,GFS,11,26,44,13,8,9,6cffd325b68593df,44 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,6cffd325b68593df
+2026-02-09T13:36:00Z,2026-02-09,12,NAM,10,26,47,14,7,9,00906f36a3610b3f,47 CONUS...14 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,00906f36a3610b3f
+2026-02-10T01:25:00Z,2026-02-10,00,NAM,8,25,61,1,5,9,c27cdb862bce2ec0,61 CONUS..1 Mexican 5 Caribbean..and 9 Pacific stations available for ingest,c27cdb862bce2ec0
+2026-02-10T13:44:00Z,2026-02-10,12,NAM,12,25,45,13,8,8,0e8562cd10e6a08a,45 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,0e8562cd10e6a08a
+2026-02-10T14:56:00Z,2026-02-10,12,GFS,12,25,45,13,8,9,8a198619be2524ac,45 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,8a198619be2524ac
+2026-02-11T13:39:00Z,2026-02-11,12,NAM,11,26,46,14,6,8,31771c6cff4ac864,46 CONUS...14 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,31771c6cff4ac864
+2026-02-12T03:05:00Z,2026-02-12,00,NCEP,9,25,60,2,7,9,7faa7d12ad150117,60 CONUS...2 Mexican...7 Caribbean..and 9 Pacific stations available for ingest,7faa7d12ad150117
+2026-02-12T13:42:00Z,2026-02-12,12,NAM,12,25,45,13,9,9,25ef647012ab3121,45 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,25ef647012ab3121
+2026-02-12T15:29:00Z,2026-02-12,12,GFS,12,25,45,13,9,9,13e6d58d70121559,45 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,13e6d58d70121559
+2026-02-13T01:39:00Z,2026-02-13,00,NAM,10,26,63,2,5,9,88976178413bf737,63 CONUS...2 Mexican...5 Caribbean...and 9 Pacific raobs available for ingest,88976178413bf737
+2026-02-13T03:26:00Z,2026-02-13,00,GFS,10,26,63,2,7,9,36f38a547f0e4526,63 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,36f38a547f0e4526
+2026-02-13T13:40:00Z,2026-02-13,12,NAM,11,26,47,13,9,9,f58edefd4e8c43a2,47 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,f58edefd4e8c43a2
+2026-02-13T15:18:00Z,2026-02-13,12,GFS,11,26,48,13,9,9,9352402396985c96,48 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,9352402396985c96
+2026-02-14T01:33:00Z,2026-02-14,00,NAM,9,25,64,2,7,9,5388d6922c405a5d,64 CONUS...2 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,5388d6922c405a5d
+2026-02-14T02:59:00Z,2026-02-14,00,GFS,9,25,64,2,7,9,700d898649d00f76,64 CONUS...2 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,700d898649d00f76
+2026-02-14T13:37:00Z,2026-02-14,12,NAM,12,26,47,14,8,9,315064a35245ea41,47 CONUS..14 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,315064a35245ea41
+2026-02-14T15:12:00Z,2026-02-14,12,GFS,12,26,48,14,8,9,cf1431d50ca56bb8,48 CONUS..14 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,cf1431d50ca56bb8
+2026-02-15T01:50:00Z,2026-02-15,00,NAM,10,26,59,1,6,9,4a62ffbe63614b5d,59 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,4a62ffbe63614b5d
+2026-02-15T03:14:00Z,2026-02-15,00,GFS,10,26,61,1,7,9,851adf39603ceba9,61 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,851adf39603ceba9
+2026-02-15T13:47:00Z,2026-02-15,12,NAM,12,26,49,14,6,9,d5eb032f551ed618,49 CONUS..14 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,d5eb032f551ed618
+2026-02-15T15:08:00Z,2026-02-15,12,GFS,12,26,49,14,6,9,859cd67d359d3eef,49 CONUS..14 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,859cd67d359d3eef
+2026-02-16T01:39:00Z,2026-02-16,00,NAM,10,25,63,1,6,9,04dedc101493aae6,63 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,04dedc101493aae6
+2026-02-16T03:27:00Z,2026-02-16,00,GFS,10,25,64,1,7,9,2bde0b9228c157fe,64 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2bde0b9228c157fe
+2026-02-19T03:32:00Z,2026-02-19,00,GFS,08,26,59,02,07,09,353384f72e0a8748,59 CONUS...02 Mexican...07 Caribbean...and 09 Pacific stations available for ingest,353384f72e0a8748
+2026-02-19T14:07:00Z,2026-02-19,12,NAM,12,26,49,14,9,9,7f50cf97ef21c408,49 CONUS...14 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,7f50cf97ef21c408
+2026-02-20T02:56:00Z,2026-02-20,00,GFS,9,26,62,2,6,9,a19ecec969b26775,62 CONUS..2 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,a19ecec969b26775
+2026-02-20T14:00:00Z,2026-02-20,12,NAM,11,26,46,14,7,9,9a25d2b8f26b9de1,46 CONUS...14 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,9a25d2b8f26b9de1
+2026-02-21T03:00:00Z,2026-02-21,00,GFS,9,26,61,2,8,9,caf0d68037b093e6,61 CONUS..2 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,caf0d68037b093e6
+2026-02-21T13:34:00Z,2026-02-21,12,NAM,12,26,47,14,9,9,73fe56ae2b98b2da,47 CONUS...14 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,73fe56ae2b98b2da
+2026-02-22T01:46:00Z,2026-02-22,00,NAM,8,26,61,1,8,9,8c3fae6181c4e9fe,61 CONUS..1 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,8c3fae6181c4e9fe
+2026-02-22T03:23:00Z,2026-02-22,00,GFS,8,26,62,1,8,9,258a559e8808f301,62 CONUS..1 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,258a559e8808f301
+2026-02-23T01:40:00Z,2026-02-23,00,NAM,10,25,61,1,9,9,31efc647b8d1abd8,61 CONUS..1 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,31efc647b8d1abd8
+2026-02-23T03:19:00Z,2026-02-23,00,GFS,10,25,61,1,9,9,402bbb5476b5a54b,61 CONUS..1 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,402bbb5476b5a54b
+2026-02-23T14:17:00Z,2026-02-23,12,NAM,12,25,48,12,09,09,194dec188a14c41b,48 CONUS...12 Mexican...09 Caribbean...and 09 Pacific stations available for ingest,194dec188a14c41b
+2026-02-24T01:39:00Z,2026-02-24,00,NAM,10,24,63,1,8,8,072732aca339511c,63 CONUS...1 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,072732aca339511c
+2026-02-24T03:10:00Z,2026-02-24,00,GFS,10,24,63,1,8,8,a525c854e3eeabc9,63 CONUS...1 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,a525c854e3eeabc9
+2026-02-25T01:40:00Z,2026-02-25,00,NAM,10,26,60,1,8,9,c7e10a44816517ee,60 CONUS...1 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,c7e10a44816517ee
+2026-02-25T03:04:00Z,2026-02-25,00,GFS,10,26,60,1,8,9,9ded3a39b6efa0b7,60 CONUS...1 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,9ded3a39b6efa0b7
+2026-02-26T01:39:00Z,2026-02-26,00,NAM,8,25,58,,5,8,88f6fe5587dc6535,58 CONUS...5 Caribbean...and 8 Pacific stations available for ingest,88f6fe5587dc6535
+2026-02-26T03:20:00Z,2026-02-26,00,GFS,8,25,60,2,5,8,1652b52d1120abf5,60 CONUS...2 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,1652b52d1120abf5
+2026-02-28T01:25:00Z,2026-02-28,00,NAM,8,25,60,1,7,9,a4cecbdd2f531129,60 CONUS..1 Mexican 7 Caribbean..and 9 Pacific stations available for ingest,a4cecbdd2f531129
+2026-03-01T01:33:00Z,2026-03-01,00,NAM,9,25,61,1,6,9,0727a667349d6095,61 CONUS...1 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,0727a667349d6095
+2026-03-02T01:34:00Z,2026-03-02,00,NAM,9,23,60,1,5,9,adca1c883364979c,60 CONUS...1 Mexican....5 Caribbean...and 9 Pacific raobs available for ingest,adca1c883364979c
+2026-03-02T15:09:00Z,2026-03-02,12,GFS,10,23,47,13,9,9,4c203276848e95a3,47 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,4c203276848e95a3
+2026-03-03T01:49:00Z,2026-03-03,00,NAM,8,25,62,2,7,9,72ce69f99b5d348c,62 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,72ce69f99b5d348c
+2026-03-03T03:10:00Z,2026-03-03,00,GFS,8,25,62,2,7,9,e3cfa32970f6129f,62 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,e3cfa32970f6129f
+2026-03-03T13:43:00Z,2026-03-03,12,NAM,10,25,48,14,8,9,4e19723bc9bc10df,48 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,4e19723bc9bc10df
+2026-03-03T15:23:00Z,2026-03-03,12,GFS,10,25,49,14,9,9,bb37ff9e4fbb2516,49 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,bb37ff9e4fbb2516
+2026-03-04T01:43:00Z,2026-03-04,00,NAM,9,25,62,2,6,9,27ad318dc1f5b75d,"62 CONUS, 2 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",27ad318dc1f5b75d
+2026-03-04T03:17:00Z,2026-03-04,00,GFS,9,25,62,2,7,9,fe3c1695eab018c9,"62 CONUS, 2 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",fe3c1695eab018c9
+2026-03-04T13:35:00Z,2026-03-04,12,NAM,11,26,47,14,9,9,a174823023698e51,47 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,a174823023698e51
+2026-03-04T15:12:00Z,2026-03-04,12,GFS,11,26,47,14,9,9,50f0d9f9961a0b39,47 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,50f0d9f9961a0b39
+2026-03-06T01:38:00Z,2026-03-06,00,NAM,9,25,60,3,6,9,4021df049929b901,60 CONUS...3 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,4021df049929b901
+2026-03-06T03:05:00Z,2026-03-06,00,GFS,9,25,62,3,7,9,2a775e26335f7101,62 CONUS...3 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,2a775e26335f7101
+2026-03-08T03:09:00Z,2026-03-08,00,GFS,9,25,60,1,7,9,e152ab9e73edbc07,60 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,e152ab9e73edbc07
+2026-03-09T02:58:00Z,2026-03-09,00,GFS,9,24,57,1,7,9,5fd65129709ad4fd,57 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,5fd65129709ad4fd
+2026-03-09T13:29:00Z,2026-03-09,12,NCEP,11,25,44,13,8,9,6c0b6ae646acf74a,44 CONUS..13 Mexican 8 Caribbean..and 9 Pacific stations available for ingest,6c0b6ae646acf74a
+2026-03-10T01:35:00Z,2026-03-10,00,NAM,9,25,63,2,6,9,95031f154c878fac,63 CONUS...2 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,95031f154c878fac
+2026-03-10T03:15:00Z,2026-03-10,00,GFS,9,25,64,2,7,9,b6e2f9213499a445,64 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,b6e2f9213499a445
+2026-03-10T13:44:00Z,2026-03-10,12,NAM,11,25,42,14,8,9,3701725436d60543,"42 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",3701725436d60543
+2026-03-10T15:08:00Z,2026-03-10,12,GFS,11,25,43,14,9,9,cb9de957df1da379,"43 CONUS, 14 Mexican, 9 Caribbean, and 9 Pacific stations available for ingest",cb9de957df1da379
+2026-03-11T01:32:00Z,2026-03-11,00,NAM,9,24,62,2,6,8,9ef2b57372307409,62 CONUS...2 Mexican...6 Caribbean...and 8 Pacific raobs available for ingest,9ef2b57372307409
+2026-03-11T02:55:00Z,2026-03-11,00,GFS,9,24,62,2,7,9,458c48dfa14fda5a,62 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,458c48dfa14fda5a
+2026-03-11T13:52:00Z,2026-03-11,12,NAM,10,24,45,14,9,8,52d5012c58a99ab2,"45 CONUS, 14 Mexican, 9 Caribbean, and 8 Pacific stations available for ingest",52d5012c58a99ab2
+2026-03-11T15:31:00Z,2026-03-11,12,GFS,10,24,45,14,9,9,09e14a563eba7f4d,"45 CONUS, 14 Mexican, 9 Caribbean, and 9 Pacific stations available for ingest",09e14a563eba7f4d
+2026-03-12T01:37:00Z,2026-03-12,00,NAM,9,25,62,2,6,9,17a744ed5085f33f,62 CONUS...2 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,17a744ed5085f33f
+2026-03-12T02:57:00Z,2026-03-12,00,GFS,9,25,63,2,7,9,ed6d9c5205aa1e72,63 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,ed6d9c5205aa1e72
+2026-03-12T15:11:00Z,2026-03-12,12,NAM,11,25,43,14,9,9,bc4c719e385970c3,43 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,bc4c719e385970c3
+2026-03-13T01:52:00Z,2026-03-13,00,NAM,10,25,61,2,7,8,5e1ba522777ce6d0,"61 CONUS, 2 Mexican, 7 Caribbean, and 8 Pacific stations available for ingest",5e1ba522777ce6d0
+2026-03-13T03:00:00Z,2026-03-13,00,GFS,10,25,63,2,7,8,fd363eb3d0994e23,"63 CONUS, 2 Mexican, 7 Caribbean, and 8 Pacific stations available for ingest",fd363eb3d0994e23
+2026-03-13T14:00:00Z,2026-03-13,12,NAM,11,26,44,11,9,9,b5049004d4c37bcc,44 CONUS...11 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,b5049004d4c37bcc
+2026-03-13T15:18:00Z,2026-03-13,12,GFS,11,26,44,11,9,9,ce34073cfeaf39f6,44 CONUS...11 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,ce34073cfeaf39f6
+2026-03-14T01:39:00Z,2026-03-14,00,NAM,9,25,58,1,6,9,f2412a2a6e493019,"58 CONUS, 1 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",f2412a2a6e493019
+2026-03-14T03:05:00Z,2026-03-14,00,GFS,9,25,59,1,6,9,dc7678566e60d311,"59 CONUS, 1 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",dc7678566e60d311
+2026-03-14T13:36:00Z,2026-03-14,12,NAM,12,25,43,12,8,9,1ec09eabd7fbe75a,43 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,1ec09eabd7fbe75a
+2026-03-14T15:44:00Z,2026-03-14,12,GFS,12,25,43,12,8,9,33785bfcf78c2c22,43 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,33785bfcf78c2c22
+2026-03-15T03:05:00Z,2026-03-15,00,GFS,9,26,57,1,6,9,ce86cd5dcd8e35ba,57 CONUS..1 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,ce86cd5dcd8e35ba
+2026-03-15T13:35:00Z,2026-03-15,12,NAM,12,26,43,13,8,9,83675d712f680e83,43 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,83675d712f680e83
+2026-03-15T15:24:00Z,2026-03-15,12,GFS,12,26,43,13,8,9,ee287fdcc5540f4c,43 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,ee287fdcc5540f4c
+2026-03-16T13:39:00Z,2026-03-16,12,NCEP,12,27,43,13,8,9,e73eb2352ffd0121,43 CONUS...13 Mexican 8 Caribbean and 9 Pacific stations available for ingest,e73eb2352ffd0121
+2026-03-17T01:35:00Z,2026-03-17,00,NAM,9,26,58,1,6,9,979be82523140a0b,58 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,979be82523140a0b
+2026-03-17T13:28:00Z,2026-03-17,12,NCEP,11,26,47,12,8,9,47da0522c5dbd73f,47 CONUS...12 Mexican 8 Caribbean and 9 Pacific stations available for ingest,47da0522c5dbd73f
+2026-03-18T01:52:00Z,2026-03-18,00,NAM,10,25,61,1,7,9,399b9bad306efe16,61 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,399b9bad306efe16
+2026-03-18T13:45:00Z,2026-03-18,12,NAM,11,23,45,13,9,8,89717bda43d4f43a,45 CONUS...13 Mexican...9 Caribbean...and 8 Pacific raobs available for ingest,89717bda43d4f43a
+2026-03-19T01:33:00Z,2026-03-19,00,NAM,9,26,59,2,8,9,eabf5276cb28a49f,59 CONUS...2 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,eabf5276cb28a49f
+2026-03-19T13:38:00Z,2026-03-19,12,NAM,10,26,46,12,8,9,15792d5d7e82b417,"46 CONUS, 12 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",15792d5d7e82b417
+2026-03-19T15:15:00Z,2026-03-19,12,GFS,10,26,47,12,9,9,4cae3b990e857f55,"47 CONUS, 12 Mexican, 9 Caribbean, and 9 Pacific stations available for ingest",4cae3b990e857f55
+2026-03-20T01:41:00Z,2026-03-20,00,NAM,9,26,61,2,7,9,6d46dbc092c7d077,61 CONUS...2 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,6d46dbc092c7d077
+2026-03-20T13:41:00Z,2026-03-20,12,NAM,9,26,44,12,7,9,925bd15e31af787d,"44 CONUS, 12 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",925bd15e31af787d
+2026-03-20T15:13:00Z,2026-03-20,12,GFS,9,26,44,12,9,9,569b58b9992ec6ec,"44 CONUS, 12 Mexican, 9 Caribbean, and 9 Pacific stations available for ingest",569b58b9992ec6ec
+2026-03-21T01:32:00Z,2026-03-21,00,NAM,9,25,61,1,7,9,6738c2a837cc34e4,61 CONUS...1 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,6738c2a837cc34e4
+2026-03-21T03:06:00Z,2026-03-21,00,GFS,9,25,62,1,7,9,35068bc67519aae8,62 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,35068bc67519aae8
+2026-03-21T13:52:00Z,2026-03-21,12,NAM,7,25,43,13,7,9,7f6932779ad79c15,"43 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",7f6932779ad79c15
+2026-03-21T15:11:00Z,2026-03-21,12,GFS,7,25,43,13,7,9,543293bdc4a664cf,"43 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",543293bdc4a664cf
+2026-03-22T13:40:00Z,2026-03-22,12,NAM,8,24,44,13,8,9,da2785844efcad21,"44 CONUS, 13 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",da2785844efcad21
+2026-03-22T15:19:00Z,2026-03-22,12,GFS,8,24,44,13,8,9,bb983ff493d79485,"44 CONUS, 13 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",bb983ff493d79485
+2026-03-23T03:13:00Z,2026-03-23,00,GFS,6,25,61,1,6,9,1144bcf8d57d6b1d,61 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,1144bcf8d57d6b1d
+2026-03-24T15:04:00Z,2026-03-24,12,GFS,10,25,44,13,9,9,665b2d4c057d439f,44 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,665b2d4c057d439f
+2026-03-25T15:04:00Z,2026-03-25,12,GFS,10,26,46,13,9,9,e03fc2f5ad497683,46 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,e03fc2f5ad497683
+2026-03-26T03:32:00Z,2026-03-26,00,GFS,8,26,63,2,7,9,3f54acc356f1496b,"63 CONUS, 2 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",3f54acc356f1496b
+2026-03-26T13:44:00Z,2026-03-26,12,NAM,11,24,45,12,8,9,35853fdfa48af415,45 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,35853fdfa48af415
+2026-03-27T02:57:00Z,2026-03-27,00,GFS,6,26,60,2,7,9,b120a2b55b1cbafd,60 CONUS..2 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,b120a2b55b1cbafd
+2026-03-27T13:42:00Z,2026-03-27,12,NAM,11,26,42,13,6,9,a2d5b8475a8820f3,42 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,a2d5b8475a8820f3
+2026-03-28T01:24:00Z,2026-03-28,00,NAM,8,26,60,1,6,9,04914b3ed2f11706,60 CONUS...1 Mexican... 6 Caribbean and 9 Pacific stations available for ingest,04914b3ed2f11706
+2026-03-28T03:11:00Z,2026-03-28,00,GFS,8,26,61,1,7,9,18bde919c3ba1d4d,"61 CONUS, 1 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",18bde919c3ba1d4d
+2026-03-28T13:49:00Z,2026-03-28,12,NAM,10,25,44,13,8,8,d51663851711e35e,44 CONUS...13 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,d51663851711e35e
+2026-03-29T01:40:00Z,2026-03-29,00,NAM,8,26,59,1,5,9,a78ad81849b343b6,"59 CONUS, 1 Mexican, 5 Caribbean, and 9 Pacific stations available for ingest",a78ad81849b343b6
+2026-03-29T03:15:00Z,2026-03-29,00,GFS,8,26,59,1,7,9,490984d4e34c8c8e,"59 CONUS, 1 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",490984d4e34c8c8e
+2026-03-29T13:52:00Z,2026-03-29,12,NAM,10,26,43,13,8,9,fa3b0b8cf0f3fc8d,43 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,fa3b0b8cf0f3fc8d
+2026-03-30T01:34:00Z,2026-03-30,00,NAM,8,26,60,1,5,9,1b2ad59084399a77,"60 CONUS, 1 Mexican, 5 Caribbean, and 9 Pacific stations available for ingest",1b2ad59084399a77
+2026-03-30T03:08:00Z,2026-03-30,00,GFS,8,26,60,1,7,9,a66b8f3125226687,"60 CONUS, 1 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",a66b8f3125226687
+2026-03-31T01:55:00Z,2026-03-31,00,NAM,8,26,60,1,6,7,4a4dca7ac9b48f7c,60 CONUS...1 Mexican...6 Caribbean...and 7 Pacific stations available for ingest,4a4dca7ac9b48f7c
+2026-03-31T03:06:00Z,2026-03-31,00,GFS,8,26,60,1,7,9,21a36e2d11afd756,60 CONUS...1 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,21a36e2d11afd756
+2026-04-01T01:34:00Z,2026-04-01,00,NAM,7,25,59,2,6,9,3a8e968565585d4d,59 CONUS...2 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,3a8e968565585d4d
+2026-04-01T03:05:00Z,2026-04-01,00,GFS,8,25,60,2,7,9,7bbb5a54b39ab7a2,60 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,7bbb5a54b39ab7a2
+2026-04-02T03:01:00Z,2026-04-02,00,NAM,7,26,58,1,6,9,098ff9050397dd17,58 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,098ff9050397dd17
+2026-04-02T13:33:00Z,2026-04-02,12,NCEP,5,26,43,11,9,9,51a61c7a83b0f7d4,43 CONUS...11 Mexican... 9 Caribbean and 9 Pacific stations available for ingest,51a61c7a83b0f7d4
+2026-04-03T01:44:00Z,2026-04-03,00,NAM,6,25,60,1,6,9,977b864bbf39f4d6,60 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,977b864bbf39f4d6
+2026-04-03T03:02:00Z,2026-04-03,00,GFS,8,25,60,1,7,9,0afbc8c03619aa72,60 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,0afbc8c03619aa72
+2026-04-03T13:27:00Z,2026-04-03,12,NCEP,7,25,42,12,8,9,7433bcbe103483f2,42 CONUS...12 Mexican... 8 Caribbean and 9 Pacific stations available for ingest,7433bcbe103483f2
+2026-04-04T03:07:00Z,2026-04-04,00,GFS,8,25,59,1,7,9,cb397502eb03aecf,59 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,cb397502eb03aecf
+2026-04-04T13:26:00Z,2026-04-04,12,NCEP,9,23,41,11,7,9,2179cd944f7a2155,41 CONUS...11 Mexican... 7 Caribbean and 9 Pacific stations available for ingest,2179cd944f7a2155
+2026-04-05T03:14:00Z,2026-04-05,00,GFS,7,24,59,1,7,9,9ee5ffcf011a6baf,59 CONUS..1 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,9ee5ffcf011a6baf
+2026-04-06T01:38:00Z,2026-04-06,00,NAM,7,23,57,1,6,9,ca4039d60bab763d,57 CONUS...1 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,ca4039d60bab763d
+2026-04-06T03:07:00Z,2026-04-06,00,GFS,8,23,59,1,7,9,88d0b00c1a704e4a,59 CONUS...1 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,88d0b00c1a704e4a
+2026-04-06T13:34:00Z,2026-04-06,12,NAM,9,23,45,12,7,9,6ed6bdb78882a381,45 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6ed6bdb78882a381
+2026-04-06T15:06:00Z,2026-04-06,12,GFS,10,23,45,12,9,9,746d4873f5f5160c,45 CONUS...12 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,746d4873f5f5160c
+2026-04-07T13:36:00Z,2026-04-07,12,NAM,8,22,43,13,8,9,d98ffd175e8bf990,43 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,d98ffd175e8bf990
+2026-04-07T15:15:00Z,2026-04-07,12,GFS,9,22,44,13,9,9,60f23d52229a1996,44 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,60f23d52229a1996
+2026-04-08T01:33:00Z,2026-04-08,00,NAM,8,25,59,2,7,10,f920b6813c13893c,"59 CONUS, 2 Mexican, 7 Caribbean, and 10 Pacific stations available for ingest",f920b6813c13893c
+2026-04-08T15:06:00Z,2026-04-08,12,GFS,11,25,45,12,9,9,5e0bd1f1dd78631f,45 CONUS..12 Mexican.. 9 Caribbean..and 9 Pacific stations available for ingest,5e0bd1f1dd78631f
+2026-04-09T15:04:00Z,2026-04-09,12,GFS,11,24,43,13,9,9,194d248cbaed7900,43 CONUS..13 Mexican..9 Caribbean..and 9 Pacific stations available for ingest,194d248cbaed7900
+2026-04-10T01:53:00Z,2026-04-10,00,NAM,8,25,58,2,7,9,697213a62c6ca66e,58 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,697213a62c6ca66e
+2026-04-10T03:13:00Z,2026-04-10,00,GFS,8,25,58,2,7,9,890c6dfcb8006fec,58 CONUS...2 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,890c6dfcb8006fec
+2026-04-10T13:32:00Z,2026-04-10,12,NCEP,11,24,44,12,8,8,f8fa2b75e38e808c,44 CONUS...12 Mexican... 8 Caribbean and 8 Pacific stations available for ingest,f8fa2b75e38e808c
+2026-04-11T01:35:00Z,2026-04-11,00,NAM,8,24,60,1,6,9,01e973d31ef54385,60 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,01e973d31ef54385
+2026-04-11T03:05:00Z,2026-04-11,00,GFS,8,24,60,1,6,9,5a81707dca1efd25,60 CONUS...1 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,5a81707dca1efd25
+2026-04-11T13:30:00Z,2026-04-11,12,NCEP,11,25,41,12,7,9,364a3f3e523efde9,41 CONUS...12 Mexican... 7 Caribbean and 9 Pacific stations available for ingest,364a3f3e523efde9
+2026-04-12T03:13:00Z,2026-04-12,00,NCEP,8,25,58,1,7,9,c763f699f8a771d4,58 CONUS...1 Mexican...7 Caribbean and 9 Pacific stations available for ingest,c763f699f8a771d4
+2026-04-12T13:27:00Z,2026-04-12,12,NCEP,11,25,41,11,7,9,4215d0a950de02f7,41 CONUS...11 Mexican... 7 Caribbean and 9 Pacific stations available for ingest,4215d0a950de02f7
+2026-04-13T03:26:00Z,2026-04-13,00,NAM,7,24,57,1,7,9,f697fc231a4942c2,57 CONUS...1 Mexican...7 Caribbean and 9 Pacific stations available for ingest,f697fc231a4942c2
+2026-04-13T13:35:00Z,2026-04-13,12,NAM,11,24,41,13,9,9,a0fcc076843d449f,41 CONUS...13 Mexican...9 Caribbean and 9 Pacific stations available for ingest,a0fcc076843d449f
+2026-04-13T15:29:00Z,2026-04-13,12,GFS,11,24,45,13,9,9,b5b696394b380618,45 CONUS...13 Mexican...9 Caribbean and 9 Pacific stations available for ingest,b5b696394b380618
+2026-04-14T13:31:00Z,2026-04-14,12,NAM,11,22,44,12,8,8,a9cb5cd2fb05e568,44 CONUS...12 Mexican...8 Caribbean and 8 Pacific stations available for ingest,a9cb5cd2fb05e568
+2026-04-14T15:19:00Z,2026-04-14,12,GFS,11,22,46,12,9,8,d4826f616fd642c1,46 CONUS...12 Mexican...9 Caribbean and 8 Pacific stations available for ingest,d4826f616fd642c1
+2026-04-15T03:10:00Z,2026-04-15,00,GFS,8,24,59,9,7,7,63486b67adf7b042,59 CONUS..9 Mexican..7 Caribbean..and 7 Pacific stations available for ingest,63486b67adf7b042
+2026-04-15T13:55:00Z,2026-04-15,12,NAM,11,23,45,13,6,9,a6fef15c08c60dbb,45 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,a6fef15c08c60dbb
+2026-04-15T15:07:00Z,2026-04-15,12,GFS,11,23,46,13,9,9,380b9000ada39873,46 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,380b9000ada39873
+2026-04-16T02:58:00Z,2026-04-16,00,GFS,8,25,59,13,6,9,5ca6019903126f23,59 CONUS..13 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,5ca6019903126f23
+2026-04-16T13:46:00Z,2026-04-16,12,NAM,11,26,46,13,7,9,bae6e7b13abbc211,46 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,bae6e7b13abbc211
+2026-04-16T15:13:00Z,2026-04-16,12,GFS,11,26,47,13,8,9,c58747a30c8c3c46,47 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,c58747a30c8c3c46
+2026-04-17T03:17:00Z,2026-04-17,00,GFS,8,25,59,12,6,9,79112699f7c309d9,59 CONUS..12 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,79112699f7c309d9
+2026-04-17T13:46:00Z,2026-04-17,12,NAM,10,24,39,12,6,9,78782c84c866d054,39 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,78782c84c866d054
+2026-04-17T14:59:00Z,2026-04-17,12,GFS,10,24,41,12,8,9,b559e2129d28b00e,41 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,b559e2129d28b00e
+2026-04-18T01:38:00Z,2026-04-18,00,NAM,8,25,59,11,6,9,bbfaf5af4ffedc7a,59 CONUS...11 Mexican...6 Caribbean and 9 Pacific stations available for ingest,bbfaf5af4ffedc7a
+2026-04-18T03:11:00Z,2026-04-18,00,GFS,8,25,59,11,7,9,2e0bc8f7d6712f25,59 CONUS..11 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,2e0bc8f7d6712f25
+2026-04-18T13:40:00Z,2026-04-18,12,NAM,10,25,40,13,8,9,cacd2a0642ff390f,40 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,cacd2a0642ff390f
+2026-04-18T15:05:00Z,2026-04-18,12,GFS,10,25,41,13,8,9,009c222be7a31fcd,41 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,009c222be7a31fcd
+2026-04-19T13:35:00Z,2026-04-19,12,NAM,9,25,40,14,7,9,b33ec11767b9e4d6,"40 CONUS, 14 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",b33ec11767b9e4d6
+2026-04-19T15:12:00Z,2026-04-19,12,GFS,9,25,40,14,7,9,c353d24ce422b256,"40 CONUS, 14 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",c353d24ce422b256
+2026-04-20T13:27:00Z,2026-04-20,12,NCEP,11,25,41,12,8,9,f96ca9239a232280,41 CONUS...12 Mexican...8 Caribbean and 9 Pacific stations available for ingest,f96ca9239a232280
+2026-04-21T13:27:00Z,2026-04-21,12,NCEP,10,25,41,14,8,9,c7d9946c50faa1a7,41 CONUS...14 Mexican...8 Caribbean and 9 Pacific stations available for ingest,c7d9946c50faa1a7
+2026-04-22T03:15:00Z,2026-04-22,00,GFS,7,,60,15,7,9,a9f49bdb21e5d35c,60 CONUS..15 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,a9f49bdb21e5d35c
+2026-04-22T13:30:00Z,2026-04-22,12,NCEP,10,26,40,13,9,9,7ba22c1681fb6875,40 CONUS...13 Mexican...9 Caribbean and 9 Pacific stations available for ingest,7ba22c1681fb6875
+2026-04-23T03:05:00Z,2026-04-23,00,GFS,8,26,61,15,6,9,f5b4961741ee745b,61 CONUS..15 Mexican..6 Caribbean..and 9 Pacific stations available for ingest,f5b4961741ee745b
+2026-04-23T13:33:00Z,2026-04-23,12,NAM,11,25,41,14,9,9,cbbca87e326b6b05,"41 CONUS, 14 Mexican, 9 Caribbean, and 9 Pacific stations available for ingest",cbbca87e326b6b05
+2026-04-23T15:19:00Z,2026-04-23,12,GFS,11,25,42,14,10,9,2937a0e8c4e37f61,"42 CONUS, 14 Mexican, 10 Caribbean, and 9 Pacific stations available for ingest",2937a0e8c4e37f61
+2026-04-24T01:22:00Z,2026-04-24,00,NCEP,7,26,56,15,6,7,048f4783036b3084,56 CONUS...15 Mexican...6 Caribbean and 7 Pacific stations available for ingest,048f4783036b3084
+2026-04-24T03:22:00Z,2026-04-24,00,GFS,7,26,56,15,7,8,c57b35ca928fe193,56 CONUS...15 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,c57b35ca928fe193
+2026-04-24T13:43:00Z,2026-04-24,12,NAM,10,25,41,14,8,9,a40c28c8e7ecc2fc,"41 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",a40c28c8e7ecc2fc
+2026-04-24T15:13:00Z,2026-04-24,12,GFS,10,26,42,14,10,9,c528a5241b7b278b,"42 CONUS, 14 Mexican, 10 Caribbean, and 9 Pacific stations available for ingest",c528a5241b7b278b
+2026-04-25T01:23:00Z,2026-04-25,00,NCEP,7,26,59,15,6,10,854e95d0f3294739,59 CONUS...15 Mexican...6 Caribbean and 10 Pacific stations available for ingest,854e95d0f3294739
+2026-04-25T03:04:00Z,2026-04-25,00,GFS,7,26,59,15,6,9,5690f2050381b435,59 CONUS...15 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,5690f2050381b435
+2026-04-25T13:36:00Z,2026-04-25,12,NAM,9,26,40,13,7,9,7dac614076a93ac6,"40 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",7dac614076a93ac6
+2026-04-25T15:07:00Z,2026-04-25,12,GFS,9,26,40,13,7,9,cd5ef780c17ae522,"40 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",cd5ef780c17ae522
+2026-04-26T01:30:00Z,2026-04-26,00,NAM,7,25,58,14,6,9,215631a06eab4aff,58 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,215631a06eab4aff
+2026-04-26T03:02:00Z,2026-04-26,00,GFS,7,26,58,14,6,9,f66c05a4779915b2,58 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,f66c05a4779915b2
+2026-04-26T13:33:00Z,2026-04-26,12,NAM,9,26,41,14,7,9,98dcf69385d90f76,"41 CONUS, 14 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",98dcf69385d90f76
+2026-04-26T15:44:00Z,2026-04-26,12,GFS,9,26,42,14,8,9,b180fc0a787be17a,"42 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",b180fc0a787be17a
+2026-04-27T01:37:00Z,2026-04-27,00,NAM,7,26,59,12,5,9,2a3609dacaa6c20b,59 CONUS...12 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,2a3609dacaa6c20b
+2026-04-27T03:17:00Z,2026-04-27,00,GFS,7,26,59,12,6,9,6ecfa8fae5fec638,59 CONUS...12 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,6ecfa8fae5fec638
+2026-04-27T13:24:00Z,2026-04-27,12,NCEP,9,25,41,13,5,9,89e76fd5225e3706,41 CONUS...13 Mexican...5 Caribbean and 9 Pacific stations available for ingest,89e76fd5225e3706
+2026-04-29T01:22:00Z,2026-04-29,00,NCEP,6,25,58,13,7,9,777e22a9dfa7996d,58 CONUS...13 Mexican...7 Caribbean and 9 Pacific stations available for ingest,777e22a9dfa7996d
+2026-04-29T03:04:00Z,2026-04-29,00,GFS,6,25,59,13,7,9,eeaa51d460dbfa18,59 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,eeaa51d460dbfa18
+2026-04-30T01:33:00Z,2026-04-30,00,NCEP,7,26,58,14,6,10,cb33946a5a201f79,58 CONUS...14 Mexican...6 Caribbean and 10 Pacific stations available for ingest,cb33946a5a201f79
+2026-04-30T03:10:00Z,2026-04-30,00,GFS,7,26,60,14,7,10,1584c26475d6b673,"60 CONUS, 14 Mexican, 7 Caribbean, and 10 Pacific stations available for ingest",1584c26475d6b673
+2026-04-30T13:37:00Z,2026-04-30,12,NAM,10,25,41,13,8,9,b4fc37fb918580d8,41 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,b4fc37fb918580d8
+2026-04-30T15:00:00Z,2026-04-30,12,GFS,10,25,43,13,9,9,0ca625e15e9c9a81,43 CONUS...13 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,0ca625e15e9c9a81
+2026-05-01T03:11:00Z,2026-05-01,00,GFS,7,26,61,14,7,8,ca67ba41a5dac6d8,"61 CONUS, 14 Mexican, 7 Caribbean, and 8 Pacific stations available for ingest",ca67ba41a5dac6d8
+2026-05-01T13:32:00Z,2026-05-01,12,NAM,10,24,41,14,8,8,59323839fdb92098,41 CONUS...14 Mexican...8 Caribbean...and 8 Pacific raobs available for ingest,59323839fdb92098
+2026-05-02T03:12:00Z,2026-05-02,00,GFS,7,26,59,12,7,9,16ca5e2b99df7315,"59 CONUS, 12 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",16ca5e2b99df7315
+2026-05-02T13:32:00Z,2026-05-02,12,NAM,11,25,40,12,7,9,152a073ab7874960,40 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,152a073ab7874960
+2026-05-02T15:17:00Z,2026-05-02,12,GFS,11,25,40,12,8,9,cef79869ec854d8a,40 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,cef79869ec854d8a
+2026-05-03T01:36:00Z,2026-05-03,00,NAM,8,26,59,14,5,9,422e072e8bd2a9fb,"59 CONUS, 14 Mexican, 5 Caribbean, and 9 Pacific stations available for ingest",422e072e8bd2a9fb
+2026-05-03T03:14:00Z,2026-05-03,00,GFS,8,26,59,14,6,9,d6d7543f43b2a059,"59 CONUS, 14 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",d6d7543f43b2a059
+2026-05-03T13:42:00Z,2026-05-03,12,NAM,11,26,37,14,8,9,eb4b759a5a45b2ec,37 CONUS...14 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,eb4b759a5a45b2ec
+2026-05-03T15:03:00Z,2026-05-03,12,GFS,11,26,37,14,9,9,ca68adb7552a12e0,37 CONUS...14 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,ca68adb7552a12e0
+2026-05-04T01:34:00Z,2026-05-04,00,NAM,8,24,58,13,6,9,bca9e05af7e6c41f,"58 CONUS, 13 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",bca9e05af7e6c41f
+2026-05-04T03:13:00Z,2026-05-04,00,GFS,8,24,58,13,7,9,e13781bcd0479238,"58 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",e13781bcd0479238
+2026-05-05T03:26:00Z,2026-05-05,00,NAM,8,26,62,14,7,9,0560bdee113a5ebf,62 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,0560bdee113a5ebf
+2026-05-05T14:59:00Z,2026-05-05,12,NCEP,11,26,39,14,9,9,0cf396e5b3ecde0e,39 CONUS...14 Mexican...9 Caribbean and 9 Pacific stations available for ingest,0cf396e5b3ecde0e
+2026-05-06T01:58:00Z,2026-05-06,00,NAM,8,26,57,13,6,8,2dad4bf517546e6c,57 CONUS...13 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,2dad4bf517546e6c
+2026-05-06T03:05:00Z,2026-05-06,00,GFS,8,26,61,13,6,9,c652b88bd32a4bea,61 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,c652b88bd32a4bea
+2026-05-07T01:45:00Z,2026-05-07,00,NAM,8,25,59,15,5,8,1b55af4b779cfc1d,59 CONUS...15 Mexican...5 Caribbean...and 8 Pacific stations available for ingest,1b55af4b779cfc1d
+2026-05-07T03:03:00Z,2026-05-07,00,GFS,8,25,59,15,6,9,bdedd7e32a04660f,59 CONUS...15 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,bdedd7e32a04660f
+2026-05-07T13:32:00Z,2026-05-07,12,NCEP,11,26,37,13,7,9,c0fd70a1217f9110,37 CONUS...13 Mexican...7 Caribbean and 9 Pacific stations available for ingest,c0fd70a1217f9110
+2026-05-08T01:38:00Z,2026-05-08,00,NAM,8,25,57,14,6,9,7f9df4095806b22f,57 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,7f9df4095806b22f
+2026-05-08T03:03:00Z,2026-05-08,00,GFS,8,25,57,14,6,9,fe158f0bc01065ba,57 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,fe158f0bc01065ba
+2026-05-08T13:24:00Z,2026-05-08,12,NCEP,11,26,40,14,6,8,6294bf8db245ee52,40 CONUS...14 Mexican...6 Caribbean and 8 Pacific stations available for ingest,6294bf8db245ee52
+2026-05-09T02:59:00Z,2026-05-09,00,GFS,8,26,57,13,5,10,34bd28d8d154445f,57 CONUS...13 Mexican...5 Caribbean and 10 Pacific stations available for ingest,34bd28d8d154445f
+2026-05-09T13:28:00Z,2026-05-09,12,NAM,11,25,37,12,7,9,ea3963c0ec5ceee2,37 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,ea3963c0ec5ceee2
+2026-05-09T15:06:00Z,2026-05-09,12,GFS,11,25,38,12,7,9,001b63b8b8bbf762,38 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,001b63b8b8bbf762
+2026-05-10T01:33:00Z,2026-05-10,00,NAM,8,25,54,14,6,9,f19aae3f4c9daef6,54 CONUS...14 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,f19aae3f4c9daef6
+2026-05-10T03:05:00Z,2026-05-10,00,GFS,8,25,55,14,7,9,14da2eada01b5b82,55 CONUS...14 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,14da2eada01b5b82
+2026-05-11T01:51:00Z,2026-05-11,00,NAM,8,26,57,13,6,9,7619a3f2089c14f2,57 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,7619a3f2089c14f2
+2026-05-11T13:37:00Z,2026-05-11,12,NAM,11,26,39,12,7,9,bd2461827f17946e,39 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,bd2461827f17946e
+2026-05-11T15:14:00Z,2026-05-11,12,GFS,11,26,39,12,8,9,2c6e3e722017cf58,39 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,2c6e3e722017cf58
+2026-05-12T01:24:00Z,2026-05-12,00,NCEP,8,26,56,14,5,8,84ac01ad474a2278,56 CONUS...14 Mexican...5 Caribbean and 8 Pacific stations available for ingest,84ac01ad474a2278
+2026-05-12T13:49:00Z,2026-05-12,12,NAM,11,25,42,14,7,8,7b9fd40917719dce,42 CONUS...14 Mexican...7 Caribbean...and 8 Pacific stations available for ingest,7b9fd40917719dce
+2026-05-12T15:02:00Z,2026-05-12,12,GFS,11,25,42,14,8,9,d73ae8279ef1488b,42 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,d73ae8279ef1488b
+2026-05-13T01:22:00Z,2026-05-13,00,NCEP,8,25,60,14,6,9,8e6207bbd5a4d82c,60 CONUS...14 Mexican... 6 Caribbean and 9 Pacific stations available for ingest,8e6207bbd5a4d82c
+2026-05-13T15:16:00Z,2026-05-13,12,NAM,11,26,41,14,8,9,acd2481dd62ad27e,41 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,acd2481dd62ad27e
+2026-05-14T01:34:00Z,2026-05-14,00,NAM,7,25,57,14,6,9,22e776e3aad5357c,"57 CONUS, 14 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",22e776e3aad5357c
+2026-05-15T01:22:00Z,2026-05-15,00,NCEP,8,25,58,15,5,8,dfbd173c3fcf0abd,58 CONUS...15 Mexican... 5 Caribbean and 8 Pacific stations available for ingest,dfbd173c3fcf0abd
+2026-05-15T15:17:00Z,2026-05-15,12,NCEP,11,25,37,13,9,9,4d86a1806c4794a2,37 CONUS...13 Mexican...9 Caribbean and 9 Pacific stations available for ingest,4d86a1806c4794a2
+2026-05-16T01:23:00Z,2026-05-16,00,NAM,8,23,57,15,5,9,60db97b0be137b19,57 CONUS...15 Mexican... 5 Caribbean and 9 Pacific stations available for ingest,60db97b0be137b19
+2026-05-16T03:04:00Z,2026-05-16,00,GFS,8,23,58,15,5,9,091f9ee186e9d625,58 CONUS..15 Mexican..5 Caribbean..and 9 Pacific stations available for ingest,091f9ee186e9d625
+2026-05-16T15:18:00Z,2026-05-16,12,NCEP,11,23,39,13,9,9,826cde3d01f9fd86,39 CONUS...13 Mexican...9 Caribbean and 9 Pacific stations available for ingest,826cde3d01f9fd86
+2026-05-17T03:06:00Z,2026-05-17,00,GFS,7,25,57,13,5,9,dfd44906e2c9d1cb,57 CONUS..13 Mexican..5 Caribbean..and 9 Pacific stations available for ingest,dfd44906e2c9d1cb
+2026-05-18T01:25:00Z,2026-05-18,00,NAM,7,24,56,13,5,9,b68368780e4ec5f0,56 CONUS...13 Mexican...5 Caribbean and 9 Pacific stations available for ingest,b68368780e4ec5f0
+2026-05-18T03:00:00Z,2026-05-18,00,GFS,7,24,57,13,5,9,eac9a15fac7863f3,57 CONUS...13 Mexican...5 Caribbean and 9 Pacific stations available for ingest,eac9a15fac7863f3
+2026-05-18T13:30:00Z,2026-05-18,12,NAM,10,25,43,14,8,9,52584708c22f61f9,"43 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",52584708c22f61f9
+2026-05-18T15:12:00Z,2026-05-18,12,GFS,10,25,43,14,8,9,ed517953cde8c08e,"43 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",ed517953cde8c08e
+2026-05-19T01:23:00Z,2026-05-19,00,NCEP,8,24,59,12,5,8,9e91fea38fbe36f7,59 CONUS...12 Mexican... 5 Caribbean and 8 Pacific stations available for ingest,9e91fea38fbe36f7
+2026-05-19T03:00:00Z,2026-05-19,00,GFS,8,24,59,12,5,9,ce7ebc9a27a12b53,59 CONUS..12 Mexican..5 Caribbean..and 9 Pacific stations available for ingest,ce7ebc9a27a12b53
+2026-05-19T13:33:00Z,2026-05-19,12,NAM,10,24,38,14,7,9,aa2a24991c958553,"38 CONUS, 14 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",aa2a24991c958553
+2026-05-19T15:01:00Z,2026-05-19,12,GFS,10,24,38,14,8,9,5f0a343594768652,"38 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",5f0a343594768652
+2026-05-20T01:21:00Z,2026-05-20,00,NCEP,8,24,58,15,5,8,51a854121d6da8a4,58 CONUS...15 Mexican... 5 Caribbean and 8 Pacific stations available for ingest,51a854121d6da8a4
+2026-05-20T02:57:00Z,2026-05-20,00,GFS,8,24,59,15,5,9,22680ba488e4f4a6,59 CONUS..15 Mexican..5 Caribbean..and 9 Pacific stations available for ingest,22680ba488e4f4a6
+2026-05-21T01:38:00Z,2026-05-21,00,NAM,8,24,58,15,5,8,ff3343fb7dc33c1e,"58 CONUS, 15 Mexican, 5 Caribbean, and 8 Pacific stations available for ingest",ff3343fb7dc33c1e
+2026-05-21T03:16:00Z,2026-05-21,00,NCEP,8,24,59,15,6,10,43e48dcf1d1e6b12,"59 CONUS, 15 Mexican, 6 Caribbean, and 10 Pacific stations available for ingest",43e48dcf1d1e6b12
+2026-05-21T13:35:00Z,2026-05-21,12,NAM,11,25,38,14,6,9,257f37bcb6c271f2,38 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,257f37bcb6c271f2
+2026-05-21T15:02:00Z,2026-05-21,12,GFS,11,25,39,14,6,9,2ea89c82b1c0d1fe,39 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,2ea89c82b1c0d1fe
+2026-05-22T01:36:00Z,2026-05-22,00,NAM,7,25,58,15,6,9,23be3a972f580c9f,"58 CONUS, 15 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",23be3a972f580c9f
+2026-05-22T03:29:00Z,2026-05-22,00,NCEP,7,25,58,15,6,10,30cd76ca7145a45e,"58 CONUS, 15 Mexican, 6 Caribbean, and 10 Pacific stations available for ingest",30cd76ca7145a45e
+2026-05-22T13:38:00Z,2026-05-22,12,NAM,11,26,37,14,8,8,65f6c97b49d2bf97,37 CONUS...14 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,65f6c97b49d2bf97
+2026-05-22T15:15:00Z,2026-05-22,12,GFS,11,26,38,14,8,9,6c1eb47cc12e4cd9,38 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,6c1eb47cc12e4cd9
+2026-05-23T01:23:00Z,2026-05-23,00,NCEP,7,25,58,12,6,9,b1109b795345b25f,58 CONUS...12 Mexican... 6 Caribbean and 9 Pacific stations available for ingest,b1109b795345b25f
+2026-05-23T03:20:00Z,2026-05-23,00,GFS,7,25,59,14,6,9,2d1161759cd7cdf3,59 CONUS...14 Mexican... 6 Caribbean and 9 Pacific stations available for ingest,2d1161759cd7cdf3
+2026-05-23T13:31:00Z,2026-05-23,12,NAM,11,25,37,12,8,8,3d9324e549a18f3d,37 CONUS...12 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,3d9324e549a18f3d
+2026-05-23T15:18:00Z,2026-05-23,12,GFS,11,25,38,12,8,9,9de7d2cb0bfe1624,38 CONUS...12 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,9de7d2cb0bfe1624
+2026-05-24T13:30:00Z,2026-05-24,12,NAM,10,26,39,14,6,8,b84b58e69357a9d1,39 CONUS...14 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,b84b58e69357a9d1
+2026-05-24T15:07:00Z,2026-05-24,12,GFS,10,26,39,14,7,9,49f3c3cacfc6a21f,39 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,49f3c3cacfc6a21f
+2026-05-26T13:36:00Z,2026-05-26,12,NAM,11,26,39,13,7,9,133377e948119b86,39 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,133377e948119b86
+2026-05-27T03:04:00Z,2026-05-27,00,GFS,8,25,59,13,5,9,cfa21500b3eed879,59 CONUS..13 Mexican..5 Caribbean..and 9 Pacific stations available for ingest,cfa21500b3eed879
+2026-05-27T13:38:00Z,2026-05-27,12,NAM,11,25,39,12,8,9,8b06b05c36083c47,39 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,8b06b05c36083c47
+2026-05-28T03:05:00Z,2026-05-28,00,GFS,8,25,58,15,6,9,ecb23ce5f21068be,58 CONUS...15 Mexican... 6 Caribbean...and 9 Pacific stations available for ingest,ecb23ce5f21068be
+2026-05-28T13:33:00Z,2026-05-28,12,NAM,11,25,37,14,7,9,adb8547e5aa55b48,"37 CONUS, 14 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",adb8547e5aa55b48
+2026-05-28T15:15:00Z,2026-05-28,12,GFS,11,25,38,14,8,9,d6ebc3ef2f8ac1e5,"38 CONUS, 14 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",d6ebc3ef2f8ac1e5
+2026-05-29T03:18:00Z,2026-05-29,00,GFS,8,25,56,13,7,9,c56ecab2ec177de9,56 CONUS...13 Mexican... 7 Caribbean...and 9 Pacific stations available for ingest,c56ecab2ec177de9
+2026-05-29T13:43:00Z,2026-05-29,12,NAM,11,26,36,13,7,8,e8d1747104d9c127,"36 CONUS, 13 Mexican, 7 Caribbean, and 8 Pacific stations available for ingest",e8d1747104d9c127
+2026-05-29T15:14:00Z,2026-05-29,12,GFS,11,26,36,13,8,9,dec10310a06e1e1e,"36 CONUS, 13 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",dec10310a06e1e1e
+2026-05-30T03:20:00Z,2026-05-30,00,GFS,8,25,57,14,6,9,d90e13a981f275f6,57 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,d90e13a981f275f6
+2026-05-30T13:32:00Z,2026-05-30,12,NAM,10,26,36,12,8,8,552d34c607c7866c,"36 CONUS, 12 Mexican, 8 Caribbean, and 8 Pacific stations available for ingest",552d34c607c7866c
+2026-05-30T15:14:00Z,2026-05-30,12,GFS,10,26,36,12,8,9,89ece0176dbb3b23,"36 CONUS, 12 Mexican, 8 Caribbean, and 9 Pacific stations available for ingest",89ece0176dbb3b23
+2026-05-31T01:37:00Z,2026-05-31,00,NAM,6,25,58,13,5,9,28967cd2b23cc9ed,58 CONUS...13 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,28967cd2b23cc9ed
+2026-05-31T03:11:00Z,2026-05-31,00,GFS,6,25,58,13,6,9,d8195907449b5d0d,58 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,d8195907449b5d0d
+2026-05-31T13:36:00Z,2026-05-31,12,NAM,10,26,35,13,6,9,303578b9bec3e566,"35 CONUS, 13 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",303578b9bec3e566
+2026-05-31T15:18:00Z,2026-05-31,12,GFS,10,26,35,13,7,9,086a0277b6418a21,"35 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",086a0277b6418a21
+2026-06-01T01:29:00Z,2026-06-01,00,NAM,7,24,57,11,5,9,227a00c619d1f031,57 CONUS...11 Mexican...5 Caribbean...and 9 Pacific stations available for ingest,227a00c619d1f031
+2026-06-01T03:05:00Z,2026-06-01,00,GFS,7,24,58,11,6,9,05363e85c6451e4f,58 CONUS...11 Mexican... 6 Caribbean...and 9 Pacific stations available for ingest,05363e85c6451e4f
+2026-06-02T03:13:00Z,2026-06-02,00,GFS,8,23,60,14,6,9,0210fc87ea4fcb0d,60 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,0210fc87ea4fcb0d
+2026-06-02T15:20:00Z,2026-06-02,12,NCEP,12,25,37,14,8,9,5bca2020f5f41ae3,37 CONUS...14 Mexican...8 Caribbean and 9 Pacific stations available for ingest,5bca2020f5f41ae3
+2026-06-03T01:28:00Z,2026-06-03,00,NAM,7,25,55,14,6,9,8207a4206f698af6,55 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,8207a4206f698af6
+2026-06-03T03:08:00Z,2026-06-03,00,GFS,7,25,58,14,7,9,b448f40fe5d0eb87,58 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,b448f40fe5d0eb87
+2026-06-04T03:13:00Z,2026-06-04,00,GFS,7,26,59,14,6,9,5b004b81efc9fe5e,59 CONUS...14 Mexican...6 Caribbean and 9 Pacific stations available for ingest,5b004b81efc9fe5e
+2026-06-04T13:25:00Z,2026-06-04,12,NCEP,11,26,36,14,8,8,9da237f6a06eb323,36 CONUS...14 Mexican...8 Caribbean and 8 Pacific stations available for ingest,9da237f6a06eb323
+2026-06-05T01:34:00Z,2026-06-04,12,NAM,8,26,56,14,5,9,2315cff9fb7ff0fa,"56 CONUS, 14 Mexican, 5 Caribbean, and 9 Pacific stations available for ingest",2315cff9fb7ff0fa
+2026-06-05T03:15:00Z,2026-06-04,12,GFS,8,26,58,14,6,9,6db25a8d339b2df5,"58 CONUS, 14 Mexican, 6 Caribbean, and 9 Pacific stations available for ingest",6db25a8d339b2df5
+2026-06-05T13:25:00Z,2026-06-05,12,NCEP,12,26,32,14,6,8,331cf3b3536f05d6,32 CONUS...14 Mexican... 6 Caribbean and 8 Pacific stations available for ingest,331cf3b3536f05d6
+2026-06-06T03:07:00Z,2026-06-06,00,GFS,8,24,61,13,7,9,c40c9a1dc7717743,61 CONUS...13 Mexican...7 Caribbean and 9 Pacific stations available for ingest,c40c9a1dc7717743
+2026-06-06T13:32:00Z,2026-06-06,12,NCEP,11,25,36,14,8,9,e1d561c894da9a3c,36 CONUS...14 Mexican...8 Caribbean and 9 Pacific stations available for ingest,e1d561c894da9a3c
+2026-06-07T03:14:00Z,2026-06-07,00,NAM,9,25,57,12,7,9,7c9c8c83e7906808,57 CONUS...12 Mexican...7 Caribbean and 9 Pacific stations available for ingest,7c9c8c83e7906808
+2026-06-07T13:43:00Z,2026-06-07,12,NAM,12,25,34,12,8,9,47215422c9aaeeba,34 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,47215422c9aaeeba
+2026-06-07T15:06:00Z,2026-06-07,12,GFS,12,25,35,12,8,9,ddbb740f7d42449c,35 CONUS...12 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,ddbb740f7d42449c
+2026-06-08T01:43:00Z,2026-06-08,00,NAM,8,25,60,12,7,9,186d8a6a6ff4ceee,60 CONUS...12 Mexican...7 Caribbean and 9 Pacific stations available for ingest,186d8a6a6ff4ceee
+2026-06-08T03:18:00Z,2026-06-08,00,GFS,8,25,60,12,7,9,c99e6aaea1c1991b,60 CONUS...12 Mexican...7 Caribbean and 9 Pacific stations available for ingest,c99e6aaea1c1991b
+2026-06-08T13:59:00Z,2026-06-08,12,NAM,11,24,34,13,9,9,1e3409dba0990c36,34 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,1e3409dba0990c36
+2026-06-08T15:09:00Z,2026-06-08,12,GFS,11,24,35,13,9,9,2f486dbc0dce5423,35 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,2f486dbc0dce5423
+2026-06-10T01:46:00Z,2026-06-10,00,NAM,7,25,56,13,6,9,ff4960d977e311a8,56 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,ff4960d977e311a8
+2026-06-10T03:12:00Z,2026-06-10,00,GFS,8,25,59,14,6,9,e7940d1df3a6b705,59 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,e7940d1df3a6b705
+2026-06-12T02:59:00Z,2026-06-12,00,GFS,8,26,60,15,6,8,19e5df6da1834a94,60 CONUS..15 Mexican..6 Caribbean..and 8 Pacific stations available for ingest,19e5df6da1834a94
+2026-06-12T13:39:00Z,2026-06-12,12,NAM,10,26,33,13,6,9,95dfe909ffe589f5,33 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,95dfe909ffe589f5
+2026-06-12T15:15:00Z,2026-06-12,12,GFS,10,26,36,13,8,9,71992418073b15f7,36 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,71992418073b15f7
+2026-06-13T14:59:00Z,2026-06-13,12,GFS,11,25,38,11,8,9,4a71147c7ac1646b,38 CONUS..11 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,4a71147c7ac1646b
+2026-06-14T01:37:00Z,2026-06-14,00,NAM,7,26,60,13,6,9,77ba787dfbd5c795,60 CONUS...13 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,77ba787dfbd5c795
+2026-06-14T03:34:00Z,2026-06-14,00,GFS,7,26,61,13,7,10,da54e0737991d846,61 CONUS...13 Mexican...7 Caribbean...and 10 Pacific raobs available for ingest,da54e0737991d846
+2026-06-15T01:45:00Z,2026-06-15,00,NAM,8,25,57,12,6,9,6045256d388bbc17,57 CONUS...12 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,6045256d388bbc17
+2026-06-15T03:06:00Z,2026-06-15,00,GFS,8,25,59,12,7,9,247ce87781b50002,59 CONUS...12 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,247ce87781b50002
+2026-06-15T15:10:00Z,2026-06-15,12,NAM,11,25,42,13,9,9,a2f1d5667165d95e,42 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,a2f1d5667165d95e
+2026-06-16T01:31:00Z,2026-06-16,00,NAM,7,25,58,15,7,9,15522e18eee53e05,58 CONUS...15 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,15522e18eee53e05
+2026-06-16T13:34:00Z,2026-06-16,12,NAM,10,25,37,14,8,8,701fb261b359f793,37 CONUS...14 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,701fb261b359f793
+2026-06-16T15:16:00Z,2026-06-16,12,GFS,11,25,37,14,9,8,5c429460c6026df0,37 CONUS...14 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,5c429460c6026df0
+2026-06-17T13:58:00Z,2026-06-17,12,NAM,11,25,42,13,10,9,4984594af6ac870f,42 CONUS...13 Mexican...10 Caribbean...and 9 Pacific stations available for ingest,4984594af6ac870f
+2026-06-17T15:15:00Z,2026-06-17,12,GFS,11,25,44,13,10,9,b9dfccc8f1c27904,44 CONUS...13 Mexican...10 Caribbean...and 9 Pacific stations available for ingest,b9dfccc8f1c27904
+2026-06-18T01:22:00Z,2026-06-18,00,NCEP,7,25,57,13,6,9,659f2412b9ef7363,57 CONUS...13 Mexican...6 Caribbean and 9 Pacific stations available for ingest,659f2412b9ef7363
+2026-06-18T03:14:00Z,2026-06-18,00,GFS,7,25,60,13,7,9,2436e379d89d51be,60 CONUS...13 Mexican...7 Caribbean and 9 Pacific stations available for ingest,2436e379d89d51be
+2026-06-19T01:51:00Z,2026-06-19,00,NAM,8,25,58,14,6,9,8eb468100c25381f,58 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,8eb468100c25381f
+2026-06-19T13:26:00Z,2026-06-19,12,NCEP,11,26,39,14,8,9,8e7aa7c70c7dd60e,39 CONUS...14 Mexican...8 Caribbean and 9 Pacific stations available for ingest,8e7aa7c70c7dd60e
+2026-06-20T01:36:00Z,2026-06-20,00,NAM,7,26,59,14,7,9,0dd5ecb34b388f2c,59 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,0dd5ecb34b388f2c
+2026-06-20T03:05:00Z,2026-06-20,00,GFS,7,26,60,14,7,9,222c2d5623c87b81,60 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,222c2d5623c87b81
+2026-06-20T13:25:00Z,2026-06-20,12,NCEP,10,25,37,11,6,9,d3972c28b32af4ea,37 CONUS...11 Mexican...6 Caribbean and 9 Pacific stations available for ingest,d3972c28b32af4ea
+2026-06-21T02:56:00Z,2026-06-21,00,GFS,7,26,60,13,8,8,914cd42abc2d0013,60 CONUS..13 Mexican..8 Caribbean..and 8 Pacific stations available for ingest,914cd42abc2d0013
+2026-06-21T13:31:00Z,2026-06-21,12,NCEP,9,25,38,12,8,9,d0be25c3e42916e8,38 CONUS...12 Mexican...8 Caribbean and 9 Pacific stations available for ingest,d0be25c3e42916e8
+2026-06-22T03:21:00Z,2026-06-22,00,GFS,7,26,59,13,7,9,8047a973a8ada9fe,59 CONUS..13 Mexican..7 Caribbean..and 9 Pacific stations available for ingest,8047a973a8ada9fe
+2026-06-22T13:52:00Z,2026-06-22,12,NAM,10,26,36,14,8,9,9d2b13a3bdad0a0f,The 12Z NAM began and is running on time with 10 Alaskan...26 Canadian...36 CONUS...14 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,9d2b13a3bdad0a0f
+2026-06-22T15:09:00Z,2026-06-22,12,GFS,10,26,39,14,9,9,b6028a3c0acd94fb,The 12Z GFS began and is running on time with 10 Alaskan...26 Canadian...39 CONUS...14 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,b6028a3c0acd94fb
+2026-06-23T01:35:00Z,2026-06-23,00,NCEP,8,26,59,14,7,10,9e6234e49e2f6167,59 CONUS...14 Mexican...7 Caribbean and 10 Pacific stations available for ingest,9e6234e49e2f6167
+2026-06-23T13:54:00Z,2026-06-23,12,NAM,10,25,39,13,9,9,3d3e4927b4b21cfe,The 12Z NAM began and is running on time with 10 Alaskan...25 Canadian...39 CONUS...13 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,3d3e4927b4b21cfe
+2026-06-23T15:12:00Z,2026-06-23,12,GFS,10,25,40,13,10,9,66a4a9ab445367f8,The 12Z GFS began and is running on time with 10 Alaskan...25 Canadian...40 CONUS...13 Mexican...10 Caribbean...and 9 Pacific raobs available for ingest,66a4a9ab445367f8
+2026-06-24T01:28:00Z,2026-06-24,00,NCEP,8,25,57,13,7,10,a71c2bcd64132b64,57 CONUS...13 Mexican...7 Caribbean and 10 Pacific stations available for ingest,a71c2bcd64132b64
+2026-06-24T03:10:00Z,2026-06-24,00,GFS,8,25,59,13,7,10,ee4c98e94c4e4d49,59 CONUS..13 Mexican..7 Caribbean..and 10 Pacific stations available for ingest,ee4c98e94c4e4d49
+2026-06-24T13:42:00Z,2026-06-24,12,NAM,10,25,39,13,9,9,60238daf70f8551e,39 CONUS...13 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,60238daf70f8551e
+2026-06-24T15:17:00Z,2026-06-24,12,GFS,10,26,40,14,10,9,0e6b305c8c8eb044,40 CONUS...14 Mexican...10 Caribbean...and 9 Pacific stations available for ingest,0e6b305c8c8eb044
+2026-06-25T01:42:00Z,2026-06-25,00,NAM,7,26,57,15,6,9,786f3db57c90c209,The 00Z NAM began and is running on time with 7 Alaskan...26 Canadian...57 CONUS...15 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,786f3db57c90c209
+2026-06-25T13:46:00Z,2026-06-25,12,NAM,10,26,41,14,7,9,77dad43c6c6d9d10,41 CONUS...14 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,77dad43c6c6d9d10
+2026-06-25T15:14:00Z,2026-06-25,12,GFS,10,26,41,14,9,9,72b1bd823608a789,41 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,72b1bd823608a789
+2026-06-26T02:07:00Z,2026-06-26,00,NAM,9,26,60,15,6,9,6218214d995a65a4,60 CONUS...15 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,6218214d995a65a4
+2026-06-26T03:09:00Z,2026-06-26,00,GFS,9,26,60,15,7,9,58005c7cb7d411de,60 CONUS...15 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,58005c7cb7d411de
+2026-06-26T13:45:00Z,2026-06-26,12,NAM,10,26,37,14,8,9,ec31a93cd4ed8e1e,37 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,ec31a93cd4ed8e1e
+2026-06-26T15:13:00Z,2026-06-26,12,GFS,10,26,38,14,9,9,ada3a12ec8fc0dee,38 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,ada3a12ec8fc0dee
+2026-06-27T01:32:00Z,2026-06-27,00,NAM,9,26,57,15,7,9,6cd07a4dedb6b154,57 CONUS...15 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6cd07a4dedb6b154
+2026-06-27T13:33:00Z,2026-06-27,12,NAM,10,26,38,10,9,8,862d040e6b03286f,38 CONUS...10 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,862d040e6b03286f
+2026-06-27T15:13:00Z,2026-06-27,12,GFS,10,26,38,10,9,9,d18876346727969d,38 CONUS...10 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,d18876346727969d
+2026-06-28T01:26:00Z,2026-06-28,00,NCEP,8,24,57,14,7,10,8a30ba9bbe3e024e,57 CONUS...14 Mexican...7 Caribbean and 10 Pacific stations available for ingest,8a30ba9bbe3e024e
+2026-06-28T15:47:00Z,2026-06-28,12,NAM,11,24,38,14,8,9,c738a940d921e428,38 CONUS...14 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,c738a940d921e428
+2026-06-29T01:26:00Z,2026-06-29,00,NCEP,8,25,59,12,7,9,9ef8d539e2bd2262,59 CONUS...12 Mexican...7 Caribbean and 9 Pacific stations available for ingest,9ef8d539e2bd2262
+2026-06-29T13:47:00Z,2026-06-29,12,NAM,9,25,38,13,8,9,e193c676eeacfd61,The 12Z NAM began and is running on time with 9 Alaskan...25 Canadian...38 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,e193c676eeacfd61
+2026-06-29T15:05:00Z,2026-06-29,12,GFS,9,25,39,13,9,9,19b045ff25e87626,The 12Z GFS began and is running on time with 9 Alaskan...25 Canadian...39 CONUS...13 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,19b045ff25e87626
+2026-06-30T13:47:00Z,2026-06-30,12,NAM,11,22,37,14,6,9,e33b6f9c648efc50,The 12Z NAM began and is running on time with 11 Alaskan...22 Canadian...37 CONUS...14 Mexican...6 Caribbean...and 9 Pacific raobs available for ingest,e33b6f9c648efc50
+2026-06-30T15:06:00Z,2026-06-30,12,GFS,11,23,39,14,9,9,06b28f90437c470a,The 12Z GFS began and is running on time with 11 Alaskan...23 Canadian...39 CONUS...14 Mexican...9 Caribbean...and 9 Pacific raobs available for ingest,06b28f90437c470a
+2026-07-01T13:50:00Z,2026-07-01,12,NAM,11,25,36,13,7,9,a322bef11f4fec5c,The 12Z NAM began and is running on time with 11 Alaskan...25 Canadian...36 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,a322bef11f4fec5c
+2026-07-01T15:12:00Z,2026-07-01,12,GFS,11,25,38,13,8,9,153bda2d571e4b7e,The 12Z GFS began and is running on time with 11 Alaskan...25 Canadian...38 CONUS...13 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,153bda2d571e4b7e
+2026-07-02T03:54:00Z,2026-07-02,00,GFS,9,26,59,14,6,10,be631f78d8ee0f50,59 CONUS...14 Mexican 6 Caribbean...and 10 Pacific stations available for ingest,be631f78d8ee0f50
+2026-07-02T13:35:00Z,2026-07-02,12,NAM,12,25,35,14,9,9,287d7577d1af55af,35 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,287d7577d1af55af
+2026-07-02T15:15:00Z,2026-07-02,12,GFS,12,25,36,14,10,9,2c83c8f6815a2ab2,36 CONUS...14 Mexican...10 Caribbean...and 9 Pacific stations available for ingest,2c83c8f6815a2ab2
+2026-07-03T01:40:00Z,2026-07-03,00,NAM,8,25,56,13,7,9,13d1885ccb00ba29,The 00Z NAM began and is running on time with 8 Alaskan...25 Canadian...56 CONUS...13 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,13d1885ccb00ba29
+2026-07-03T03:13:00Z,2026-07-03,00,GFS,8,25,58,13,7,9,1f689f1b13de420c,58 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,1f689f1b13de420c
+2026-07-03T13:36:00Z,2026-07-03,12,NAM,12,24,37,13,9,8,6ec2806824fdf927,37 CONUS...13 Mexican...9 Caribbean...and 8 Pacific stations available for ingest,6ec2806824fdf927
+2026-07-03T15:09:00Z,2026-07-03,12,GFS,12,24,37,13,10,8,37f35e57dcab7882,37 CONUS...13 Mexican...10 Caribbean...and 8 Pacific stations available for ingest,37f35e57dcab7882
+2026-07-04T01:31:00Z,2026-07-04,00,NAM,8,24,55,13,6,9,8c40e08111992fcf,55 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,8c40e08111992fcf
+2026-07-04T03:30:00Z,2026-07-04,00,GFS,8,25,55,13,7,9,ba5b700e59a08567,55 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,ba5b700e59a08567
+2026-07-04T13:33:00Z,2026-07-04,12,NAM,12,25,37,12,7,9,6a4426ba2dee20f0,37 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,6a4426ba2dee20f0
+2026-07-04T15:09:00Z,2026-07-04,12,GFS,12,25,37,12,7,9,8bf9892e90198ce3,37 CONUS...12 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,8bf9892e90198ce3
+2026-07-05T01:38:00Z,2026-07-05,00,NAM,9,25,55,13,6,9,fe6cfee8fe9e0a53,55 CONUS...13 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,fe6cfee8fe9e0a53
+2026-07-05T03:04:00Z,2026-07-05,00,GFS,9,25,56,13,6,10,711504551facb4db,56 CONUS...13 Mexican...6 Caribbean...and 10 Pacific stations available for ingest,711504551facb4db
+2026-07-05T13:37:00Z,2026-07-05,12,NAM,12,24,37,13,8,8,6ca54a8a1bfced0a,37 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,6ca54a8a1bfced0a
+2026-07-05T15:16:00Z,2026-07-05,12,GFS,12,24,37,13,8,8,36e63564a7b1ffed,37 CONUS...13 Mexican...8 Caribbean...and 8 Pacific stations available for ingest,36e63564a7b1ffed
+2026-07-06T01:40:00Z,2026-07-06,00,NAM,9,25,55,12,6,8,88125faf530b1109,55 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,88125faf530b1109
+2026-07-06T03:03:00Z,2026-07-06,00,GFS,9,25,56,12,6,8,2368a65cd4f203a4,56 CONUS...12 Mexican...6 Caribbean...and 8 Pacific stations available for ingest,2368a65cd4f203a4
+2026-07-07T01:24:00Z,2026-07-07,00,NCEP,8,25,53,14,5,9,a930b177a22217c0,53 CONUS...14 Mexican...5 Caribbean and 9 Pacific stations available for ingest,a930b177a22217c0
+2026-07-07T03:43:00Z,2026-07-07,00,GFS,8,25,56,14,6,9,361140f045c74a3b,56 CONUS...14 Mexican...6 Caribbean...and 9 Pacific stations available for ingest,361140f045c74a3b
+2026-07-08T01:25:00Z,2026-07-08,00,NCEP,8,26,54,15,7,9,027d82fd27ab68ff,54 CONUS...15 Mexican...7 Caribbean and 9 Pacific stations available for ingest,027d82fd27ab68ff
+2026-07-08T03:04:00Z,2026-07-08,00,GFS,9,26,56,15,7,9,9001f4da5635193f,56 CONUS...15 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,9001f4da5635193f
+2026-07-09T01:25:00Z,2026-07-09,00,NCEP,9,26,59,15,8,8,7e8b92d2979137a7,59 CONUS...15 Mexican...8 Caribbean and 8 Pacific stations available for ingest,7e8b92d2979137a7
+2026-07-09T03:11:00Z,2026-07-09,00,GFS,9,26,61,15,8,9,8c0b700ae3c65028,61 CONUS...15 Mexican...8 Caribbean and 9 Pacific stations available for ingest,8c0b700ae3c65028
+2026-07-10T01:31:00Z,2026-07-10,00,NCEP,8,26,59,13,7,9,ad53a9fae9179713,59 CONUS...13 Mexican...7 Caribbean and 9 Pacific stations available for ingest,ad53a9fae9179713
+2026-07-10T03:11:00Z,2026-07-10,00,GFS,8,26,60,13,7,9,ffe3451d928057ac,"60 CONUS, 13 Mexican, 7 Caribbean, and 9 Pacific stations available for ingest",ffe3451d928057ac
+2026-07-11T01:25:00Z,2026-07-11,00,NCEP,9,26,56,12,7,9,892fe9b382fcee3c,56 CONUS...12 Mexican...7 Caribbean and 9 Pacific stations available for ingest,892fe9b382fcee3c
+2026-07-11T13:31:00Z,2026-07-11,12,NAM,12,26,37,12,7,8,0322ecab5529f41e,The 12Z NAM began and is running on time with 12 Alaskan...26 Canadian...37 CONUS...12 Mexican...7 Caribbean...and 8 Pacific raobs available for ingest,0322ecab5529f41e
+2026-07-12T01:35:00Z,2026-07-12,00,NAM,9,26,58,14,6,9,7eb5c4737ea9c7a5,"58 CONUS, 14 Mexican, 6 Caribbean and 9 Pacific stations available for ingest",7eb5c4737ea9c7a5
+2026-07-12T03:15:00Z,2026-07-12,00,GFS,9,26,59,14,6,9,b77bc6b0ab385f3b,"59 CONUS, 14 Mexican, 6 Caribbean and 9 Pacific stations available for ingest",b77bc6b0ab385f3b
+2026-07-12T13:37:00Z,2026-07-12,12,NAM,12,26,35,14,7,9,0e76fc8b57fa247a,The 12Z NAM began and is running on time with 12 Alaskan...26 Canadian...35 CONUS...14 Mexican...7 Caribbean...and 9 Pacific raobs available for ingest,0e76fc8b57fa247a
+2026-07-12T14:59:00Z,2026-07-12,12,GFS,12,26,37,14,8,9,a8fd82c62f6d04ad,The 12Z GFS began and is running on time with 12 Alaskan...26 Canadian...37 CONUS...14 Mexican...8 Caribbean...and 9 Pacific raobs available for ingest,a8fd82c62f6d04ad
+2026-07-13T01:33:00Z,2026-07-13,00,NAM,9,26,57,12,6,9,0e67a90d35c0548b,"57 CONUS, 12 Mexican, 6 Caribbean and 9 Pacific stations available for ingest",0e67a90d35c0548b
+2026-07-13T03:10:00Z,2026-07-13,00,GFS,9,26,59,12,7,9,a6298de9eb035d71,"59 CONUS, 12 Mexican, 7 Caribbean and 9 Pacific stations available for ingest",a6298de9eb035d71
+2026-07-13T13:45:00Z,2026-07-13,12,NAM,11,25,36,14,9,9,b9593a7a327da3c6,36 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,b9593a7a327da3c6
+2026-07-13T15:25:00Z,2026-07-13,12,GFS,11,25,37,14,9,9,0b6daf2f40e4f335,37 CONUS...14 Mexican...9 Caribbean...and 9 Pacific stations available for ingest,0b6daf2f40e4f335
+2026-07-14T01:27:00Z,2026-07-14,00,NCEP,8,26,58,14,7,9,dec7f030a64ed978,58 CONUS...14 Mexican...7 Caribbean and 9 Pacific stations available for ingest,dec7f030a64ed978
+2026-07-14T03:09:00Z,2026-07-14,00,GFS,9,26,59,14,7,9,a94e7be808a19cdf,"59 CONUS, 14 Mexican, 7 Caribbean and 9 Pacific stations available for ingest",a94e7be808a19cdf
+2026-07-14T13:36:00Z,2026-07-14,12,NAM,12,25,39,13,7,9,cf54af334f4cc90f,39 CONUS...13 Mexican...7 Caribbean...and 9 Pacific stations available for ingest,cf54af334f4cc90f
+2026-07-14T15:00:00Z,2026-07-14,12,GFS,12,25,39,13,8,9,beaa87b52282a193,39 CONUS...13 Mexican...8 Caribbean...and 9 Pacific stations available for ingest,beaa87b52282a193
+2026-07-15T01:24:00Z,2026-07-15,00,NCEP,8,24,56,12,6,9,a45fed5cfd422897,56 CONUS...12 Mexican...6 Caribbean and 9 Pacific stations available for ingest,a45fed5cfd422897
+2026-07-15T03:13:00Z,2026-07-15,00,GFS,8,24,59,12,6,9,107161b62ad2d413,"59 CONUS, 12 Mexican, 6 Caribbean and 9 Pacific stations available for ingest",107161b62ad2d413
+2026-07-15T15:15:00Z,2026-07-15,12,GFS,11,24,38,13,8,9,7ac05a8e8da54292,38 CONUS..13 Mexican..8 Caribbean..and 9 Pacific stations available for ingest,7ac05a8e8da54292
