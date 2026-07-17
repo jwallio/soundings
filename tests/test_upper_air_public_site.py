@@ -15,6 +15,10 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert 'id="nco-heatmap"' in text
     assert 'id="nco-heatmap-custom"' in text
     assert 'id="nco-one-year"' in text and 'id="nco-custom-toggle"' in text
+    assert 'id="nco-heatmap-custom" class="nco-heatmap-custom" hidden' in text
+    assert 'id="nco-cell-detail"' in text and 'hidden>' in text
+    assert "valid NCO record" in text
+    assert "98 to 100 percent" in text
     assert "combined NCO ingest calendar" in text and "No data" in text
     assert all(label in text for label in ("7D", "14D", "30D", "90D"))
     assert "Sources and data health" in text

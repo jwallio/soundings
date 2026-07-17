@@ -35,7 +35,6 @@ from upper_air_network_monitor.dashboard_charts import (
 )
 from upper_air_network_monitor.dashboard_data import (
     archive_window_metrics,
-    expected_nco_reports_by_date,
     format_pp_delta,
     issue_counts_by_cycle,
     latest_issue_rows,
@@ -227,20 +226,19 @@ def _nco_payload(daily: pd.DataFrame, source_start: pd.Timestamp, source_end: pd
     return {"days": days, "min_date": source_start.date().isoformat(), "max_date": source_end.date().isoformat()}
 
 
-def _nco_latest_text(daily: pd.DataFrame, stations: pd.DataFrame) -> tuple[str, str]:
+def _nco_latest_text(daily: pd.DataFrame) -> tuple[str, str]:
     if daily.empty:
         return "Latest: —", "No complete NCO ingest day is available."
     latest = daily.sort_values("date").iloc[-1]
-    model_values = [getattr(latest, f"{model}_count") for model in ("gfs", "nam", "ncep")]
-    valid = [float(value) for value in model_values if pd.notna(value)]
-    received = max(valid) if valid else float(latest.received)
-    expected_series = expected_nco_reports_by_date(stations, [latest.date])
-    expected = expected_series.iloc[0] if not expected_series.empty else float("nan")
-    percent = received / expected * 100.0 if pd.notna(expected) and expected else float("nan")
+    received = float(latest.received) if pd.notna(latest.received) else float("nan")
+    expected = float(latest.expected) if pd.notna(latest.expected) else float("nan")
+    percent = float(latest.percent) if pd.notna(latest.percent) else float("nan")
     date_text = _display_date(latest.date)
+    if pd.isna(received):
+        return "Latest: —", f"Complete through {date_text}"
     if pd.isna(expected) or not expected:
-        return f"Latest: {received:.0f} / —", f"{date_text}; expected inventory unavailable"
-    return f"Latest: {received:.0f} / {expected:.0f} · {percent:.1f}%", f"Complete data date: {date_text}"
+        return f"Latest: {received:.0f} / —", f"Complete through {date_text}; expected inventory unavailable"
+    return f"Latest: {received:.0f} / {expected:.0f} · {percent:.1f}%", f"Complete through {date_text}"
 
 
 def _nco_heatmap_markup(
@@ -253,7 +251,7 @@ def _nco_heatmap_markup(
     stations: pd.DataFrame,
 ) -> str:
     payload = json.dumps(_nco_payload(daily, source_start, source_end), separators=(",", ":"))
-    latest_text, latest_detail = _nco_latest_text(daily, stations)
+    latest_text, latest_detail = _nco_latest_text(daily)
     metric_cards: list[str] = []
     for days in (7, 14, 30, 90):
         row = metrics[metrics["days"].eq(days)] if not metrics.empty else pd.DataFrame()
@@ -279,7 +277,9 @@ def _nco_heatmap_markup(
         '</div><div id="nco-range-summary" class="nco-range-summary" aria-live="polite" hidden></div>'
         '<div class="nco-heatmap-scroller"><div id="nco-heatmap" class="nco-heatmap" role="group" aria-label="Daily combined NCO ingest calendar"></div></div>'
         '<div class="nco-heatmap-legend" aria-label="Ingest health scale"><span><i class="health-healthy"></i>98–100% healthy</span><span><i class="health-minor"></i>95–97.9% minor misses</span><span><i class="health-reduced"></i>90–94.9% reduced</span><span><i class="health-degraded"></i>&lt;90% degraded</span><span><i class="health-none"></i>No data</span></div>'
-        '<div id="nco-cell-detail" class="nco-cell-detail" tabindex="0" aria-live="polite">Select a day for received, expected, and model details.</div>'
+        '<div id="nco-cell-tooltip" class="nco-cell-tooltip" role="tooltip" hidden></div>'
+        '<p id="nco-health-thresholds" class="sr-only">Healthy: 98 to 100 percent. Minor misses: 95 to 97.9 percent. Reduced: 90 to 94.9 percent. Degraded: below 90 percent. No data: no monitoring record.</p>'
+        '<div id="nco-cell-detail" class="nco-cell-detail" tabindex="-1" aria-live="polite" hidden><button type="button" class="nco-detail-close" aria-label="Dismiss selected day details">×</button></div>'
         f'<script type="application/json" id="nco-heatmap-payload">{payload}</script>'
     )
 
@@ -427,14 +427,17 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
 .section{{padding:28px 0}}.section-head{{margin-bottom:12px}}h2{{font-size:clamp(26px,3vw,38px);letter-spacing:-.035em;line-height:1.1;margin:0}}.grid{{display:grid;gap:14px;min-width:0}}.grid>*{{min-width:0}}.two{{grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr)}}.two-even{{grid-template-columns:repeat(2,minmax(0,1fr))}}.card{{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;overflow:hidden}}.status-card{{overflow:visible}}.kpi-label{{text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;font-size:11px}}.kpi-value{{font-size:clamp(38px,4vw,56px);font-weight:850;letter-spacing:-.05em;margin:7px 0 2px}}.problem{{color:var(--orange)}}.clean{{color:var(--green)}}.kpi-detail{{color:var(--muted);font-size:13px}}.chart-card{{padding:14px 12px 6px}}.chart-title{{padding:7px 9px 0;font-weight:800;font-size:17px}}.chart-sub{{padding:2px 9px;color:var(--muted);font-size:13px}}.js-plotly-plot,.plot-container,.svg-container{{max-width:100%!important}}.map{{width:100%;height:auto;display:block;border-radius:12px}}ul{{color:var(--muted);padding-left:20px}}li+li{{margin-top:9px}}
  .trend-controls{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 9px 4px}}.preset-controls{{display:flex;gap:6px;flex-wrap:wrap}}.trend-controls button,.custom-range input,.custom-range button{{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:7px 9px}}.trend-controls button,.custom-range button{{cursor:pointer;font-weight:750;font-size:12px}}.trend-controls button:hover,.trend-controls button.active,.custom-range button:hover{{background:var(--panel2);border-color:var(--blue)}}.scale-toggle{{color:var(--blue)!important}}.custom-range{{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--muted);font-size:12px}}.custom-range input{{color-scheme:dark;max-width:140px}}.custom-range button{{color:var(--blue)}}.operation-controls{{padding-top:8px}}.operation-controls .custom-range{{width:100%;justify-content:flex-end}}
  .nco-ingest-head{{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:3px 9px 0}}.nco-ingest-head .chart-title{{padding:0}}.nco-latest{{font-weight:800;font-size:15px;margin-top:2px}}.nco-latest-detail{{color:var(--muted);font-size:11px}}.nco-view-controls{{display:flex;gap:6px;flex:0 0 auto}}.nco-view-button{{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:6px 9px;cursor:pointer;font-weight:750;font-size:12px}}.nco-view-button.active,.nco-view-button:hover,.nco-view-button:focus-visible{{border-color:var(--blue);background:var(--panel2)}}.nco-lookbacks{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px 9px 8px}}.nco-lookback{{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 8px;min-width:0}}.nco-lookback span,.nco-lookback small{{display:block;color:var(--muted);font-size:10px}}.nco-lookback strong{{display:block;font-size:16px;line-height:1.2}}.nco-lookback small{{color:var(--blue);margin-top:2px}}.nco-heatmap-custom{{display:flex;align-items:end;gap:7px;flex-wrap:wrap;padding:8px 9px;background:rgba(6,21,33,.45);border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}}.nco-heatmap-custom label{{display:flex;flex-direction:column;gap:3px}}.nco-heatmap-custom input{{color-scheme:dark;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:6px 7px}}.nco-heatmap-custom button{{border:1px solid var(--line);background:var(--bg);color:var(--blue);border-radius:7px;padding:6px 8px;cursor:pointer;font-weight:750;font-size:11px}}.nco-range-summary{{color:var(--muted);font-size:11px;padding:6px 9px 0}}.nco-heatmap-scroller{{overflow-x:auto;padding:2px 9px 0}}.nco-heatmap{{min-width:max(100%,calc(var(--nco-week-count,53) * 7px));font-size:9px}}.nco-months{{display:grid;grid-template-columns:repeat(var(--nco-week-count),minmax(0,1fr));margin-left:18px;height:17px;color:var(--muted);font-size:9px}}.nco-months span{{white-space:nowrap}}.nco-heatmap-body{{display:flex;gap:4px}}.nco-weekday-labels{{width:14px;display:grid;grid-template-rows:repeat(7,1fr);color:var(--muted);font-size:8px;text-align:right;line-height:1}}.nco-heatmap-grid{{display:grid;grid-template-columns:repeat(var(--nco-week-count),minmax(0,1fr));grid-template-rows:repeat(7,10px);gap:2px;flex:1}}.nco-cell{{display:block;width:100%;height:10px;min-width:5px;padding:0;border:0;border-radius:2px;background:var(--panel2);cursor:pointer;outline-offset:2px}}.nco-cell:hover,.nco-cell:focus-visible{{box-shadow:0 0 0 2px var(--text);z-index:2}}.nco-cell.health-healthy{{background:var(--green)}}.nco-cell.health-minor{{background:#89d58f}}.nco-cell.health-reduced{{background:var(--amber)}}.nco-cell.health-degraded{{background:var(--orange)}}.nco-cell.no-data{{background:#40566b}}.nco-heatmap-legend{{display:flex;gap:8px;flex-wrap:wrap;padding:7px 9px 2px;color:var(--muted);font-size:9px}}.nco-heatmap-legend span{{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}}.nco-heatmap-legend i{{width:8px;height:8px;border-radius:2px;display:inline-block}}.health-healthy{{background:var(--green)}}.health-minor{{background:#89d58f}}.health-reduced{{background:var(--amber)}}.health-degraded{{background:var(--orange)}}.health-none{{background:#40566b}}.nco-cell-detail{{margin:7px 9px 3px;padding:8px 9px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--muted);font-size:11px;min-height:42px}}.nco-cell-detail strong{{display:block;color:var(--text);font-size:12px}}.nco-cell-detail span{{display:block}}.nco-cell-models{{color:var(--muted);font-size:10px}}
-.change-strip{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}}.change-stat{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px}}.change-stat strong{{display:block;font-size:26px}}.change-stat span{{color:var(--muted);font-size:12px}}.change-stat.new strong{{color:var(--orange)}}.change-stat.resolved strong{{color:var(--green)}}
+ .change-strip{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}}.change-stat{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px}}.change-stat strong{{display:block;font-size:26px}}.change-stat span{{color:var(--muted);font-size:12px}}.change-stat.new strong{{color:var(--orange)}}.change-stat.resolved strong{{color:var(--green)}}
+ .nco-view-controls{{border:1px solid var(--line);border-radius:9px;padding:2px;gap:0;background:var(--bg)}}.nco-view-button{{border:0;border-radius:6px;padding:5px 8px}}.nco-lookbacks{{gap:0;padding:9px 9px 7px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}}.nco-lookback{{background:transparent;border:0;border-right:1px solid var(--line);border-radius:0;padding:3px 8px}}.nco-lookback:last-child{{border-right:0}}.nco-lookback strong{{font-size:15px}}.nco-heatmap-scroller{{position:relative;overscroll-behavior-x:contain}}.nco-heatmap{{min-width:100%}}.nco-months span{{display:block;max-width:32px;overflow:hidden}}.nco-heatmap-grid{{gap:1px;grid-template-rows:repeat(7,9px)}}.nco-cell{{height:9px;min-width:0;border-radius:2px}}.nco-weekday-labels{{width:12px;font-size:8px}}.nco-heatmap-legend span{{font-size:0}}.nco-heatmap-legend span::after{{font-size:9px}}.nco-heatmap-legend span:nth-child(1)::after{{content:"Healthy"}}.nco-heatmap-legend span:nth-child(2)::after{{content:"Minor"}}.nco-heatmap-legend span:nth-child(3)::after{{content:"Reduced"}}.nco-heatmap-legend span:nth-child(4)::after{{content:"Degraded"}}.nco-heatmap-legend span:nth-child(5)::after{{content:"No data"}}.nco-cell-tooltip{{position:fixed;z-index:5;max-width:230px;padding:7px 9px;background:var(--panel2);border:1px solid var(--blue);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);color:var(--text);font-size:11px;pointer-events:none}}.nco-cell-tooltip strong,.nco-cell-tooltip span{{display:block}}.nco-cell-tooltip span{{color:var(--muted);font-size:10px}}.nco-cell-detail{{position:relative;margin:6px 9px 3px;padding:7px 30px 7px 9px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:11px}}.nco-cell-detail strong{{display:block;color:var(--text);font-size:12px}}.nco-cell-detail span{{display:block}}.nco-cell-models{{color:var(--muted);font-size:10px}}.nco-detail-close{{position:absolute;right:6px;top:4px;border:0;background:transparent;color:var(--muted);font-size:16px;line-height:1;cursor:pointer}}
 details{{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}}summary{{cursor:pointer;font-weight:800;color:var(--blue);list-style:none}}summary::-webkit-details-marker{{display:none}}summary::after{{content:" +";color:var(--muted)}}details[open] summary::after{{content:" −"}}.table-wrap{{overflow:auto;margin-top:10px}}table{{width:100%;border-collapse:collapse;font-size:13px}}th,td{{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}}th{{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}}.status,.station-status{{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--panel2)}}.status.new-issue,.status.category-changed,.station-status.issue{{color:var(--orange)}}.status.resolved,.station-status.clean{{color:var(--green)}}
 .review-card{{margin-top:8px;padding:12px 20px}}.review-card details{{border-top:0;margin-top:0;padding-top:0}}
  .directory-tools{{display:grid;grid-template-columns:auto minmax(180px,420px) 1fr;gap:12px;align-items:center;margin:14px 0}}.directory-tools label{{font-weight:800}}.directory-tools input{{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}}.directory-tools input:focus{{border-color:var(--blue);box-shadow:0 0 0 3px rgba(89,200,245,.12)}}#station-count{{justify-self:end;color:var(--muted);font-size:12px}}.station-table{{max-height:420px}}.downloads{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}}.download{{text-decoration:none;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--blue);font-weight:750;font-size:13px}}.download:hover{{background:var(--panel2)}}
  .health-summary{{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0 0}}.health-summary strong{{font-size:16px}}.health-badge{{border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800}}.health-badge.green{{color:var(--green);border-color:rgba(82,211,162,.5)}}.health-badge.amber{{color:var(--amber);border-color:rgba(246,200,95,.5)}}.health-optional{{color:var(--muted);font-size:12px;margin:4px 0 12px}}.health-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}}.health-item{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px;min-width:0}}.health-item strong{{display:block;font-size:14px;white-space:nowrap}}.health-item span,.health-item small{{display:block;color:var(--muted);font-size:12px;margin-top:3px}}.health-item small{{font-size:11px;color:var(--amber)}}.health-item .green{{color:var(--green)}}.health-item .amber{{color:var(--amber)}}
+ [hidden]{{display:none!important}}.sr-only{{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}}.nco-detail-close:focus-visible,.nco-view-button:focus-visible{{outline:2px solid var(--blue);outline-offset:2px}}
 footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;color:var(--muted);font-size:13px}}.footer-row{{display:flex;justify-content:space-between;gap:20px}}.empty{{color:var(--muted)}}
 @media(min-width:901px){{.station-search-details[open]{{position:fixed;z-index:100;top:7vh;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 64px));max-height:86vh;overflow:auto;margin:0;padding:22px;background:var(--panel);border:1px solid var(--blue);border-radius:18px;box-shadow:0 0 0 100vmax rgba(2,10,17,.72),0 24px 70px rgba(0,0,0,.5)}}.station-search-details[open] .station-table{{max-height:none}}}}
 @media(max-width:900px){{.hero{{grid-template-columns:1fr;padding-top:32px}}.signal{{max-width:none}}.two,.two-even{{grid-template-columns:1fr}}}}
+ @media(max-width:600px){{.nco-heatmap-grid{{grid-template-rows:repeat(7,8px)}}.nco-cell{{height:8px}}.nco-weekday-labels span:nth-child(even),.nco-weekday-labels span:nth-child(7){{visibility:hidden}}.nco-weekday-labels{{width:10px}}.nco-months{{font-size:8px;margin-left:14px;overflow:hidden}}.nco-months span{{max-width:22px}}.nco-heatmap-legend{{gap:6px;padding-inline:5px}}.nco-cell-tooltip{{display:none!important}}}}
  @media(max-width:600px){{.wrap{{width:calc(100% - 20px)}}nav .wrap{{min-height:56px}}.navlinks{{display:none}}.nav-status{{font-size:11px}}.hero{{gap:20px;padding:24px 0 8px}}h1{{font-size:clamp(26px,8vw,34px)}}.signal .kpi-value{{font-size:68px}}.section{{padding:22px 0}}.card{{padding:15px;border-radius:15px}}.chart-card{{padding:10px 4px 2px}}.custom-range{{width:100%;margin-left:0;flex-wrap:wrap}}.custom-range input{{min-width:0;flex:1}}.change-strip{{grid-template-columns:1fr 1fr 1fr}}.change-stat{{padding:10px}}.change-stat strong{{font-size:22px}}.directory-tools{{grid-template-columns:1fr}}#station-count{{justify-self:start}}.nco-lookbacks{{gap:4px;padding-inline:5px}}.nco-lookback{{padding:6px 5px}}.nco-lookback strong{{font-size:14px}}.nco-lookback small{{font-size:9px}}.nco-ingest-head{{padding-inline:5px}}.nco-heatmap-scroller{{padding-inline:5px}}.health-grid{{grid-template-columns:1fr;gap:7px}}.health-item{{display:grid;grid-template-columns:minmax(132px,.85fr) minmax(0,1.15fr);column-gap:10px;align-items:baseline;padding:9px}}.health-item strong{{white-space:normal}}.health-item small{{grid-column:2}}.downloads{{gap:6px}}.download{{padding:8px 5px;font-size:11px}}.footer-row{{display:block}}th,td{{padding:10px}}}}
 </style></head><body>
 <a class="skip" href="#content">Skip to data</a>
@@ -546,6 +549,55 @@ if(ncoPayloadElement){{
   ncoOneYear?.addEventListener('click',()=>{{ncoStartInput.value=ncoDefaultStart;ncoEndInput.value=ncoDefaultEnd;ncoSummary.hidden=true;ncoOneYear.classList.add('active');ncoCustomToggle?.classList.remove('active');ncoRender(ncoDefaultStart,ncoDefaultEnd);}});
   ncoApply?.addEventListener('click',()=>{{const start=ncoStartInput.value,end=ncoEndInput.value;const invalid=!start||!end||start>end||start<ncoPayload.min_date||end>ncoPayload.max_date;if(invalid){{ncoStartInput.setCustomValidity('Choose dates within the available range, with start on or before end.');ncoStartInput.reportValidity();return;}}ncoStartInput.setCustomValidity('');ncoOneYear?.classList.remove('active');ncoCustomToggle?.classList.add('active');ncoRender(start,end);ncoUpdateSummary(start,end);}});
   ncoReset?.addEventListener('click',()=>{{ncoStartInput.value=ncoDefaultStart;ncoEndInput.value=ncoDefaultEnd;ncoSummary.hidden=true;ncoOneYear?.classList.add('active');ncoCustomToggle?.classList.remove('active');ncoRender(ncoDefaultStart,ncoDefaultEnd);}});
+}}
+if(ncoPayloadElement){{
+  const ncoByDateForDetails=new Map((JSON.parse(ncoPayloadElement.textContent||'{{}}').days||[]).map(row=>[row.date,row]));
+  const ncoHeatmapForDetails=document.getElementById('nco-heatmap');
+  const ncoTooltip=document.getElementById('nco-cell-tooltip');
+  const ncoSelectedDetail=document.getElementById('nco-cell-detail');
+  const ncoCustomPanelForState=document.getElementById('nco-heatmap-custom');
+  const ncoCustomToggleForState=document.getElementById('nco-custom-toggle');
+  const ncoOneYearForState=document.getElementById('nco-one-year');
+  const ncoEscapeDetail=value=>String(value).replace(/[&<>"]/g,character=>({{ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }})[character]);
+  const ncoDetailHtml=(date,row)=>{{
+    if(!row)return '<strong>'+ncoEscapeDetail(date)+'</strong><span>No data - monitoring record absent.</span>';
+    const present=Object.entries(row.models||{{}}).filter(([,value])=>value!==null&&Number.isFinite(Number(value))).map(([model,value])=>model+': '+Number(value).toFixed(0));
+    const sources=present.length?present.join(' · '):'No applicable source record';
+    return '<strong>'+ncoEscapeDetail(date)+' · '+(Number.isFinite(Number(row.percent))?Number(row.percent).toFixed(1)+'%':'No data')+'</strong><span>'+Number(row.received).toFixed(0)+' received / '+(Number.isFinite(Number(row.expected))?Number(row.expected).toFixed(0):'—')+' expected · '+ncoEscapeDetail(sources)+'</span><span class="nco-cell-models">'+ncoEscapeDetail(row.available_rows+' valid NCO record'+(row.available_rows===1?'':'s'))+'</span>';
+  }};
+  const ncoShowTooltip=cell=>{{
+    if(!ncoTooltip)return;
+    ncoTooltip.innerHTML=ncoDetailHtml(cell.dataset.date,ncoByDateForDetails.get(cell.dataset.date));
+    const rect=cell.getBoundingClientRect();
+    ncoTooltip.style.left=Math.min(Math.max(8,rect.left),Math.max(8,window.innerWidth-238))+'px';
+    ncoTooltip.style.top=Math.max(8,rect.top-58)+'px';
+    ncoTooltip.hidden=false;
+  }};
+  const ncoHideTooltip=()=>{{if(ncoTooltip)ncoTooltip.hidden=true;}};
+  const ncoShowSelected=cell=>{{
+    if(!ncoSelectedDetail)return;
+    ncoSelectedDetail.innerHTML=ncoDetailHtml(cell.dataset.date,ncoByDateForDetails.get(cell.dataset.date))+'<button type="button" class="nco-detail-close" aria-label="Dismiss selected day details">×</button>';
+    ncoSelectedDetail.hidden=false;
+  }};
+  const ncoBindDetailCells=()=>{{
+    ncoHeatmapForDetails?.querySelectorAll('button[data-date]').forEach(cell=>{{
+      if(cell.dataset.detailBound)return;
+      cell.dataset.detailBound='1';
+      cell.addEventListener('mouseenter',()=>ncoShowTooltip(cell));
+      cell.addEventListener('mouseleave',ncoHideTooltip);
+      cell.addEventListener('focus',()=>ncoShowTooltip(cell));
+      cell.addEventListener('blur',ncoHideTooltip);
+      cell.addEventListener('click',()=>ncoShowSelected(cell));
+    }});
+  }};
+  ncoBindDetailCells();
+  if(ncoHeatmapForDetails)new MutationObserver(ncoBindDetailCells).observe(ncoHeatmapForDetails,{{childList:true,subtree:true}});
+  ncoSelectedDetail?.addEventListener('click',event=>{{if(event.target.closest('.nco-detail-close'))ncoSelectedDetail.hidden=true;}});
+  const ncoSetCustomOpen=open=>{{if(ncoCustomPanelForState)ncoCustomPanelForState.hidden=!open;if(ncoCustomToggleForState){{ncoCustomToggleForState.setAttribute('aria-expanded',String(open));ncoCustomToggleForState.classList.toggle('active',open);}}ncoOneYearForState?.classList.toggle('active',!open);}};
+  ncoCustomToggleForState?.addEventListener('click',()=>ncoSetCustomOpen(!ncoCustomPanelForState?.hidden));
+  ncoOneYearForState?.addEventListener('click',()=>ncoSetCustomOpen(false));
+  document.getElementById('nco-heatmap-reset')?.addEventListener('click',()=>ncoSetCustomOpen(false));
+  ncoSetCustomOpen(false);
 }}
 const stationSearch=document.getElementById('station-search');
 if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stationSearch.value.trim().toLowerCase();let visible=0;document.querySelectorAll('.station-row').forEach(row=>{{const show=!query||row.dataset.search.includes(query);row.hidden=!show;if(show)visible++;}});document.getElementById('station-count').textContent=`${{visible}} station${{visible===1?'':'s'}}`;}});}}

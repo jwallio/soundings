@@ -212,6 +212,46 @@ def test_nco_daily_ingest_is_weighted_across_models_and_keeps_missing_days_out()
     assert daily.iloc[0]["percent"] == 425.0
 
 
+def test_nco_missing_source_is_not_zero_and_explicit_zero_is_retained() -> None:
+    nco = pd.DataFrame(
+        {
+            "cycle_date_utc": ["2025-01-03", "2025-01-03"],
+            "cycle_hour": ["00", "00"],
+            "model": ["GFS", "NAM"],
+            "conus_count": [0, 2],
+        }
+    )
+    stations = pd.DataFrame({"active_expected": ["true"] * 2})
+    daily = nco_daily_ingest(nco, stations)
+    row = daily.iloc[0]
+    assert row["gfs_count"] == 0
+    assert row["nam_count"] == 2
+    assert pd.isna(row["ncep_count"])
+    assert row["received"] == 2
+    assert row["expected"] == 4
+
+
+def test_nco_one_applicable_record_uses_one_expected_inventory() -> None:
+    nco = pd.DataFrame(
+        {
+            "cycle_date_utc": ["2025-01-03"],
+            "cycle_hour": ["00"],
+            "model": ["NAM"],
+            "conus_count": [2],
+        }
+    )
+    stations = pd.DataFrame({"active_expected": ["true"] * 2})
+    daily = nco_daily_ingest(nco, stations)
+    assert daily.iloc[0]["expected"] == 2
+    assert daily.iloc[0]["percent"] == 100.0
+
+
+def test_nco_no_data_returns_empty_daily_frame() -> None:
+    stations = pd.DataFrame({"active_expected": ["true"] * 2})
+    daily = nco_daily_ingest(pd.DataFrame(), stations)
+    assert daily.empty
+
+
 def test_nco_lookbacks_use_equal_periods_and_percentage_points() -> None:
     daily = pd.DataFrame(
         {

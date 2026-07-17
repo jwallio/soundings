@@ -224,7 +224,14 @@ def nco_daily_ingest(
     stations: pd.DataFrame,
     models: Iterable[str] = NCO_INGEST_MODELS,
 ) -> pd.DataFrame:
-    """Combine valid NCO model/cycle rows into weighted daily ingest rates."""
+    """Combine valid NCO model/cycle records into weighted daily rates.
+
+    GFS, NAM, and NCEP rows are alternative operational-message products for
+    a cycle, not three copies of one station inventory.  Each present,
+    non-negative record contributes one applicable numerator/denominator
+    pair.  A repeated message for the same cycle/product is reduced to the
+    latest message so it cannot inflate the daily rate.
+    """
     columns = ["date", "received", "expected", "percent", "available_rows", *[f"{m.lower()}_count" for m in NCO_INGEST_MODELS]]
     data = prepare_nco(frame)
     if data.empty or not {"cycle_dt", "conus_count", "model"}.issubset(data.columns):
@@ -236,6 +243,13 @@ def nco_daily_ingest(
     data = data[data["conus_count"].ge(0)]
     if data.empty:
         return pd.DataFrame(columns=columns)
+
+    sort_columns = ["cycle_dt"]
+    if "message_dt" in data:
+        sort_columns.append("message_dt")
+    data = data.sort_values(sort_columns).drop_duplicates(
+        subset=["cycle_dt", "model"], keep="last"
+    )
 
     expected = expected_nco_reports_by_date(stations, data["date"].unique())
     rows: list[dict[str, object]] = []
