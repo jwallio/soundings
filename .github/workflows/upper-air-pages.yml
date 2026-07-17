@@ -39,7 +39,20 @@ jobs:
           python -m pip install -r requirements-dashboard.txt
 
       - name: Refresh upper-air data
-        run: python scripts/run_upper_air_monitor.py --refresh --years 6
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            echo "Refresh attempt ${attempt}/3"
+            if python scripts/run_upper_air_monitor.py --refresh --years 6; then
+              exit 0
+            fi
+            if [ "${attempt}" -lt 3 ]; then
+              echo "Refresh failed; waiting 30 seconds before retry."
+              sleep 30
+            fi
+          done
+          echo "Upper-air refresh failed after 3 attempts." >&2
+          exit 1
 
       - name: Build social graphics and public site
         run: |
