@@ -155,6 +155,194 @@ def prepare_nco(frame: pd.DataFrame) -> pd.DataFrame:
     return data.sort_values([column for column in ("cycle_dt", "message_dt") if column in data]).reset_index(drop=True)
 
 
+NCO_INGEST_MODELS = ("GFS", "NAM", "NCEP")
+
+
+def expected_nco_reports_by_date(
+    stations: pd.DataFrame,
+    dates: Iterable[object],
+) -> pd.Series:
+    """Return the date-effective expected CONUS report inventory.
+
+    The station master is the canonical expected inventory.  If a future
+    station-master export exposes effective start/end dates, those dates are
+    honored per day.  The current export has a single ``active_expected``
+    flag, so its configured active-CONUS count is used consistently rather
+    than substituting a historical maximum or today's observed count.
+    """
+    date_index = pd.DatetimeIndex(pd.to_datetime(list(dates), errors="coerce")).normalize()
+    date_index = date_index[~date_index.isna()]
+    if len(date_index) == 0:
+        return pd.Series(dtype="float64", index=pd.DatetimeIndex([], dtype="datetime64[ns]"))
+    if stations.empty:
+        return pd.Series(np.nan, index=date_index, dtype="float64")
+
+    data = stations.copy()
+    active_values = data.get("active_expected", pd.Series(True, index=data.index))
+    active = active_values.astype(str).str.lower().isin({"true", "1", "yes"})
+    data = data.loc[active].copy()
+    if data.empty:
+        return pd.Series(np.nan, index=date_index, dtype="float64")
+
+    start_column = next(
+        (column for column in ("effective_start_date", "active_start_date", "expected_start_date") if column in data),
+        None,
+    )
+    end_column = next(
+        (column for column in ("effective_end_date", "active_end_date", "expected_end_date") if column in data),
+        None,
+    )
+    starts = pd.to_datetime(data[start_column], errors="coerce").dt.normalize() if start_column else None
+    ends = pd.to_datetime(data[end_column], errors="coerce").dt.normalize() if end_column else None
+
+    counts: list[float] = []
+    for date in date_index:
+        eligible = pd.Series(True, index=data.index)
+        if starts is not None:
+            eligible &= starts.isna() | starts.le(date)
+        if ends is not None:
+            eligible &= ends.isna() | ends.ge(date)
+        counts.append(float(eligible.sum()))
+    return pd.Series(counts, index=date_index, dtype="float64")
+
+
+def latest_complete_nco_date(frame: pd.DataFrame, now: object | None = None) -> pd.Timestamp | pd.NaT:
+    """Return the latest fully dated NCO day, excluding a current UTC day."""
+    data = prepare_nco(frame)
+    if data.empty or "cycle_dt" not in data:
+        return pd.NaT
+    dates = data["cycle_dt"].dropna().dt.tz_convert(None).dt.normalize()
+    if dates.empty:
+        return pd.NaT
+    today = pd.Timestamp.now(tz="UTC").tz_convert(None).normalize() if now is None else pd.Timestamp(now).tz_localize(None).normalize()
+    prior = dates[dates < today]
+    return prior.max() if not prior.empty else dates.max()
+
+
+def nco_daily_ingest(
+    frame: pd.DataFrame,
+    stations: pd.DataFrame,
+    models: Iterable[str] = NCO_INGEST_MODELS,
+) -> pd.DataFrame:
+    """Combine valid NCO model/cycle rows into weighted daily ingest rates."""
+    columns = ["date", "received", "expected", "percent", "available_rows", *[f"{m.lower()}_count" for m in NCO_INGEST_MODELS]]
+    data = prepare_nco(frame)
+    if data.empty or not {"cycle_dt", "conus_count", "model"}.issubset(data.columns):
+        return pd.DataFrame(columns=columns)
+    data = data[data["model"].astype(str).str.upper().isin({str(m).upper() for m in models})].copy()
+    data["conus_count"] = pd.to_numeric(data["conus_count"], errors="coerce")
+    data["date"] = data["cycle_dt"].dt.tz_convert(None).dt.normalize()
+    data = data.dropna(subset=["date", "conus_count"])
+    data = data[data["conus_count"].ge(0)]
+    if data.empty:
+        return pd.DataFrame(columns=columns)
+
+    expected = expected_nco_reports_by_date(stations, data["date"].unique())
+    rows: list[dict[str, object]] = []
+    for date, group in data.sort_values("cycle_dt").groupby("date", sort=True):
+        expected_per_row = expected.get(pd.Timestamp(date), np.nan)
+        received = float(group["conus_count"].sum())
+        expected_total = float(expected_per_row * len(group)) if pd.notna(expected_per_row) else np.nan
+        row: dict[str, object] = {
+            "date": pd.Timestamp(date),
+            "received": received,
+            "expected": expected_total,
+            "percent": received / expected_total * 100.0 if expected_total and math.isfinite(expected_total) else np.nan,
+            "available_rows": int(len(group)),
+        }
+        latest_by_model = group.groupby(group["model"].astype(str).str.upper(), sort=False).tail(1)
+        for model in NCO_INGEST_MODELS:
+            matches = latest_by_model[latest_by_model["model"].astype(str).str.upper().eq(model)]
+            row[f"{model.lower()}_count"] = float(matches.iloc[-1]["conus_count"]) if not matches.empty else np.nan
+        rows.append(row)
+    return pd.DataFrame(rows, columns=columns).sort_values("date").reset_index(drop=True)
+
+
+def nco_lookback_metrics(
+    daily: pd.DataFrame,
+    windows: Iterable[int] = (7, 14, 30, 90),
+    end_date: object | None = None,
+) -> pd.DataFrame:
+    """Calculate weighted rates and equal-period percentage-point deltas."""
+    columns = ["days", "current_percent", "previous_percent", "delta_pp", "current_days", "previous_days"]
+    if daily.empty or not {"date", "received", "expected"}.issubset(daily.columns):
+        return pd.DataFrame(columns=columns)
+    data = daily.copy()
+    data["date"] = pd.to_datetime(data["date"], errors="coerce").dt.normalize()
+    for column in ("received", "expected"):
+        data[column] = pd.to_numeric(data[column], errors="coerce")
+    data = data.dropna(subset=["date"]).sort_values("date")
+    if data.empty:
+        return pd.DataFrame(columns=columns)
+    end = pd.Timestamp(end_date).normalize() if end_date is not None else data["date"].max()
+    rows: list[dict[str, object]] = []
+    for value in windows:
+        days = int(value)
+        comparison = nco_range_comparison(data, end - pd.Timedelta(days=days - 1), end)
+        rows.append({
+            "days": days,
+            "current_percent": comparison["current_percent"],
+            "previous_percent": comparison["previous_percent"],
+            "delta_pp": comparison["delta_pp"],
+            "current_days": comparison["current_days"],
+            "previous_days": comparison["previous_days"],
+        })
+    return pd.DataFrame(rows, columns=columns)
+
+
+def nco_range_comparison(daily: pd.DataFrame, start_date: object, end_date: object) -> dict[str, object]:
+    """Compare a selected range with the immediately preceding equal range."""
+    start = pd.to_datetime(start_date, errors="coerce")
+    end = pd.to_datetime(end_date, errors="coerce")
+    if pd.isna(start) or pd.isna(end) or start > end:
+        raise ValueError("NCO range start and end must be valid, ordered dates.")
+    start = pd.Timestamp(start).normalize()
+    end = pd.Timestamp(end).normalize()
+    previous_end = start - pd.Timedelta(days=1)
+    previous_start = previous_end - (end - start)
+
+    data = daily.copy()
+    if not data.empty and {"date", "received", "expected"}.issubset(data.columns):
+        data["date"] = pd.to_datetime(data["date"], errors="coerce").dt.normalize()
+        for column in ("received", "expected"):
+            data[column] = pd.to_numeric(data[column], errors="coerce")
+    else:
+        data = pd.DataFrame(columns=["date", "received", "expected"])
+
+    def rate(range_start: pd.Timestamp, range_end: pd.Timestamp) -> tuple[float, int]:
+        subset = data[data["date"].between(range_start, range_end) & data["received"].notna() & data["expected"].gt(0)]
+        expected_total = float(subset["expected"].sum())
+        if subset.empty or not expected_total:
+            return np.nan, int(len(subset))
+        return float(subset["received"].sum() / expected_total * 100.0), int(len(subset))
+
+    current, current_days = rate(start, end)
+    previous, previous_days = rate(previous_start, previous_end)
+    return {
+        "start_date": start,
+        "end_date": end,
+        "previous_start_date": previous_start,
+        "previous_end_date": previous_end,
+        "current_percent": current,
+        "previous_percent": previous,
+        "delta_pp": current - previous if pd.notna(current) and pd.notna(previous) else np.nan,
+        "current_days": current_days,
+        "previous_days": previous_days,
+    }
+
+
+def format_pp_delta(value: object) -> str:
+    """Format a percentage-point delta without inventing a zero."""
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return "—"
+    if not math.isfinite(numeric):
+        return "—"
+    sign = "+" if numeric >= 0 else "−"
+    return f"{sign}{abs(numeric):.1f} pp"
+
+
 def prepare_issues(frame: pd.DataFrame) -> pd.DataFrame:
     data = frame.copy()
     if data.empty:
