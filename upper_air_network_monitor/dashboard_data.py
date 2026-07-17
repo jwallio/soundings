@@ -337,7 +337,10 @@ def format_pp_delta(value: object) -> str:
         numeric = float(value)
     except (TypeError, ValueError):
         return "—"
-    return "—" if not math.isfinite(numeric) else f"{numeric:+.1f} pp"
+    if not math.isfinite(numeric):
+        return "—"
+    sign = "+" if numeric >= 0 else "−"
+    return f"{sign}{abs(numeric):.1f} pp"
 
 
 def prepare_issues(frame: pd.DataFrame) -> pd.DataFrame:

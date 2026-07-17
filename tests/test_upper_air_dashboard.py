@@ -225,7 +225,7 @@ def test_nco_lookbacks_use_equal_periods_and_percentage_points() -> None:
     assert row["current_percent"] == 95.0
     assert row["previous_percent"] == 100.0
     assert row["delta_pp"] == -5.0
-    assert format_pp_delta(row["delta_pp"]) == "-5.0 pp"
+    assert format_pp_delta(row["delta_pp"]) == "−5.0 pp"
     assert format_pp_delta(None) == "—"
 
 
