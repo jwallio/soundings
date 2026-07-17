@@ -13,6 +13,7 @@ import argparse
 import base64
 import html
 import io
+import json
 import math
 import shutil
 import sys
@@ -30,14 +31,18 @@ from upper_air_network_monitor.dashboard_charts import (
     archive_trend_figure,
     archive_windows_figure,
     issue_category_figure,
-    nco_ingest_figure,
     station_archive_shortfall_figure,
 )
 from upper_air_network_monitor.dashboard_data import (
     archive_window_metrics,
+    expected_nco_reports_by_date,
+    format_pp_delta,
     issue_counts_by_cycle,
     latest_issue_rows,
+    latest_complete_nco_date,
     load_dashboard_snapshot,
+    nco_daily_ingest,
+    nco_lookback_metrics,
     station_issue_changes,
     station_status_frame,
     source_health_summary,
@@ -152,7 +157,11 @@ def _write_downloads(output_dir: Path, snapshot, station_status: pd.DataFrame) -
 
 def _date_bounds(frame: pd.DataFrame, column: str, fallback: object, *, default_days: int = 90) -> tuple[pd.Timestamp, pd.Timestamp, pd.Timestamp]:
     """Return source minimum, default-window start, and source maximum dates."""
-    fallback_date = pd.Timestamp(fallback).normalize()
+    fallback_date = pd.to_datetime(fallback, errors="coerce")
+    if pd.isna(fallback_date):
+        fallback_date = pd.Timestamp.now(tz="UTC").tz_convert(None).normalize()
+    else:
+        fallback_date = pd.Timestamp(fallback_date).normalize()
     if frame.empty or column not in frame:
         return fallback_date, fallback_date, fallback_date
     dates = pd.to_datetime(frame[column], errors="coerce").dropna()
@@ -164,6 +173,11 @@ def _date_bounds(frame: pd.DataFrame, column: str, fallback: object, *, default_
     return first, default_start, last
 
 
+def _display_date(value: object) -> str:
+    date = pd.Timestamp(value)
+    return f"{date.strftime('%b')} {date.day}, {date.year}"
+
+
 def _source_coverage(snapshot, source: str) -> str:
     rows = snapshot.source_status[snapshot.source_status["source"].eq(source)]
     if rows.empty:
@@ -172,10 +186,102 @@ def _source_coverage(snapshot, source: str) -> str:
     end = pd.to_datetime(rows.iloc[0].get("coverage_end_utc"), errors="coerce", utc=True)
     if pd.isna(start) or pd.isna(end):
         return "unavailable"
-    text = f"{start.strftime('%b %d, %Y')} – {end.strftime('%b %d, %Y')}"
+    return f"{_display_date(start)} – {_display_date(end)}"
+
+
+def _source_qualifier(snapshot, source: str) -> str:
     if source == "IGRA daily archive" and snapshot.payload.partial_date:
-        text += f" (preliminary {pd.Timestamp(snapshot.payload.partial_date).strftime('%b %d')} excluded)"
-    return text
+        date = pd.Timestamp(snapshot.payload.partial_date)
+        return f"Preliminary {date.strftime('%b')} {date.day} excluded"
+    return ""
+
+
+def _nco_json_value(value: object) -> float | None:
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return None
+    return numeric if math.isfinite(numeric) else None
+
+
+def _nco_payload(daily: pd.DataFrame, source_start: pd.Timestamp, source_end: pd.Timestamp) -> dict[str, object]:
+    days: list[dict[str, object]] = []
+    for row in daily.itertuples(index=False):
+        date = pd.Timestamp(row.date).normalize()
+        if date < source_start or date > source_end:
+            continue
+        days.append(
+            {
+                "date": date.date().isoformat(),
+                "received": _nco_json_value(row.received),
+                "expected": _nco_json_value(row.expected),
+                "percent": _nco_json_value(row.percent),
+                "available_rows": int(row.available_rows),
+                "models": {
+                    "GFS": _nco_json_value(row.gfs_count),
+                    "NAM": _nco_json_value(row.nam_count),
+                    "NCEP": _nco_json_value(row.ncep_count),
+                },
+            }
+        )
+    return {"days": days, "min_date": source_start.date().isoformat(), "max_date": source_end.date().isoformat()}
+
+
+def _nco_latest_text(daily: pd.DataFrame, stations: pd.DataFrame) -> tuple[str, str]:
+    if daily.empty:
+        return "Latest: —", "No complete NCO ingest day is available."
+    latest = daily.sort_values("date").iloc[-1]
+    model_values = [getattr(latest, f"{model}_count") for model in ("gfs", "nam", "ncep")]
+    valid = [float(value) for value in model_values if pd.notna(value)]
+    received = max(valid) if valid else float(latest.received)
+    expected_series = expected_nco_reports_by_date(stations, [latest.date])
+    expected = expected_series.iloc[0] if not expected_series.empty else float("nan")
+    percent = received / expected * 100.0 if pd.notna(expected) and expected else float("nan")
+    date_text = _display_date(latest.date)
+    if pd.isna(expected) or not expected:
+        return f"Latest: {received:.0f} / —", f"{date_text}; expected inventory unavailable"
+    return f"Latest: {received:.0f} / {expected:.0f} · {percent:.1f}%", f"Complete data date: {date_text}"
+
+
+def _nco_heatmap_markup(
+    daily: pd.DataFrame,
+    metrics: pd.DataFrame,
+    source_start: pd.Timestamp,
+    source_end: pd.Timestamp,
+    default_start: pd.Timestamp,
+    default_end: pd.Timestamp,
+    stations: pd.DataFrame,
+) -> str:
+    payload = json.dumps(_nco_payload(daily, source_start, source_end), separators=(",", ":"))
+    latest_text, latest_detail = _nco_latest_text(daily, stations)
+    metric_cards: list[str] = []
+    for days in (7, 14, 30, 90):
+        row = metrics[metrics["days"].eq(days)] if not metrics.empty else pd.DataFrame()
+        current = row.iloc[0]["current_percent"] if not row.empty else float("nan")
+        delta = row.iloc[0]["delta_pp"] if not row.empty else float("nan")
+        current_text = f"{float(current):.1f}%" if pd.notna(current) else "—"
+        metric_cards.append(
+            f'<div class="nco-lookback" role="listitem"><span>{days}D</span>'
+            f'<strong>{current_text}</strong><small>{html.escape(format_pp_delta(delta))}</small></div>'
+        )
+    return (
+        '<div class="nco-ingest-head"><div><div class="chart-title">CONUS RAOB Ingest</div>'
+        f'<div class="nco-latest" id="nco-latest">{html.escape(latest_text)}</div>'
+        f'<div class="nco-latest-detail">{html.escape(latest_detail)}</div></div>'
+        '<div class="nco-view-controls"><button type="button" id="nco-one-year" class="nco-view-button active">1Y</button>'
+        '<button type="button" id="nco-custom-toggle" class="nco-view-button" aria-expanded="false" aria-controls="nco-heatmap-custom">Custom</button></div></div>'
+        '<div class="nco-lookbacks" role="list" aria-label="NCO ingest lookback rates">'
+        + "".join(metric_cards)
+        + '</div><div id="nco-heatmap-custom" class="nco-heatmap-custom" hidden>'
+        f'<label>Start <input id="nco-heatmap-start" type="date" min="{source_start.date().isoformat()}" max="{source_end.date().isoformat()}" value="{default_start.date().isoformat()}"></label>'
+        f'<label>End <input id="nco-heatmap-end" type="date" min="{source_start.date().isoformat()}" max="{source_end.date().isoformat()}" value="{default_end.date().isoformat()}"></label>'
+        '<button type="button" id="nco-heatmap-apply">Apply</button><button type="button" id="nco-heatmap-reset">Reset</button>'
+        '</div><div id="nco-range-summary" class="nco-range-summary" aria-live="polite" hidden></div>'
+        '<div class="nco-heatmap-scroller"><div id="nco-heatmap" class="nco-heatmap" role="group" aria-label="Daily combined NCO ingest calendar"></div></div>'
+        '<div class="nco-heatmap-legend" aria-label="Ingest health scale"><span><i class="health-healthy"></i>98–100% healthy</span><span><i class="health-minor"></i>95–97.9% minor misses</span><span><i class="health-reduced"></i>90–94.9% reduced</span><span><i class="health-degraded"></i>&lt;90% degraded</span><span><i class="health-none"></i>No data</span></div>'
+        '<div id="nco-cell-detail" class="nco-cell-detail" tabindex="0" aria-live="polite">Select a day for received, expected, and model details.</div>'
+        f'<script type="application/json" id="nco-heatmap-payload">{payload}</script>'
+    )
 
 
 def _station_deficit_frame(stations: pd.DataFrame) -> tuple[pd.DataFrame, str]:
@@ -220,18 +326,31 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
     resolved_count = int(transition_counts.get("Resolved", 0))
     kpis = snapshot.payload
     health = source_health_summary(snapshot.source_status)
-    health_status = "All required source products ready" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "Review required source health"
     health_color = "green" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "amber"
     optional_health = "Optional SPC feed unavailable" if health["optional_problems"] else "Optional feeds ready"
     nco_coverage = _source_coverage(snapshot, "NCO availability")
     issue_coverage = _source_coverage(snapshot, "NCO station issues")
     igra_coverage = _source_coverage(snapshot, "IGRA daily archive")
+    igra_qualifier = _source_qualifier(snapshot, "IGRA daily archive")
     archive_windows = archive_window_metrics(kpis.series, days=(7, 14, 30, 60, 90, 180, 360))
     window_90 = archive_windows[archive_windows["days"].eq(90)]
     shortfall_90 = abs(float(window_90.iloc[0]["deficit"])) if not window_90.empty else float("nan")
     percent_90 = float(window_90.iloc[0]["percent"]) if not window_90.empty else float("nan")
 
-    nco_first, nco_default_start, nco_last = _date_bounds(snapshot.nco, "cycle_dt", kpis.latest_date, default_days=365)
+    nco_daily = nco_daily_ingest(snapshot.nco, snapshot.stations)
+    nco_last = latest_complete_nco_date(snapshot.nco)
+    if pd.isna(nco_last) and not nco_daily.empty:
+        nco_last = pd.Timestamp(nco_daily["date"].max()).normalize()
+    if not nco_daily.empty and pd.notna(nco_last):
+        nco_daily = nco_daily[pd.to_datetime(nco_daily["date"], errors="coerce").le(nco_last)].copy()
+    if nco_daily.empty:
+        fallback_nco_date = _date_bounds(snapshot.nco, "cycle_dt", kpis.latest_date, default_days=365)[2]
+        nco_first = nco_default_start = nco_last = fallback_nco_date
+    else:
+        nco_first = pd.Timestamp(nco_daily["date"].min()).normalize()
+        nco_last = pd.Timestamp(nco_daily["date"].max()).normalize()
+        nco_default_start = max(nco_first, nco_last - pd.Timedelta(days=364))
+    nco_metrics = nco_lookback_metrics(nco_daily, windows=(7, 14, 30, 90), end_date=nco_last)
     issue_dates = pd.to_datetime(snapshot.issues.get("cycle_dt", pd.Series(dtype="datetime64[ns]")), errors="coerce").dropna()
     issue_span_days = max(90, int((issue_dates.max() - issue_dates.min()).days) + 1) if not issue_dates.empty else 90
     issue_history = issue_counts_by_cycle(snapshot.issues, issue_span_days)
@@ -271,9 +390,7 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
         include_runtime=False,
         div_id="station-shortfalls",
     )
-    nco_figure = nco_ingest_figure(snapshot.nco, show_smoothed_trend=True, smooth_window_days=7, height=350)
-    nco_figure.update_xaxes(range=[nco_default_start, nco_last])
-    nco = _plotly_fragment(nco_figure, include_runtime=False, div_id="nco-trend")
+    nco = _nco_heatmap_markup(nco_daily, nco_metrics, nco_first, nco_last, nco_default_start, nco_last, snapshot.stations)
     issue_figure = issue_category_figure(issue_history, show_smoothed_trend=True, height=350)
     issue_figure.update_xaxes(range=[issue_default_start, issue_last])
     categories = _plotly_fragment(
@@ -308,16 +425,17 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
 .wrap{{width:min(1240px,calc(100% - 32px));margin-inline:auto;min-width:0}}nav{{position:sticky;top:0;z-index:20;background:rgba(6,21,33,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}}nav .wrap{{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}}.brand{{font-weight:850;letter-spacing:-.02em;color:var(--blue);text-decoration:none}}.navlinks{{display:flex;gap:22px;font-size:14px;color:var(--muted)}}.navlinks a{{text-decoration:none}}.nav-status{{font-size:12px;color:var(--green);border:1px solid var(--line);border-radius:999px;padding:5px 9px}}
 .hero{{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:32px;align-items:center;padding:30px 0 8px}}.eyebrow{{color:var(--blue);font-weight:800;letter-spacing:.14em;font-size:12px}}h1{{font-size:clamp(26px,3vw,38px);line-height:1.1;letter-spacing:-.035em;max-width:860px;margin:12px 0 0;overflow-wrap:break-word}}.signal{{background:linear-gradient(150deg,rgba(255,112,79,.17),var(--panel) 58%);border-color:rgba(255,112,79,.6)!important}}.signal .kpi-value{{font-size:clamp(62px,7vw,96px);line-height:.95}}.signal-grid{{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--line);margin-top:18px;padding-top:16px}}.signal-grid strong{{display:block;font-size:22px}}.signal-grid span{{color:var(--muted);font-size:12px}}
 .section{{padding:28px 0}}.section-head{{margin-bottom:12px}}h2{{font-size:clamp(26px,3vw,38px);letter-spacing:-.035em;line-height:1.1;margin:0}}.grid{{display:grid;gap:14px;min-width:0}}.grid>*{{min-width:0}}.two{{grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr)}}.two-even{{grid-template-columns:repeat(2,minmax(0,1fr))}}.card{{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;overflow:hidden}}.status-card{{overflow:visible}}.kpi-label{{text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;font-size:11px}}.kpi-value{{font-size:clamp(38px,4vw,56px);font-weight:850;letter-spacing:-.05em;margin:7px 0 2px}}.problem{{color:var(--orange)}}.clean{{color:var(--green)}}.kpi-detail{{color:var(--muted);font-size:13px}}.chart-card{{padding:14px 12px 6px}}.chart-title{{padding:7px 9px 0;font-weight:800;font-size:17px}}.chart-sub{{padding:2px 9px;color:var(--muted);font-size:13px}}.js-plotly-plot,.plot-container,.svg-container{{max-width:100%!important}}.map{{width:100%;height:auto;display:block;border-radius:12px}}ul{{color:var(--muted);padding-left:20px}}li+li{{margin-top:9px}}
-.trend-controls{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 9px 4px}}.preset-controls{{display:flex;gap:6px;flex-wrap:wrap}}.trend-controls button,.custom-range input,.custom-range button{{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:7px 9px}}.trend-controls button,.custom-range button{{cursor:pointer;font-weight:750;font-size:12px}}.trend-controls button:hover,.trend-controls button.active,.custom-range button:hover{{background:var(--panel2);border-color:var(--blue)}}.scale-toggle{{color:var(--blue)!important}}.custom-range{{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--muted);font-size:12px}}.custom-range input{{color-scheme:dark;max-width:140px}}.custom-range button{{color:var(--blue)}}.operation-controls{{padding-top:8px}}.operation-controls .custom-range{{width:100%;justify-content:flex-end}}
+ .trend-controls{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 9px 4px}}.preset-controls{{display:flex;gap:6px;flex-wrap:wrap}}.trend-controls button,.custom-range input,.custom-range button{{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:7px 9px}}.trend-controls button,.custom-range button{{cursor:pointer;font-weight:750;font-size:12px}}.trend-controls button:hover,.trend-controls button.active,.custom-range button:hover{{background:var(--panel2);border-color:var(--blue)}}.scale-toggle{{color:var(--blue)!important}}.custom-range{{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--muted);font-size:12px}}.custom-range input{{color-scheme:dark;max-width:140px}}.custom-range button{{color:var(--blue)}}.operation-controls{{padding-top:8px}}.operation-controls .custom-range{{width:100%;justify-content:flex-end}}
+ .nco-ingest-head{{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:3px 9px 0}}.nco-ingest-head .chart-title{{padding:0}}.nco-latest{{font-weight:800;font-size:15px;margin-top:2px}}.nco-latest-detail{{color:var(--muted);font-size:11px}}.nco-view-controls{{display:flex;gap:6px;flex:0 0 auto}}.nco-view-button{{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:6px 9px;cursor:pointer;font-weight:750;font-size:12px}}.nco-view-button.active,.nco-view-button:hover,.nco-view-button:focus-visible{{border-color:var(--blue);background:var(--panel2)}}.nco-lookbacks{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px 9px 8px}}.nco-lookback{{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 8px;min-width:0}}.nco-lookback span,.nco-lookback small{{display:block;color:var(--muted);font-size:10px}}.nco-lookback strong{{display:block;font-size:16px;line-height:1.2}}.nco-lookback small{{color:var(--blue);margin-top:2px}}.nco-heatmap-custom{{display:flex;align-items:end;gap:7px;flex-wrap:wrap;padding:8px 9px;background:rgba(6,21,33,.45);border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}}.nco-heatmap-custom label{{display:flex;flex-direction:column;gap:3px}}.nco-heatmap-custom input{{color-scheme:dark;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:6px 7px}}.nco-heatmap-custom button{{border:1px solid var(--line);background:var(--bg);color:var(--blue);border-radius:7px;padding:6px 8px;cursor:pointer;font-weight:750;font-size:11px}}.nco-range-summary{{color:var(--muted);font-size:11px;padding:6px 9px 0}}.nco-heatmap-scroller{{overflow-x:auto;padding:2px 9px 0}}.nco-heatmap{{min-width:max(100%,calc(var(--nco-week-count,53) * 7px));font-size:9px}}.nco-months{{display:grid;grid-template-columns:repeat(var(--nco-week-count),minmax(0,1fr));margin-left:18px;height:17px;color:var(--muted);font-size:9px}}.nco-months span{{white-space:nowrap}}.nco-heatmap-body{{display:flex;gap:4px}}.nco-weekday-labels{{width:14px;display:grid;grid-template-rows:repeat(7,1fr);color:var(--muted);font-size:8px;text-align:right;line-height:1}}.nco-heatmap-grid{{display:grid;grid-template-columns:repeat(var(--nco-week-count),minmax(0,1fr));grid-template-rows:repeat(7,10px);gap:2px;flex:1}}.nco-cell{{display:block;width:100%;height:10px;min-width:5px;padding:0;border:0;border-radius:2px;background:var(--panel2);cursor:pointer;outline-offset:2px}}.nco-cell:hover,.nco-cell:focus-visible{{box-shadow:0 0 0 2px var(--text);z-index:2}}.nco-cell.health-healthy{{background:var(--green)}}.nco-cell.health-minor{{background:#89d58f}}.nco-cell.health-reduced{{background:var(--amber)}}.nco-cell.health-degraded{{background:var(--orange)}}.nco-cell.no-data{{background:#40566b}}.nco-heatmap-legend{{display:flex;gap:8px;flex-wrap:wrap;padding:7px 9px 2px;color:var(--muted);font-size:9px}}.nco-heatmap-legend span{{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}}.nco-heatmap-legend i{{width:8px;height:8px;border-radius:2px;display:inline-block}}.health-healthy{{background:var(--green)}}.health-minor{{background:#89d58f}}.health-reduced{{background:var(--amber)}}.health-degraded{{background:var(--orange)}}.health-none{{background:#40566b}}.nco-cell-detail{{margin:7px 9px 3px;padding:8px 9px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--muted);font-size:11px;min-height:42px}}.nco-cell-detail strong{{display:block;color:var(--text);font-size:12px}}.nco-cell-detail span{{display:block}}.nco-cell-models{{color:var(--muted);font-size:10px}}
 .change-strip{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}}.change-stat{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px}}.change-stat strong{{display:block;font-size:26px}}.change-stat span{{color:var(--muted);font-size:12px}}.change-stat.new strong{{color:var(--orange)}}.change-stat.resolved strong{{color:var(--green)}}
 details{{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}}summary{{cursor:pointer;font-weight:800;color:var(--blue);list-style:none}}summary::-webkit-details-marker{{display:none}}summary::after{{content:" +";color:var(--muted)}}details[open] summary::after{{content:" −"}}.table-wrap{{overflow:auto;margin-top:10px}}table{{width:100%;border-collapse:collapse;font-size:13px}}th,td{{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}}th{{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}}.status,.station-status{{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--panel2)}}.status.new-issue,.status.category-changed,.station-status.issue{{color:var(--orange)}}.status.resolved,.station-status.clean{{color:var(--green)}}
 .review-card{{margin-top:8px;padding:12px 20px}}.review-card details{{border-top:0;margin-top:0;padding-top:0}}
-.directory-tools{{display:grid;grid-template-columns:auto minmax(180px,420px) 1fr;gap:12px;align-items:center;margin:14px 0}}.directory-tools label{{font-weight:800}}.directory-tools input{{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}}.directory-tools input:focus{{border-color:var(--blue);box-shadow:0 0 0 3px rgba(89,200,245,.12)}}#station-count{{justify-self:end;color:var(--muted);font-size:12px}}.station-table{{max-height:420px}}.downloads{{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}}.download{{text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--blue);font-weight:750;font-size:13px}}.download:hover{{background:var(--panel2)}}
-.health-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}}.health-item{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px}}.health-item strong{{display:block;font-size:15px}}.health-item span{{display:block;color:var(--muted);font-size:12px;margin-top:3px}}.health-item .green{{color:var(--green)}}.health-item .amber{{color:var(--amber)}}
+ .directory-tools{{display:grid;grid-template-columns:auto minmax(180px,420px) 1fr;gap:12px;align-items:center;margin:14px 0}}.directory-tools label{{font-weight:800}}.directory-tools input{{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}}.directory-tools input:focus{{border-color:var(--blue);box-shadow:0 0 0 3px rgba(89,200,245,.12)}}#station-count{{justify-self:end;color:var(--muted);font-size:12px}}.station-table{{max-height:420px}}.downloads{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}}.download{{text-decoration:none;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--blue);font-weight:750;font-size:13px}}.download:hover{{background:var(--panel2)}}
+ .health-summary{{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0 0}}.health-summary strong{{font-size:16px}}.health-badge{{border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800}}.health-badge.green{{color:var(--green);border-color:rgba(82,211,162,.5)}}.health-badge.amber{{color:var(--amber);border-color:rgba(246,200,95,.5)}}.health-optional{{color:var(--muted);font-size:12px;margin:4px 0 12px}}.health-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}}.health-item{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px;min-width:0}}.health-item strong{{display:block;font-size:14px;white-space:nowrap}}.health-item span,.health-item small{{display:block;color:var(--muted);font-size:12px;margin-top:3px}}.health-item small{{font-size:11px;color:var(--amber)}}.health-item .green{{color:var(--green)}}.health-item .amber{{color:var(--amber)}}
 footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;color:var(--muted);font-size:13px}}.footer-row{{display:flex;justify-content:space-between;gap:20px}}.empty{{color:var(--muted)}}
 @media(min-width:901px){{.station-search-details[open]{{position:fixed;z-index:100;top:7vh;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 64px));max-height:86vh;overflow:auto;margin:0;padding:22px;background:var(--panel);border:1px solid var(--blue);border-radius:18px;box-shadow:0 0 0 100vmax rgba(2,10,17,.72),0 24px 70px rgba(0,0,0,.5)}}.station-search-details[open] .station-table{{max-height:none}}}}
 @media(max-width:900px){{.hero{{grid-template-columns:1fr;padding-top:32px}}.signal{{max-width:none}}.two,.two-even{{grid-template-columns:1fr}}}}
-@media(max-width:600px){{.wrap{{width:calc(100% - 20px)}}nav .wrap{{min-height:56px}}.navlinks{{display:none}}.nav-status{{font-size:11px}}.hero{{gap:20px;padding:24px 0 8px}}h1{{font-size:clamp(26px,8vw,34px)}}.signal .kpi-value{{font-size:68px}}.section{{padding:22px 0}}.card{{padding:15px;border-radius:15px}}.chart-card{{padding:10px 4px 2px}}.custom-range{{width:100%;margin-left:0;flex-wrap:wrap}}.custom-range input{{min-width:0;flex:1}}.change-strip{{grid-template-columns:1fr 1fr 1fr}}.change-stat{{padding:10px}}.change-stat strong{{font-size:22px}}.directory-tools{{grid-template-columns:1fr}}#station-count{{justify-self:start}}.footer-row{{display:block}}th,td{{padding:10px}}}}
+ @media(max-width:600px){{.wrap{{width:calc(100% - 20px)}}nav .wrap{{min-height:56px}}.navlinks{{display:none}}.nav-status{{font-size:11px}}.hero{{gap:20px;padding:24px 0 8px}}h1{{font-size:clamp(26px,8vw,34px)}}.signal .kpi-value{{font-size:68px}}.section{{padding:22px 0}}.card{{padding:15px;border-radius:15px}}.chart-card{{padding:10px 4px 2px}}.custom-range{{width:100%;margin-left:0;flex-wrap:wrap}}.custom-range input{{min-width:0;flex:1}}.change-strip{{grid-template-columns:1fr 1fr 1fr}}.change-stat{{padding:10px}}.change-stat strong{{font-size:22px}}.directory-tools{{grid-template-columns:1fr}}#station-count{{justify-self:start}}.nco-lookbacks{{gap:4px;padding-inline:5px}}.nco-lookback{{padding:6px 5px}}.nco-lookback strong{{font-size:14px}}.nco-lookback small{{font-size:9px}}.nco-ingest-head{{padding-inline:5px}}.nco-heatmap-scroller{{padding-inline:5px}}.health-grid{{grid-template-columns:1fr;gap:7px}}.health-item{{display:grid;grid-template-columns:minmax(132px,.85fr) minmax(0,1.15fr);column-gap:10px;align-items:baseline;padding:9px}}.health-item strong{{white-space:normal}}.health-item small{{grid-column:2}}.downloads{{gap:6px}}.download{{padding:8px 5px;font-size:11px}}.footer-row{{display:block}}th,td{{padding:10px}}}}
 </style></head><body>
 <a class="skip" href="#content">Skip to data</a>
 <nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status">Data through {html.escape(str(kpis.latest_date))}</div></div></nav>
@@ -329,9 +447,9 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
 
 <section id="stations" class="section"><div class="section-head"><div class="eyebrow">STATION STATUS</div><h2>Current NCO-reported issues</h2></div><div class="grid two"><article class="card"><img class="map" src="{map_uri}" alt="Miller-projection map of CONUS upper-air stations with state borders and latest NCO-reported status"></article><article class="card status-card"><div class="kpi-label">Latest mapped status</div><p class="kpi-detail">Stations with an NCO-reported issue</p><div class="kpi-value problem">{issue_count} / {active_count}</div><p class="kpi-detail">{clean_count} stations have no issue reported</p><div class="change-strip"><div class="change-stat new"><strong>{new_count}</strong><span>new or changed</span></div><div class="change-stat"><strong>{persistent_count}</strong><span>persistent</span></div><div class="change-stat resolved"><strong>{resolved_count}</strong><span>resolved</span></div></div><details class="station-search-details"><summary>Search all mapped stations</summary>{_station_directory(current_stations)}</details></article></div></section>
 
-<section id="operations" class="section"><div class="section-head"><div class="eyebrow">OPERATIONAL MESSAGES</div><h2>NCO reported for ingest</h2></div><div class="grid two-even"><article class="card chart-card"><div class="chart-title">CONUS RAOBs reported for ingest</div><div class="chart-sub">Latest reported count: {int(kpis.nco_count or 0)} &middot; Default view: latest 1 year &middot; Smoothed line: 7 days</div><div class="trend-controls operation-controls"><div class="preset-controls" aria-label="NCO ingest date range"><button type="button" class="nco-range-button" data-days="28">1MO</button><button type="button" class="nco-range-button" data-days="182">6MO</button><button type="button" class="nco-range-button active" data-days="365">1YR</button><button type="button" class="nco-range-button" data-days="730">2YR</button></div><form id="nco-custom-range" class="custom-range"><span>Custom</span><input id="nco-range-start" type="date" aria-label="NCO custom range start" min="{nco_first.date().isoformat()}" max="{nco_last.date().isoformat()}" value="{nco_default_start.date().isoformat()}"><span>to</span><input id="nco-range-end" type="date" aria-label="NCO custom range end" min="{nco_first.date().isoformat()}" max="{nco_last.date().isoformat()}" value="{nco_last.date().isoformat()}"><button type="submit">Apply</button></form></div>{nco}</article><article class="card chart-card"><div class="chart-title">Reported issue categories</div><div class="chart-sub">Default view: latest 28 days</div><div class="trend-controls operation-controls"><form id="issue-custom-range" class="custom-range"><span>Custom</span><input id="issue-range-start" type="date" aria-label="Issue-category custom range start" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_default_start.date().isoformat()}"><span>to</span><input id="issue-range-end" type="date" aria-label="Issue-category custom range end" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_last.date().isoformat()}"><button type="submit">Apply</button></form></div>{categories}</article></div><article class="card review-card"><details><summary>Review station changes from the previous comparable cycle</summary>{_issue_rows(snapshot)}</details></article></section>
+<section id="operations" class="section"><div class="section-head"><div class="eyebrow">OPERATIONAL MESSAGES</div><h2>NCO reported for ingest</h2></div><div class="grid two-even"><article class="card chart-card">{nco}</article><article class="card chart-card"><div class="chart-title">Reported issue categories</div><div class="chart-sub">Default view: latest 28 days</div><div class="trend-controls operation-controls"><form id="issue-custom-range" class="custom-range"><span>Custom</span><input id="issue-range-start" type="date" aria-label="Issue-category custom range start" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_default_start.date().isoformat()}"><span>to</span><input id="issue-range-end" type="date" aria-label="Issue-category custom range end" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_last.date().isoformat()}"><button type="submit">Apply</button></form></div>{categories}</article></div><article class="card review-card"><details><summary>Review station changes from the previous comparable cycle</summary>{_issue_rows(snapshot)}</details></article></section>
 
-<section id="methods" class="section"><div class="section-head"><div><div class="eyebrow">SOURCES & METHODS</div><h2>Sources and data health</h2></div><p>Generated {html.escape(updated_text)}.</p></div><article class="card"><div class="eyebrow">DATA HEALTH / SOURCE COVERAGE</div><div class="health-grid"><div class="health-item"><strong class="{health_color}">{health_status}</strong><span>{health["required_ready"]} of {health["required_total"]} required products ready · {health["duplicate_rows"]} duplicate rows · {optional_health}</span></div><div class="health-item"><strong>IGRA daily archive</strong><span>{html.escape(igra_coverage)}</span></div><div class="health-item"><strong>NCO ingest counts</strong><span>{html.escape(nco_coverage)}</span></div><div class="health-item"><strong>NCO issue statuses</strong><span>{html.escape(issue_coverage)}</span></div></div><ul>{caveats}</ul><p class="kpi-detail">Sources: NOAA/NCEI IGRA v2; NWS/NCEP/NCO SDM Administrative Messages; CONUS upper-air station master.</p><div class="downloads"><a class="download" href="archive-availability.csv" download>Download archive CSV</a><a class="download" href="latest-station-status.csv" download>Download station CSV</a><a class="download" href="nco-ingest-history.csv" download>Download NCO CSV</a></div></article></section>
+<section id="methods" class="section"><div class="section-head"><div><div class="eyebrow">SOURCES & METHODS</div><h2>Sources and data health</h2></div><p>Generated {html.escape(updated_text)}.</p></div><article class="card"><div class="health-summary"><div><strong>{health["required_ready"]} of {health["required_total"]} required products ready</strong></div><span class="health-badge {health_color}">{"Ready" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "Review"}</span></div><p class="health-optional">{html.escape(optional_health)}</p><div class="health-grid"><div class="health-item"><strong>IGRA daily archive</strong><span>{html.escape(igra_coverage)}</span>{f'<small>{html.escape(igra_qualifier)}</small>' if igra_qualifier else ''}</div><div class="health-item"><strong>NCO ingest counts</strong><span>{html.escape(nco_coverage)}</span></div><div class="health-item"><strong>NCO issue statuses</strong><span>{html.escape(issue_coverage)}</span></div></div><ul>{caveats}</ul><p class="kpi-detail">Sources: NOAA/NCEI IGRA v2; NWS/NCEP/NCO SDM Administrative Messages; CONUS upper-air station master.</p><div class="downloads"><a class="download" href="archive-availability.csv" download aria-label="Download archive CSV">Archive CSV</a><a class="download" href="latest-station-status.csv" download aria-label="Download station CSV">Station CSV</a><a class="download" href="nco-ingest-history.csv" download aria-label="Download NCO CSV">NCO CSV</a></div></article></section>
 </main><footer><div class="wrap footer-row"><div><strong class="brand">wall.cloud</strong><br>Weather data, carefully framed.</div><div><a href="#methods">Sources and methods</a></div></div></footer>
 <script>
 const trendChart=document.getElementById('archive-trend');
@@ -385,15 +503,50 @@ function attachCustomDateRange(formId,startId,endId,chartId){{
 }}
 attachCustomDateRange('nco-custom-range','nco-range-start','nco-range-end','nco-trend');
 attachCustomDateRange('issue-custom-range','issue-range-start','issue-range-end','issue-categories');
-const ncoChart=document.getElementById('nco-trend');
-const ncoEnd=new Date('{nco_last.date().isoformat()}T00:00:00Z');
-document.querySelectorAll('.nco-range-button').forEach(button=>button.addEventListener('click',()=>{{
-  const start=new Date(ncoEnd);
-  start.setUTCDate(start.getUTCDate()-(Number(button.dataset.days)-1));
-  Plotly.relayout(ncoChart,{{'xaxis.range':[start.toISOString(),ncoEnd.toISOString()],'xaxis.autorange':false}});
-  document.querySelectorAll('.nco-range-button').forEach(item=>item.classList.toggle('active',item===button));
-}}));
-document.getElementById('nco-custom-range')?.addEventListener('submit',()=>document.querySelectorAll('.nco-range-button').forEach(item=>item.classList.remove('active')));
+const ncoPayloadElement=document.getElementById('nco-heatmap-payload');
+if(ncoPayloadElement){{
+  const ncoPayload=JSON.parse(ncoPayloadElement.textContent||'{{}}');
+  const ncoByDate=new Map((ncoPayload.days||[]).map(row=>[row.date,row]));
+  const ncoHeatmap=document.getElementById('nco-heatmap');
+  const ncoDetail=document.getElementById('nco-cell-detail');
+  const ncoSummary=document.getElementById('nco-range-summary');
+  const ncoStartInput=document.getElementById('nco-heatmap-start');
+  const ncoEndInput=document.getElementById('nco-heatmap-end');
+  const ncoOneYear=document.getElementById('nco-one-year');
+  const ncoCustomToggle=document.getElementById('nco-custom-toggle');
+  const ncoCustomPanel=document.getElementById('nco-heatmap-custom');
+  const ncoApply=document.getElementById('nco-heatmap-apply');
+  const ncoReset=document.getElementById('nco-heatmap-reset');
+  const ncoMonths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const ncoIso=date=>date.toISOString().slice(0,10);
+  const ncoEscape=value=>String(value).replace(/[&<>\"]/g,character=>({{ '&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;' }})[character]);
+  const ncoPct=value=>Number.isFinite(Number(value))?Number(value).toFixed(1)+'%':'—';
+  const ncoHealth=value=>{{const number=Number(value);if(!Number.isFinite(number))return 'no-data';if(number>=98)return 'health-healthy';if(number>=95)return 'health-minor';if(number>=90)return 'health-reduced';return 'health-degraded';}};
+  const ncoRate=(startIso,endIso)=>{{let received=0,expected=0,days=0;for(const row of ncoPayload.days||[]){{if(row.date>=startIso&&row.date<=endIso&&Number.isFinite(Number(row.received))&&Number(row.expected)>0){{received+=Number(row.received);expected+=Number(row.expected);days++;}}}}return {{rate:expected?received/expected*100:null,days}};}};
+  const ncoShowCell=date=>{{
+    const row=ncoByDate.get(date);
+    if(!row){{ncoDetail.innerHTML='<strong>'+ncoEscape(date)+'</strong><span>No data — monitoring record absent.</span>';return;}}
+    const models=['GFS','NAM','NCEP'].map(model=>{{const value=row.models?.[model];return model+': '+(Number.isFinite(Number(value))?Number(value).toFixed(0):'—');}}).join(' · ');
+    ncoDetail.innerHTML='<strong>'+ncoEscape(date)+' · '+ncoPct(row.percent)+'</strong><span>'+Number(row.received).toFixed(0)+' received / '+(Number.isFinite(Number(row.expected))?Number(row.expected).toFixed(0):'—')+' expected across '+row.available_rows+' valid reports</span><span class="nco-cell-models">'+ncoEscape(models)+'</span>';
+  }};
+  const ncoRender=(startIso,endIso)=>{{
+    const start=new Date(startIso+'T00:00:00Z'),end=new Date(endIso+'T00:00:00Z');
+    const monday=new Date(start);monday.setUTCDate(monday.getUTCDate()-((monday.getUTCDay()+6)%7));
+    const sunday=new Date(end);sunday.setUTCDate(sunday.getUTCDate()+(6-((sunday.getUTCDay()+6)%7)));
+    const weeks=Math.round((sunday-monday)/86400000/7)+1;ncoHeatmap.style.setProperty('--nco-week-count',weeks);
+    let monthLabels='';for(let column=0;column<weeks;column++){{const day=new Date(monday);day.setUTCDate(day.getUTCDate()+column*7);if(column===0||day.getUTCDate()<=7)monthLabels+='<span style="grid-column:'+(column+1)+'">'+ncoMonths[day.getUTCMonth()]+'</span>';}}
+    let cells='';for(let row=0;row<7;row++)for(let column=0;column<weeks;column++){{const day=new Date(monday);day.setUTCDate(day.getUTCDate()+column*7+row);const date=ncoIso(day);if(day<start||day>end){{cells+='<span aria-hidden="true"></span>';continue;}}const value=ncoByDate.get(date);const label=value?date+' '+ncoPct(value.percent)+' '+Number(value.received).toFixed(0)+' received / '+(Number.isFinite(Number(value.expected))?Number(value.expected).toFixed(0):'no expected total')+' expected':date+' No data';cells+='<button type="button" class="nco-cell '+ncoHealth(value?.percent)+'" data-date="'+date+'" aria-label="'+ncoEscape(label)+'"></button>';}}
+    ncoHeatmap.innerHTML='<div class="nco-months" style="--nco-week-count:'+weeks+'">'+monthLabels+'</div><div class="nco-heatmap-body"><div class="nco-weekday-labels"><span>M</span><span>Tu</span><span>W</span><span>Th</span><span>F</span><span>Sa</span><span>Su</span></div><div class="nco-heatmap-grid" style="--nco-week-count:'+weeks+'">'+cells+'</div></div>';
+    ncoHeatmap.querySelectorAll('button[data-date]').forEach(cell=>{{cell.addEventListener('focus',()=>ncoShowCell(cell.dataset.date));cell.addEventListener('click',()=>ncoShowCell(cell.dataset.date));}});
+  }};
+  const ncoUpdateSummary=(startIso,endIso)=>{{const current=ncoRate(startIso,endIso);const start=new Date(startIso+'T00:00:00Z'),end=new Date(endIso+'T00:00:00Z');const length=Math.round((end-start)/86400000)+1;const previousEnd=new Date(start);previousEnd.setUTCDate(previousEnd.getUTCDate()-1);const previousStart=new Date(previousEnd);previousStart.setUTCDate(previousStart.getUTCDate()-(length-1));const previous=ncoRate(ncoIso(previousStart),ncoIso(previousEnd));const delta=current.rate!==null&&previous.rate!==null?current.rate-previous.rate:null;ncoSummary.hidden=false;ncoSummary.textContent=(current.days===0?'Selected range: No monitoring data':'Selected range: '+ncoPct(current.rate))+' ('+startIso+' to '+endIso+') · Previous equal range: '+ncoPct(previous.rate)+' ('+ncoIso(previousStart)+' to '+ncoIso(previousEnd)+') · Change: '+(delta===null?'—':(delta>=0?'+':'')+delta.toFixed(1)+' pp');}};
+  const ncoDefaultEnd=ncoPayload.max_date;const defaultEndDate=new Date(ncoDefaultEnd+'T00:00:00Z');const defaultStartDate=new Date(defaultEndDate);defaultStartDate.setUTCDate(defaultStartDate.getUTCDate()-364);const ncoDefaultStart=ncoIso(defaultStartDate)<ncoPayload.min_date?ncoPayload.min_date:ncoIso(defaultStartDate);
+  ncoRender(ncoDefaultStart,ncoDefaultEnd);
+  ncoCustomToggle?.addEventListener('click',()=>{{const expanded=ncoCustomToggle.getAttribute('aria-expanded')==='true';ncoCustomToggle.setAttribute('aria-expanded',String(!expanded));ncoCustomPanel.hidden=expanded;}});
+  ncoOneYear?.addEventListener('click',()=>{{ncoStartInput.value=ncoDefaultStart;ncoEndInput.value=ncoDefaultEnd;ncoSummary.hidden=true;ncoOneYear.classList.add('active');ncoCustomToggle?.classList.remove('active');ncoRender(ncoDefaultStart,ncoDefaultEnd);}});
+  ncoApply?.addEventListener('click',()=>{{const start=ncoStartInput.value,end=ncoEndInput.value;const invalid=!start||!end||start>end||start<ncoPayload.min_date||end>ncoPayload.max_date;if(invalid){{ncoStartInput.setCustomValidity('Choose dates within the available range, with start on or before end.');ncoStartInput.reportValidity();return;}}ncoStartInput.setCustomValidity('');ncoOneYear?.classList.remove('active');ncoCustomToggle?.classList.add('active');ncoRender(start,end);ncoUpdateSummary(start,end);}});
+  ncoReset?.addEventListener('click',()=>{{ncoStartInput.value=ncoDefaultStart;ncoEndInput.value=ncoDefaultEnd;ncoSummary.hidden=true;ncoOneYear?.classList.add('active');ncoCustomToggle?.classList.remove('active');ncoRender(ncoDefaultStart,ncoDefaultEnd);}});
+}}
 const stationSearch=document.getElementById('station-search');
 if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stationSearch.value.trim().toLowerCase();let visible=0;document.querySelectorAll('.station-row').forEach(row=>{{const show=!query||row.dataset.search.includes(query);row.hidden=!show;if(show)visible++;}});document.getElementById('station-count').textContent=`${{visible}} station${{visible===1?'':'s'}}`;}});}}
 </script></body></html>"""
