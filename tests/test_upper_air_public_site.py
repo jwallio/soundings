@@ -23,7 +23,8 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert 'id="nco-cell-detail"' in text and 'hidden>' in text
     assert "Average ingest" in text
     assert "Latest day:" in text
-    assert "Mon" in text and "Wed" in text and "Fri" in text
+    assert 'aria-label="Weekdays"' in text
+    assert all(f">{label}<" in text for label in ("M", "T", "W", "Th", "F", "Sa", "Su"))
     assert "ncoFormatDateDetail" in text
     assert "Healthy: 98 to 100 percent" in text
     assert "98 to 100 percent" in text
@@ -87,4 +88,3 @@ def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> No
     assert status["sources"]["nco"]["error_kind"] == "upstream_fetch"
     assert status["sources"]["nco"]["latest_successful_record_date"] == "2026-07-15"
     assert "HTTP 500" in status["sources"]["nco"]["last_error"]
-
