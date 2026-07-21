@@ -3,11 +3,53 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
+import json
 import subprocess
 import sys
 from pathlib import Path
 
 import pandas as pd
+
+
+REFRESH_STATUS_PATH = Path("data/upper_air_refresh_status.json")
+
+
+def _utc_now() -> str:
+    return dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def _read_status() -> dict[str, object]:
+    if not REFRESH_STATUS_PATH.exists():
+        return {}
+    try:
+        value = json.loads(REFRESH_STATUS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def _latest_record_date(path: Path, column: str) -> str | None:
+    frame = read_csv(path)
+    if frame.empty or column not in frame:
+        return None
+    values = pd.to_datetime(frame[column], errors="coerce").dropna()
+    return values.max().date().isoformat() if not values.empty else None
+
+
+def _write_status(status: dict[str, object]) -> None:
+    REFRESH_STATUS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    REFRESH_STATUS_PATH.write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
+
+
+def _error_kind(output: str) -> str:
+    """Classify a failed source step for compact public diagnostics."""
+    normalized = output.lower()
+    if any(token in normalized for token in ("http", "timeout", "timed out", "connection", "dns", "urlopen")):
+        return "upstream_fetch"
+    if any(token in normalized for token in ("parse", "schema", "column", "keyerror", "csv")):
+        return "parser_or_schema"
+    return "unknown"
 
 
 def parse_args() -> argparse.Namespace:
@@ -44,6 +86,42 @@ def run_step(name: str, command: list[str], required: bool) -> tuple[int, str]:
     if completed.returncode != 0:
         print(f"WARNING: {name} failed; continuing.", file=sys.stderr)
     return completed.returncode, completed.stdout + completed.stderr
+
+
+def _record_source_step(
+    status: dict[str, object],
+    source: str,
+    code: int,
+    output: str,
+    path: Path,
+    date_column: str,
+) -> None:
+    sources = status.setdefault("sources", {})
+    if not isinstance(sources, dict):
+        sources = {}
+        status["sources"] = sources
+    previous = sources.get(source, {})
+    if not isinstance(previous, dict):
+        previous = {}
+    if code == 0:
+        previous.update(
+            {
+                "status": "ready",
+                "last_successful_fetch_utc": status["run_started_at_utc"],
+                "latest_successful_record_date": _latest_record_date(path, date_column),
+                "last_error": None,
+            }
+        )
+    else:
+        retained = bool(path.exists() and path.stat().st_size > 0)
+        previous.update(
+            {
+                "status": "failed_retained" if retained else "failed",
+                "error_kind": _error_kind(output),
+                "last_error": " ".join(output.split())[-500:],
+            }
+        )
+    sources[source] = previous
 
 
 def read_csv(path: Path, **kwargs) -> pd.DataFrame:
@@ -136,15 +214,22 @@ def main() -> int:
     outdir = Path(args.outdir)
     python = sys.executable
     refresh = ["--refresh"] if args.refresh else []
-
+    previous = _read_status()
+    status: dict[str, object] = {
+        "schema_version": 1,
+        "run_started_at_utc": _utc_now(),
+        "run_status": "running",
+        "sources": previous.get("sources", {}) if isinstance(previous.get("sources", {}), dict) else {},
+    }
     try:
-        run_step(
+        station_code, station_output = run_step(
             "Build station master",
             [python, "scripts/build_upper_air_station_master.py", *refresh],
             required=True,
         )
+        _record_source_step(status, "station_master", station_code, station_output, Path("data/upper_air_station_master.csv"), "station_id")
         if not args.skip_igra:
-            run_step(
+            igra_code, igra_output = run_step(
                 "Build IGRA launch counts",
                 [
                     python,
@@ -157,6 +242,7 @@ def main() -> int:
                 ],
                 required=True,
             )
+            _record_source_step(status, "igra", igra_code, igra_output, outdir / "conus_balloon_launches_by_year_daily.csv", "date")
         if not args.skip_nco:
             nco_command = [python, "scripts/parse_nco_sdm_raob_messages.py"]
             if args.nco_source == "iem":
@@ -176,24 +262,39 @@ def main() -> int:
                         args.nco_archive_dir,
                     ]
                 )
-            run_step(
+            nco_code, nco_output = run_step(
                 "Parse NCO SDM RAOB messages",
                 nco_command,
                 required=False,
             )
+            _record_source_step(status, "nco", nco_code, nco_output, Path("data/nco_raob_availability.csv"), "cycle_date_utc")
         if not args.skip_spc:
-            run_step(
+            spc_code, spc_output = run_step(
                 "Parse SPC sounding page",
                 [python, "scripts/parse_spc_sounding_page.py"],
                 required=False,
             )
-        run_step(
+            _record_source_step(status, "spc", spc_code, spc_output, Path("data/spc_sounding_availability.csv"), "date")
+        dashboard_code, dashboard_output = run_step(
             "Make dashboard",
             [python, "scripts/make_upper_air_dashboard.py", "--outdir", str(outdir)],
             required=True,
         )
+        status["run_status"] = "success_with_stale" if any(
+            isinstance(source, dict) and source.get("status") == "failed_retained"
+            for source in status.get("sources", {}).values()
+        ) else "success"
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
+        status["run_status"] = "failed"
+        status["last_error"] = str(exc)
+        return_code = 1
+    else:
+        return_code = 0
+    finally:
+        status["run_completed_at_utc"] = _utc_now()
+        _write_status(status)
+    if return_code:
         return 1
 
     summary(outdir)
@@ -202,3 +303,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
 
@@ -25,6 +25,7 @@ MANIFEST_PATH = Path("outputs/upper_air_network_monitor/social/upper_air_data_wa
 STATION_DEFICITS_PATH = Path("outputs/conus_balloon_launches_station_deficits.csv")
 IGRA_METADATA_PATH = Path("outputs/conus_balloon_launches_metadata.json")
 SPC_STATUS_PATH = Path("data/spc_sounding_availability.csv")
+REFRESH_STATUS_PATH = Path("data/upper_air_refresh_status.json")
 BASELINE_YEARS = (2021, 2022, 2023, 2024)
 ARCHIVE_DETAIL_START_DATE = pd.Timestamp("2021-01-01")
 
@@ -42,6 +43,7 @@ class DashboardSnapshot:
     igra_metadata: dict[str, object]
     source_status: pd.DataFrame
     manifest_used: bool
+    refresh_status: dict[str, object] = field(default_factory=dict)
 
 
 def _read_csv(path: Path, **kwargs: object) -> pd.DataFrame:
@@ -223,6 +225,7 @@ def nco_daily_ingest(
     frame: pd.DataFrame,
     stations: pd.DataFrame,
     models: Iterable[str] = NCO_INGEST_MODELS,
+    cycle_hours: Iterable[str | int] | None = None,
 ) -> pd.DataFrame:
     """Combine valid NCO model/cycle records into weighted daily rates.
 
@@ -237,6 +240,9 @@ def nco_daily_ingest(
     if data.empty or not {"cycle_dt", "conus_count", "model"}.issubset(data.columns):
         return pd.DataFrame(columns=columns)
     data = data[data["model"].astype(str).str.upper().isin({str(m).upper() for m in models})].copy()
+    if cycle_hours is not None:
+        requested_hours = {str(value).replace("Z", "").zfill(2) for value in cycle_hours}
+        data = data[data["cycle_dt"].dt.hour.astype(str).str.zfill(2).isin(requested_hours)].copy()
     data["conus_count"] = pd.to_numeric(data["conus_count"], errors="coerce")
     data["date"] = data["cycle_dt"].dt.tz_convert(None).dt.normalize()
     data = data.dropna(subset=["date", "conus_count"])
@@ -567,6 +573,7 @@ def load_dashboard_snapshot(repo_root: Path) -> DashboardSnapshot:
     igra_metadata = _read_json(igra_metadata_path)
     spc_status_path = repo_root / SPC_STATUS_PATH
     spc_status = _read_csv(spc_status_path, dtype=str)
+    refresh_status = _read_json(repo_root / REFRESH_STATUS_PATH)
     source_paths = {
         "metrics manifest": manifest_path,
         "IGRA daily archive": inputs.input_paths["igra_daily"],
@@ -597,6 +604,7 @@ def load_dashboard_snapshot(repo_root: Path) -> DashboardSnapshot:
         igra_metadata=igra_metadata,
         source_status=_source_rows(repo_root, source_paths, frames),
         manifest_used=manifest_used,
+        refresh_status=refresh_status,
     )
 
 
@@ -792,3 +800,4 @@ def format_metric(value: object, *, decimals: int = 1, suffix: str = "") -> str:
     if not math.isfinite(numeric):
         return "N/A"
     return f"{numeric:,.{decimals}f}{suffix}"
+

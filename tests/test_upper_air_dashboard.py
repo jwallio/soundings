@@ -246,6 +246,27 @@ def test_nco_one_applicable_record_uses_one_expected_inventory() -> None:
     assert daily.iloc[0]["percent"] == 100.0
 
 
+def test_nco_cycle_filter_keeps_combined_and_separate_cycle_rates() -> None:
+    nco = pd.DataFrame(
+        {
+            "cycle_date_utc": ["2025-01-03", "2025-01-03", "2025-01-04", "2025-01-04"],
+            "cycle_hour": ["00", "12", "00", "12"],
+            "model": ["NAM", "NAM", "NAM", "NAM"],
+            "conus_count": [8, 6, 10, 4],
+        }
+    )
+    stations = pd.DataFrame({"active_expected": ["true"] * 10})
+    combined = nco_daily_ingest(nco, stations)
+    zero = nco_daily_ingest(nco, stations, cycle_hours=("00",))
+    twelve = nco_daily_ingest(nco, stations, cycle_hours=(12,))
+    assert combined["received"].sum() == 28
+    assert zero["received"].sum() == 18
+    assert twelve["received"].sum() == 10
+    assert zero["expected"].sum() == 20
+    assert twelve["expected"].sum() == 20
+    assert nco_lookback_metrics(twelve, windows=(2,), end_date="2025-01-04").iloc[0]["current_percent"] == 50.0
+
+
 def test_nco_no_data_returns_empty_daily_frame() -> None:
     stations = pd.DataFrame({"active_expected": ["true"] * 2})
     daily = nco_daily_ingest(pd.DataFrame(), stations)
@@ -443,3 +464,4 @@ def test_streamlit_navigation_renders_only_selected_view() -> None:
     assert not app.exception
     assert app.radio(key="dashboard_view").value == "NCO operations"
     assert len(app.get("plotly_chart")) == 3
+

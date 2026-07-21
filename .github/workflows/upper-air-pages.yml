@@ -3,7 +3,7 @@ name: Update and publish upper-air dashboard
 on:
   workflow_dispatch:
   schedule:
-    # After the twice-daily source refresh window.
+    # Cover the expected 00Z and 12Z NCO message windows.
     - cron: "45 1,3,13,15 * * *"
 
 permissions:
@@ -41,14 +41,25 @@ jobs:
       - name: Refresh upper-air data
         run: |
           set -o pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ github.event.schedule }}" == "45 15 * * *" ]]; then
+            export FULL_ARCHIVE_REFRESH=true
+          else
+            export FULL_ARCHIVE_REFRESH=false
+          fi
+          echo "FULL_ARCHIVE_REFRESH=${FULL_ARCHIVE_REFRESH}" >> "$GITHUB_ENV"
           for attempt in 1 2 3; do
             echo "Refresh attempt ${attempt}/3"
-            if python scripts/run_upper_air_monitor.py --refresh --years 6; then
+            refresh_args=(--refresh --years 6)
+            if [[ "${FULL_ARCHIVE_REFRESH}" != "true" ]]; then
+              refresh_args+=(--skip-igra)
+            fi
+            if python scripts/run_upper_air_monitor.py "${refresh_args[@]}"; then
               exit 0
             fi
             if [ "${attempt}" -lt 3 ]; then
-              echo "Refresh failed; waiting 30 seconds before retry."
-              sleep 30
+              delay=$((30 * 2 ** (attempt - 1)))
+              echo "Refresh failed; waiting ${delay} seconds before retry."
+              sleep "${delay}"
             fi
           done
           echo "Upper-air refresh failed after 3 attempts." >&2
@@ -56,7 +67,11 @@ jobs:
 
       - name: Build social graphics and public site
         run: |
-          python scripts/build_upper_air_social_graphics.py
+          if [[ "${FULL_ARCHIVE_REFRESH:-false}" == "true" ]]; then
+            python scripts/build_upper_air_social_graphics.py
+          else
+            echo "Skipping full social-graphics rebuild for NCO-only refresh."
+          fi
           python scripts/build_upper_air_public_site.py
           test -s upper-air-site/dist/index.html
           test -s upper-air-site/dist/og.png
@@ -78,3 +93,4 @@ jobs:
       - name: Deploy Pages artifact
         id: deployment
         uses: actions/deploy-pages@v4
+
