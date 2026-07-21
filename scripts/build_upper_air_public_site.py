@@ -657,7 +657,7 @@ if(ncoPayloadElement){{
     const filteredMonths=monthItems.filter((item,index)=>index===0||item.week!==monthItems[index-1].week||(item.label!==monthItems[index-1].label||item.week-monthItems[index-1].week>=4));
     let monthLabels='';for(const item of filteredMonths)monthLabels+='<span style="grid-column:'+(item.week+1)+'">'+item.label+'</span>';
     let cells='';for(let row=0;row<7;row++)for(let column=0;column<weeks;column++){{const day=new Date(monday);day.setUTCDate(day.getUTCDate()+column*7+row);const date=ncoIso(day);if(day<start||day>end){{cells+='<span aria-hidden="true"></span>';continue;}}const value=ncoByDate.get(date);const sources=ncoPresentSources(value);const label=value?date+' '+ncoPct(value.percent)+' '+Number(value.received).toFixed(0)+' of '+(Number.isFinite(Number(value.expected))?Number(value.expected).toFixed(0):'no expected total')+' expected product records'+(sources.length?' · '+sources.join(' · '):''):date+' No data';cells+='<button type="button" class="nco-cell '+ncoHealth(value?.percent)+'" data-date="'+date+'" aria-label="'+ncoEscape(label)+'"></button>';}}
-    ncoHeatmap.innerHTML='<div class="nco-months" style="--nco-week-count:'+weeks+'">'+monthLabels+'</div><div class="nco-heatmap-body"><div class="nco-weekday-labels"><span>Mon</span><span aria-hidden="true"></span><span>Wed</span><span aria-hidden="true"></span><span>Fri</span><span aria-hidden="true"></span><span aria-hidden="true"></span></div><div class="nco-heatmap-grid" style="--nco-week-count:'+weeks+'">'+cells+'</div></div>';
+    ncoHeatmap.innerHTML='<div class="nco-months" style="--nco-week-count:'+weeks+'">'+monthLabels+'</div><div class="nco-heatmap-body"><div class="nco-weekday-labels" aria-label="Weekdays"><span>M</span><span>T</span><span>W</span><span>Th</span><span>F</span><span>Sa</span><span>Su</span></div><div class="nco-heatmap-grid" style="--nco-week-count:'+weeks+'">'+cells+'</div></div>';
     ncoHeatmap.querySelectorAll('button[data-date]').forEach(cell=>{{cell.addEventListener('focus',()=>ncoShowCell(cell.dataset.date));cell.addEventListener('click',()=>ncoShowCell(cell.dataset.date));}});
   }};
   const ncoUpdateSummary=(startIso,endIso)=>{{const current=ncoRate(startIso,endIso);const start=new Date(startIso+'T00:00:00Z'),end=new Date(endIso+'T00:00:00Z');const length=Math.round((end-start)/86400000)+1;const previousEnd=new Date(start);previousEnd.setUTCDate(previousEnd.getUTCDate()-1);const previousStart=new Date(previousEnd);previousStart.setUTCDate(previousStart.getUTCDate()-(length-1));const previous=ncoRate(ncoIso(previousStart),ncoIso(previousEnd));const delta=current.rate!==null&&previous.rate!==null?current.rate-previous.rate:null;ncoSummary.hidden=false;ncoSummary.textContent=(current.days===0?'Selected range: No monitoring data':'Selected range: '+ncoPct(current.rate))+' ('+startIso+' to '+endIso+') · Previous equal range: '+ncoPct(previous.rate)+' ('+ncoIso(previousStart)+' to '+ncoIso(previousEnd)+') · Change: '+(delta===null?'—':(delta>=0?'+':'−')+Math.abs(delta).toFixed(1)+' pp');}};
@@ -759,6 +759,18 @@ const stationSearch=document.getElementById('station-search');
 if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stationSearch.value.trim().toLowerCase();let visible=0;document.querySelectorAll('.station-row').forEach(row=>{{const show=!query||row.dataset.search.includes(query);row.hidden=!show;if(show)visible++;}});document.getElementById('station-count').textContent=`${{visible}} station${{visible===1?'':'s'}}`;}});}}
 </script></body></html>"""
 
+    # The cycle-selector renderer is intentionally kept in the inline page
+    # script. Normalize its weekday markup here so both render paths show the
+    # complete calendar instead of the older Mon/Wed/Fri-only labels.
+    page = page.replace(
+        '<div class="nco-weekday-labels"><span>Mon</span><span aria-hidden="true"></span><span>Wed</span><span aria-hidden="true"></span><span>Fri</span><span aria-hidden="true"></span><span aria-hidden="true"></span></div>',
+        '<div class="nco-weekday-labels" aria-label="Weekdays"><span>M</span><span>T</span><span>W</span><span>Th</span><span>F</span><span>Sa</span><span>Su</span></div>',
+    )
+    page = page.replace(
+        '</head>',
+        '<style>.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
+        1,
+    )
     index_path = output_dir / "index.html"
     index_path.write_text(page, encoding="utf-8")
     social_image = REPO_ROOT / "outputs" / "upper_air_network_monitor" / "social" / "original_dashboard_style.png"
