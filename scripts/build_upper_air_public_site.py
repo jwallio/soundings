@@ -33,6 +33,7 @@ from upper_air_network_monitor.dashboard_charts import (
     archive_windows_figure,
     issue_category_figure,
     station_archive_shortfall_figure,
+    station_archive_surplus_figure,
 )
 from upper_air_network_monitor.dashboard_data import (
     archive_window_metrics,
@@ -491,6 +492,11 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
         include_runtime=False,
         div_id="station-shortfalls",
     )
+    station_surpluses = _plotly_fragment(
+        station_archive_surplus_figure(station_deficits, height=360),
+        include_runtime=False,
+        div_id="station-surpluses",
+    )
     nco = _nco_heatmap_markup(
         {name: (frame, nco_view_metrics[name]) for name, frame in nco_views.items()},
         nco_first,
@@ -560,7 +566,7 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
 <header class="hero"><div><div class="eyebrow">CONUS UPPER-AIR DATA WATCH</div><h1>Sounding data availability, clearly tracked.</h1></div>
 <article class="card signal"><div class="kpi-label">Current 7-day archive gap</div><div class="kpi-value problem">{kpis.gap_percent:.1f}%</div><div class="kpi-detail">{kpis.observed:.1f} observed vs {kpis.expected:.1f} expected records per day</div><div class="signal-grid"><div><strong>{shortfall_90:.0f}</strong><span>fewer records over 90 days</span></div><div><strong>{percent_90:.1f}%</strong><span>90-day difference</span></div></div></article></header>
 <section id="archive" class="section"><div class="section-head"><div class="eyebrow">SOUNDING AVAILABILITY</div><h2>Observed records versus expected</h2></div><article class="card chart-card"><div class="chart-title">Sounding availability trend</div><div class="chart-sub">Diamonds label same-date historical event maximums above 140/day. The orange dotted line marks NWS RAOB cuts.</div><div class="trend-controls"><div class="preset-controls" aria-label="Trend date range"><button type="button" class="range-button" data-days="182">6MO</button><button type="button" class="range-button active" data-days="365">1YR</button><button type="button" class="range-button" data-days="730">2YR</button><button type="button" class="range-button" data-days="10">10D</button><button type="button" class="range-button" data-days="30">30D</button><button type="button" class="range-button" data-days="60">60D</button><button type="button" class="range-button" data-days="90">90D</button><button type="button" id="nws-layoffs-range" class="event-range-button">NWS Layoffs</button><button type="button" id="scale-toggle" class="scale-toggle">Full Y scale</button></div><form id="custom-range" class="custom-range"><span>Custom</span><input id="range-start" type="date" aria-label="Custom range start" min="{first_trend_date.date().isoformat()}" max="{last_trend_date.date().isoformat()}" value="{first_trend_date.date().isoformat()}"><span>to</span><input id="range-end" type="date" aria-label="Custom range end" min="{first_trend_date.date().isoformat()}" max="{last_trend_date.date().isoformat()}" value="{last_trend_date.date().isoformat()}"><button type="submit">Apply</button></form></div>{trend}</article></section>
-<section class="section"><div class="grid two-even"><article class="card chart-card"><div class="chart-title">Recent archive windows</div>{windows}</article><article class="card chart-card"><div class="chart-title">Stations ranked by 90-day archive shortfall</div><div class="chart-sub">IGRA archive records vs {html.escape(station_baseline_label)}</div>{station_shortfalls}</article></div></section>
+<section class="section"><article class="card chart-card"><div class="chart-title">Recent archive windows</div>{windows}</article><div class="grid two-even station-ranking-grid"><article class="card chart-card"><div class="chart-title">Stations ranked by 90-day archive shortfall</div><div class="chart-sub">IGRA archive records vs {html.escape(station_baseline_label)}</div>{station_shortfalls}</article><article class="card chart-card"><div class="chart-title">Stations ranked by 90-day archive surplus</div><div class="chart-sub">IGRA archive records above {html.escape(station_baseline_label)}</div>{station_surpluses}</article></div></section>
 
 <section id="stations" class="section"><div class="section-head"><div class="eyebrow">STATION STATUS</div><h2>Current NCO-reported issues</h2></div><div class="grid two"><article class="card"><img class="map" src="{map_uri}" alt="Miller-projection map of CONUS upper-air stations with state borders and latest NCO-reported status"></article><article class="card status-card"><div class="kpi-label">Latest mapped status</div><p class="kpi-detail">Stations with an NCO-reported issue</p><div class="kpi-value problem">{issue_count} / {active_count}</div><p class="kpi-detail">{clean_count} stations have no issue reported</p><div class="change-strip"><div class="change-stat new"><strong>{new_count}</strong><span>new or changed</span></div><div class="change-stat"><strong>{persistent_count}</strong><span>persistent</span></div><div class="change-stat resolved"><strong>{resolved_count}</strong><span>resolved</span></div></div><details class="station-search-details"><summary>Search all mapped stations</summary>{_station_directory(current_stations)}</details></article></div></section>
 
@@ -768,7 +774,7 @@ if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stat
     )
     page = page.replace(
         '</head>',
-        '<style>.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
+        '<style>.station-ranking-grid{margin-top:14px}.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
         1,
     )
     index_path = output_dir / "index.html"
