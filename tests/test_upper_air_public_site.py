@@ -16,6 +16,8 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert 'id="custom-range"' in text and "NWS Layoffs" in text
     assert "NCO reported for ingest" in text
     assert "CONUS RAOB Ingest" in text
+    assert "Stations ranked by 90-day archive surplus" in text
+    assert 'id="station-surpluses"' in text
     assert 'id="nco-heatmap"' in text
     assert 'id="nco-heatmap-custom"' in text
     assert 'id="nco-one-year"' in text and 'id="nco-custom-toggle"' in text
