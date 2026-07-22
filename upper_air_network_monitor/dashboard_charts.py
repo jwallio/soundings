@@ -156,6 +156,27 @@ def empty_figure(message: str, *, height: int = 390) -> go.Figure:
     return _base_layout(fig, height=height)
 
 
+def _deficit_segments(data: pd.DataFrame) -> list[pd.DataFrame]:
+    """Return contiguous below-baseline runs for clean Plotly area fills.
+
+    A single ``where(below)`` trace inserts NaNs whenever the observed series
+    crosses the baseline. Plotly can then close the fill polygon across those
+    NaNs, producing the detached triangular patches seen in the dashboard.
+    Segmenting on both deficit state and date continuity keeps each filled
+    polygon bounded by the actual observations that support it.
+    """
+    eligible = data.loc[
+        data["observed"].notna()
+        & data["baseline"].notna()
+        & data["observed"].lt(data["baseline"]),
+        ["date", "observed", "baseline"],
+    ].sort_values("date")
+    if eligible.empty:
+        return []
+    breaks = eligible["date"].diff().gt(pd.Timedelta(days=1)).cumsum()
+    return [segment for _, segment in eligible.groupby(breaks) if len(segment) >= 2]
+
+
 def archive_trend_figure(
     series: pd.DataFrame,
     *,
@@ -219,30 +240,29 @@ def archive_trend_figure(
                 hovertemplate="%{x|%b %d, %Y}<br>Historical range high: %{y:.1f}/day<extra></extra>",
             )
         )
-    fig.add_trace(
-        go.Scatter(
-            x=data["date"],
-            y=data["baseline"].where(below),
-            mode="lines",
-            line={"width": 0},
-            hoverinfo="skip",
-            showlegend=False,
-            connectgaps=False,
+    for segment in _deficit_segments(data):
+        fig.add_trace(
+            go.Scatter(
+                x=segment["date"],
+                y=segment["baseline"],
+                mode="lines",
+                line={"width": 0},
+                hoverinfo="skip",
+                showlegend=False,
+            )
         )
-    )
-    fig.add_trace(
-        go.Scatter(
-            x=data["date"],
-            y=data["observed"].where(below),
-            mode="lines",
-            line={"width": 0},
-            fill="tonexty",
-            fillcolor="rgba(255,112,79,0.28)",
-            hoverinfo="skip",
-            showlegend=False,
-            connectgaps=False,
+        fig.add_trace(
+            go.Scatter(
+                x=segment["date"],
+                y=segment["observed"],
+                mode="lines",
+                line={"width": 0},
+                fill="tonexty",
+                fillcolor="rgba(255,112,79,0.28)",
+                hoverinfo="skip",
+                showlegend=False,
+            )
         )
-    )
     if show_daily and "daily" in data:
         fig.add_trace(
             go.Scatter(
@@ -349,7 +369,9 @@ def archive_trend_figure(
             if pd.isna(row["observed"]):
                 continue
             observed_y = float(row["observed"])
-            label_y = 145.0
+            # Keep the label above the 145 gridline so the guide does not run
+            # through the text while preserving the capped chart scale.
+            label_y = 146.5
             label_y = min(label_y, guide_y_max - 2.0)
             label_y = max(label_y, guide_y_min + 2.0)
             fig.add_trace(

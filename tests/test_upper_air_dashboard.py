@@ -388,9 +388,24 @@ def test_plotly_builders_render_real_chart_structures() -> None:
     assert [trace.text[1] for trace in workforce_traces] == ["NWS RAOB cuts"]
     assert all(trace.text[0] == "" and trace.text[2] == "" for trace in workforce_traces)
     assert all("timeline context only" in str(row[1]).lower() for trace in workforce_traces for row in trace.customdata)
+    assert workforce_traces[0].y[1] > 145.0
     assert next(trace for trace in event_trend.data if trace.name == "Event maximums").marker.color == "#F15BB5"
     assert not any(trace.name == "Government Actions" for trace in workforce_trend.data)
     assert all("not a confirmed cause" not in str(trace.hovertemplate) for trace in event_trend.data)
+
+
+def test_archive_deficit_fills_are_contiguous() -> None:
+    series = pd.DataFrame(
+        {
+            "date": pd.date_range("2025-01-01", periods=6, freq="D"),
+            "observed": [100.0, 99.0, 110.0, 98.0, 97.0, 111.0],
+            "baseline": [105.0] * 6,
+        }
+    )
+    figure = archive_trend_figure(series)
+    fills = [trace for trace in figure.data if trace.fill == "tonexty"]
+    assert len(fills) == 2
+    assert all(not any(value is None for value in trace.y) for trace in fills)
 
 
 def test_station_archive_shortfall_chart_ranks_largest_gap_first_visually() -> None:

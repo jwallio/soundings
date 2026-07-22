@@ -13,6 +13,7 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert "CONUS Upper-Air Data Watch" in text
     assert "soundings.wall.cloud" in text
     assert "SOUNDING AVAILABILITY" in text and "Sounding availability trend" in text
+    assert "Diamonds label same-date historical event maximums" not in text
     assert 'id="custom-range"' in text and "NWS Layoffs" in text
     assert "NCO reported for ingest" in text
     assert "CONUS RAOB Ingest" in text
