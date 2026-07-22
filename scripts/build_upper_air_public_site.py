@@ -488,6 +488,7 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
     trend = _plotly_fragment(trend_figure, include_runtime=True, div_id="archive-trend")
     windows = _plotly_fragment(archive_windows_figure(archive_windows, height=360, vertical=True), include_runtime=False, div_id="archive-windows")
     station_windows = ((365, "1YR"), (180, "6MO"), (90, "90D"), (30, "30D"), (7, "7D"))
+    station_default_days = 30
     station_shortfall_panels: list[str] = []
     station_surplus_panels: list[str] = []
     for days, label in station_windows:
@@ -501,13 +502,13 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
             include_runtime=False,
             div_id=f"station-surpluses-{days}",
         )
-        hidden = "" if days == 365 else " hidden"
+        hidden = "" if days == station_default_days else " hidden"
         station_shortfall_panels.append(f'<div class="station-ranking-panel" data-window="{days}"{hidden}>{shortfall_figure}</div>')
         station_surplus_panels.append(f'<div class="station-ranking-panel" data-window="{days}"{hidden}>{surplus_figure}</div>')
     station_shortfall_panels_html = "".join(station_shortfall_panels)
     station_surplus_panels_html = "".join(station_surplus_panels)
     station_window_buttons = "".join(
-        f'<button type="button" class="station-window-button{" active" if days == 365 else ""}" data-window="{days}" aria-pressed="{"true" if days == 365 else "false"}">{label}</button>'
+        f'<button type="button" class="station-window-button{" active" if days == station_default_days else ""}" data-window="{days}" aria-pressed="{"true" if days == station_default_days else "false"}">{label}</button>'
         for days, label in station_windows
     )
     nco = _nco_heatmap_markup(
