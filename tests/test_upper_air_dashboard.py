@@ -422,6 +422,23 @@ def test_station_archive_surplus_chart_ranks_largest_surplus_visually() -> None:
     assert list(figure.data[0].y)[-1] == "BBB"
 
 
+def test_station_archive_rankings_support_selected_window() -> None:
+    deficits = pd.DataFrame(
+        {
+            "display_label": ["AAA", "BBB"],
+            "observed_30": [90.0, 120.0],
+            "expected_30": [100.0, 100.0],
+            "deficit_30": [-10.0, 20.0],
+        }
+    )
+    shortfall = station_archive_shortfall_figure(deficits, days=30)
+    surplus = station_archive_surplus_figure(deficits, days=30)
+    assert list(shortfall.data[0].x) == [10.0]
+    assert list(surplus.data[0].x) == [20.0]
+    assert "30 days" in shortfall.layout.xaxis.title.text
+    assert "30 days" in surplus.layout.xaxis.title.text
+
+
 def test_real_snapshot_reconciles_latest_station_kpi() -> None:
     snapshot = load_dashboard_snapshot(REPO_ROOT)
     if snapshot.payload.latest_date is None or snapshot.payload.series.empty:
@@ -464,4 +481,3 @@ def test_streamlit_navigation_renders_only_selected_view() -> None:
     assert not app.exception
     assert app.radio(key="dashboard_view").value == "NCO operations"
     assert len(app.get("plotly_chart")) == 3
-
