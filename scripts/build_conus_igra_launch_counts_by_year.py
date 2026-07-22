@@ -570,7 +570,9 @@ def build_station_deficit_rows(
             "latest_complete_date": end_date.isoformat(),
             "baseline_years": ";".join(str(year) for year in baseline_years),
         }
-        for days in (30, 60, 90):
+        # Keep the station ranking payload useful for the dashboard's range
+        # selector while using the same date-effective baseline calculation.
+        for days in (7, 30, 60, 90, 180, 365):
             observed, expected, deficit, percent = _station_window(counts, end_date, days, baseline_years)
             row[f"observed_{days}"] = round(observed, 2)
             row[f"expected_{days}"] = round(expected, 2)
@@ -589,6 +591,10 @@ def write_station_deficits(path: Path, rows: list[dict[str, object]]) -> None:
         "longitude",
         "latest_complete_date",
         "baseline_years",
+        "observed_7",
+        "expected_7",
+        "deficit_7",
+        "percent_7",
         "observed_30",
         "expected_30",
         "deficit_30",
@@ -601,6 +607,14 @@ def write_station_deficits(path: Path, rows: list[dict[str, object]]) -> None:
         "expected_90",
         "deficit_90",
         "percent_90",
+        "observed_180",
+        "expected_180",
+        "deficit_180",
+        "percent_180",
+        "observed_365",
+        "expected_365",
+        "deficit_365",
+        "percent_365",
         "missed_90",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)
