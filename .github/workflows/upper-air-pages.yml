@@ -2,12 +2,6 @@ name: Update and publish upper-air dashboard
 
 on:
   workflow_dispatch:
-    inputs:
-      full_archive_refresh:
-        description: "Refresh the full IGRA archive and station metadata"
-        required: false
-        default: true
-        type: boolean
   schedule:
     # Cover the expected 00Z and 12Z NCO message windows.
     - cron: "45 1,3,13,15 * * *"
@@ -47,7 +41,7 @@ jobs:
       - name: Refresh upper-air data
         run: |
           set -o pipefail
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.full_archive_refresh }}" == "true" || "${{ github.event.schedule }}" == "45 15 * * *" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || "${{ github.event.schedule }}" == "45 15 * * *" ]]; then
             export FULL_ARCHIVE_REFRESH=true
           else
             export FULL_ARCHIVE_REFRESH=false
