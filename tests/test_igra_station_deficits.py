@@ -31,6 +31,10 @@ def test_station_deficits_compare_90_days_with_same_date_baseline() -> None:
     assert rows[0]["expected_90"] == 180.0
     assert rows[0]["deficit_90"] == -90.0
     assert rows[0]["missed_90"] == 90.0
+    for days in (7, 30, 90, 180, 365):
+        assert f"observed_{days}" in rows[0]
+        assert f"expected_{days}" in rows[0]
+        assert f"deficit_{days}" in rows[0]
 
 
 def test_partial_latest_date_uses_monitor_threshold() -> None:
