@@ -57,6 +57,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--years", type=int, default=6)
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument("--skip-igra", action="store_true")
+    parser.add_argument("--skip-station-master", action="store_true")
     parser.add_argument("--skip-spc", action="store_true")
     parser.add_argument("--skip-nco", action="store_true")
     parser.add_argument(
@@ -222,12 +223,19 @@ def main() -> int:
         "sources": previous.get("sources", {}) if isinstance(previous.get("sources", {}), dict) else {},
     }
     try:
-        station_code, station_output = run_step(
-            "Build station master",
-            [python, "scripts/build_upper_air_station_master.py", *refresh],
-            required=True,
-        )
-        _record_source_step(status, "station_master", station_code, station_output, Path("data/upper_air_station_master.csv"), "station_id")
+        station_path = Path("data/upper_air_station_master.csv")
+        if args.skip_station_master:
+            if not station_path.exists() or station_path.stat().st_size == 0:
+                raise RuntimeError("Station master is unavailable; run without --skip-station-master.")
+            print("\n== Build station master ==")
+            print("Using retained station master (--skip-station-master).")
+        else:
+            station_code, station_output = run_step(
+                "Build station master",
+                [python, "scripts/build_upper_air_station_master.py", *refresh],
+                required=True,
+            )
+            _record_source_step(status, "station_master", station_code, station_output, station_path, "station_id")
         if not args.skip_igra:
             igra_code, igra_output = run_step(
                 "Build IGRA launch counts",
