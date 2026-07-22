@@ -421,6 +421,10 @@ def prepare_station_deficits(frame: pd.DataFrame) -> pd.DataFrame:
         "expected_7d",
         "avg_7d_deficit",
         "avg_7d_percent_difference",
+        "observed_7",
+        "expected_7",
+        "deficit_7",
+        "percent_7",
         "observed_30",
         "expected_30",
         "deficit_30",
@@ -433,6 +437,14 @@ def prepare_station_deficits(frame: pd.DataFrame) -> pd.DataFrame:
         "expected_90",
         "deficit_90",
         "percent_90",
+        "observed_180",
+        "expected_180",
+        "deficit_180",
+        "percent_180",
+        "observed_365",
+        "expected_365",
+        "deficit_365",
+        "percent_365",
         "ytd_observed",
         "ytd_expected",
         "ytd_deficit",
@@ -800,4 +812,3 @@ def format_metric(value: object, *, decimals: int = 1, suffix: str = "") -> str:
     if not math.isfinite(numeric):
         return "N/A"
     return f"{numeric:,.{decimals}f}{suffix}"
-
