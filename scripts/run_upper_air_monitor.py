@@ -222,9 +222,13 @@ def main() -> int:
         "sources": previous.get("sources", {}) if isinstance(previous.get("sources", {}), dict) else {},
     }
     try:
+        # NCO-only checks should reuse the cached station inventory. Refreshing
+        # the IGRA station list would unnecessarily depend on the NOAA archive
+        # being reachable and would block a valid stale-data publication.
+        station_refresh = [] if args.skip_igra else refresh
         station_code, station_output = run_step(
             "Build station master",
-            [python, "scripts/build_upper_air_station_master.py", *refresh],
+            [python, "scripts/build_upper_air_station_master.py", *station_refresh],
             required=True,
         )
         _record_source_step(status, "station_master", station_code, station_output, Path("data/upper_air_station_master.csv"), "station_id")
@@ -303,4 +307,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
