@@ -19,6 +19,7 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert "Stations ranked by archive surplus" in text
     assert 'id="station-surpluses-365"' in text
     assert all(f">{label}<" in text for label in ("1YR", "6MO", "90D", "30D", "7D"))
+    assert 'data-window="30" aria-pressed="true">30D</button>' in text
     assert 'id="nco-heatmap"' in text
     assert 'id="nco-heatmap-custom"' in text
     assert 'id="nco-one-year"' in text and 'id="nco-custom-toggle"' in text
