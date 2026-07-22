@@ -302,18 +302,17 @@ def _nco_reference_count(stations: pd.DataFrame) -> int | None:
 
 def _nco_latest_text(daily: pd.DataFrame, reference_count: int | None) -> tuple[str, str]:
     if daily.empty:
-        return "Latest day: —", "No complete NCO ingest day is available."
+        return "Latest: —", "No complete NCO day available"
     latest = daily.sort_values("date").iloc[-1]
     received = float(latest.received) if pd.notna(latest.received) else float("nan")
     expected = float(latest.expected) if pd.notna(latest.expected) else float("nan")
     percent = float(latest.percent) if pd.notna(latest.percent) else float("nan")
     date_text = _display_date(latest.date)
     if pd.isna(received):
-        return "Latest day: —", f"Complete through {date_text}"
+        return "Latest: —", f"Complete through {date_text}"
     if pd.isna(expected) or not expected:
-        return f"Latest day: {received:.0f} received across {int(latest.available_rows)} product records", f"Complete through {date_text}; expected inventory unavailable"
-    reference = f"{reference_count}-station reference per applicable record" if reference_count else "station reference per applicable record"
-    return f"Latest day: {received:.0f} received across {int(latest.available_rows)} product records · {percent:.1f}%", f"Complete through {date_text} · {reference}"
+        return f"Latest: {received:.0f} of {int(latest.available_rows)} product records", f"Complete through {date_text} · expected inventory unavailable"
+    return f"Latest: {received:.0f} of {int(latest.available_rows)} product records · {percent:.1f}%", f"Complete through {date_text}"
 
 
 def _nco_heatmap_markup(
@@ -330,6 +329,7 @@ def _nco_heatmap_markup(
     latest_text, latest_detail = _nco_latest_text(daily, _nco_reference_count(stations))
     metrics = views["combined"][1]
     latest_record_text, refresh_text, stale = freshness
+    compact_refresh = refresh_text.replace("Last successful NCO refresh: ", "").replace(" · Updated ", " · ")
     metric_cards: list[str] = []
     for days in (7, 14, 30, 90):
         row = metrics[metrics["days"].eq(days)] if not metrics.empty else pd.DataFrame()
@@ -342,13 +342,12 @@ def _nco_heatmap_markup(
         )
     return (
         '<div class="nco-ingest-head"><div><div class="chart-title">CONUS RAOB Ingest</div>'
-        '<div class="nco-ingest-subtitle">NCO operational-message availability · product records, not unique-station counts</div>'
         f'<div class="nco-latest" id="nco-latest">{html.escape(latest_text)}</div>'
         f'<div id="nco-latest-detail" class="nco-latest-detail">{html.escape(latest_detail)}</div></div>'
         '<div class="nco-view-controls"><button type="button" id="nco-one-year" class="nco-view-button active">1Y</button>'
         '<button type="button" id="nco-custom-toggle" class="nco-view-button" aria-expanded="false" aria-controls="nco-heatmap-custom">Custom</button></div></div>'
         '<div class="nco-cycle-controls" role="group" aria-label="NCO cycle view"><span>Cycle</span><button type="button" class="nco-cycle-button active" data-cycle-view="combined">Combined</button><button type="button" class="nco-cycle-button" data-cycle-view="00Z">00Z</button><button type="button" class="nco-cycle-button" data-cycle-view="12Z">12Z</button></div>'
-        f'<div class="nco-freshness{" stale" if stale else ""}"><strong>Latest source record:</strong> {html.escape(latest_record_text)} · {html.escape(refresh_text)}{(" · Using retained valid data" if stale else "")}</div>'
+        f'<div class="nco-freshness{" stale" if stale else ""}" title="{html.escape(refresh_text, quote=True)}"><strong>Source:</strong> {html.escape(latest_record_text)} · {html.escape(compact_refresh)}{(" · retained valid data" if stale else "")}</div>'
         '<div class="nco-lookbacks-label" title="Each percentage-point delta compares with the immediately preceding equal-length period">Average ingest</div>'
         '<div class="nco-lookbacks" role="list" aria-label="Average NCO ingest rates; each delta compares with the immediately preceding equal-length period">'
         + "".join(metric_cards)
@@ -797,7 +796,12 @@ if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stat
     )
     page = page.replace(
         '</head>',
-        '<style>.station-ranking-grid{margin-top:14px}.station-window-controls{display:flex;gap:4px;flex-wrap:wrap;padding:8px 9px 2px}.station-window-button{border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:7px;padding:5px 8px;cursor:pointer;font-size:11px;font-weight:750}.station-window-button:hover,.station-window-button.active,.station-window-button:focus-visible{color:var(--text);border-color:var(--blue);background:var(--panel2)}.station-ranking-panel[hidden]{display:none!important}.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.station-window-controls{padding-inline:5px}.station-window-button{padding:5px 6px;font-size:10px}.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
+        '<style>.station-ranking-grid{margin-top:14px}.station-window-controls{display:flex;gap:4px;flex-wrap:wrap;padding:8px 9px 2px}.station-window-button{border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:7px;padding:5px 8px;cursor:pointer;font-size:11px;font-weight:750}.station-window-button:hover,.station-window-button.active,.station-window-button:focus-visible{color:var(--text);border-color:var(--blue);background:var(--panel2)}.station-ranking-panel[hidden]{display:none!important}.nco-ingest-card{display:flex;flex-direction:column}.nco-ingest-card .nco-heatmap-scroller{flex:1;display:flex;min-height:0}.nco-ingest-card .nco-heatmap{display:flex;flex:1;flex-direction:column;width:100%}.nco-ingest-card .nco-heatmap-body{flex:1;min-height:120px}.nco-ingest-card .nco-heatmap-grid{height:100%;grid-template-rows:repeat(7,minmax(10px,1fr))}.nco-ingest-card .nco-cell{height:auto;min-height:10px}.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.station-window-controls{padding-inline:5px}.station-window-button{padding:5px 6px;font-size:10px}.nco-ingest-card .nco-heatmap-body{min-height:90px}.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
+        1,
+    )
+    page = page.replace(
+        '<article class="card chart-card"><div class="nco-ingest-head">',
+        '<article class="card chart-card nco-ingest-card"><div class="nco-ingest-head">',
         1,
     )
     index_path = output_dir / "index.html"
