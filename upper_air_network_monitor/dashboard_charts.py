@@ -437,35 +437,49 @@ def station_archive_shortfall_figure(
     *,
     height: int = 360,
     top_n: int = 8,
+    days: int = 90,
 ) -> go.Figure:
     """Rank stations by fewer IGRA archive records than the same-date baseline."""
-    required = {"display_label", "missed_90", "observed_90", "expected_90"}
+    observed_column = f"observed_{days}"
+    expected_column = f"expected_{days}"
+    deficit_column = f"deficit_{days}"
+    shortfall_column = f"missed_{days}"
+    has_deficit = deficit_column in station_deficits.columns
+    has_shortfall = shortfall_column in station_deficits.columns
+    required = {"display_label", observed_column, expected_column}
+    if not (has_deficit or has_shortfall):
+        required.add(deficit_column)
     if station_deficits.empty or not required.issubset(station_deficits.columns):
-        return empty_figure("Station-level 90-day archive data are unavailable.", height=height)
+        return empty_figure(f"Station-level {days}-day archive data are unavailable.", height=height)
     data = station_deficits.copy()
-    for column in ("missed_90", "observed_90", "expected_90"):
-        data[column] = pd.to_numeric(data[column], errors="coerce")
-    data = data.dropna(subset=["display_label", "missed_90"]).query("missed_90 > 0")
+    for column in (observed_column, expected_column, deficit_column, shortfall_column):
+        if column in data:
+            data[column] = pd.to_numeric(data[column], errors="coerce")
+    if has_shortfall:
+        data["shortfall"] = data[shortfall_column]
+    else:
+        data["shortfall"] = -data[deficit_column]
+    data = data.dropna(subset=["display_label", "shortfall"]).query("shortfall > 0")
     if data.empty:
-        return empty_figure("No station-level archive shortfalls were found.", height=height)
-    data = data.nlargest(top_n, "missed_90").sort_values("missed_90")
+        return empty_figure(f"No station-level {days}-day archive shortfalls were found.", height=height)
+    data = data.nlargest(top_n, "shortfall").sort_values("shortfall")
     fig = go.Figure(
         go.Bar(
-            x=data["missed_90"],
+            x=data["shortfall"],
             y=data["display_label"],
             orientation="h",
             marker={"color": COLORS["deficit"]},
-            text=[f"{value:,.0f}" for value in data["missed_90"]],
+            text=[f"{value:,.0f}" for value in data["shortfall"]],
             textposition="outside",
             textfont={"color": COLORS["text"], "size": 12},
             cliponaxis=False,
-            customdata=np.column_stack([data["observed_90"], data["expected_90"]]),
-            hovertemplate="%{y}<br>Archive shortfall: %{x:,.1f}<br>Observed: %{customdata[0]:,.1f}<br>Expected: %{customdata[1]:,.1f}<extra></extra>",
+            customdata=np.column_stack([data[observed_column], data[expected_column]]),
+            hovertemplate=f"%{{y}}<br>Archive shortfall ({days}D): %{{x:,.1f}}<br>Observed: %{{customdata[0]:,.1f}}<br>Expected: %{{customdata[1]:,.1f}}<extra></extra>",
         )
     )
     _base_layout(fig, height=height, margin={"l": 150, "r": 48, "t": 24, "b": 58})
     fig.update_layout(showlegend=False)
-    fig.update_xaxes(title="Fewer archived soundings over 90 days", rangemode="tozero")
+    fig.update_xaxes(title=f"Fewer archived soundings over {days} days", rangemode="tozero")
     fig.update_yaxes(gridcolor="rgba(0,0,0,0)")
     return fig
 
@@ -475,36 +489,39 @@ def station_archive_surplus_figure(
     *,
     height: int = 360,
     top_n: int = 8,
+    days: int = 90,
 ) -> go.Figure:
     """Rank stations with more archived soundings than the 90-day baseline."""
-    required = {"display_label", "observed_90", "expected_90"}
+    observed_column = f"observed_{days}"
+    expected_column = f"expected_{days}"
+    required = {"display_label", observed_column, expected_column}
     if station_deficits.empty or not required.issubset(station_deficits.columns):
-        return empty_figure("Station-level 90-day archive data are unavailable.", height=height)
+        return empty_figure(f"Station-level {days}-day archive data are unavailable.", height=height)
     data = station_deficits.copy()
-    for column in ("observed_90", "expected_90"):
+    for column in (observed_column, expected_column):
         data[column] = pd.to_numeric(data[column], errors="coerce")
-    data["surplus_90"] = data["observed_90"] - data["expected_90"]
-    data = data.dropna(subset=["display_label", "surplus_90"]).query("surplus_90 > 0")
+    data["surplus"] = data[observed_column] - data[expected_column]
+    data = data.dropna(subset=["display_label", "surplus"]).query("surplus > 0")
     if data.empty:
-        return empty_figure("No station-level archive surpluses were found.", height=height)
-    data = data.nlargest(top_n, "surplus_90").sort_values("surplus_90")
+        return empty_figure(f"No station-level {days}-day archive surpluses were found.", height=height)
+    data = data.nlargest(top_n, "surplus").sort_values("surplus")
     fig = go.Figure(
         go.Bar(
-            x=data["surplus_90"],
+            x=data["surplus"],
             y=data["display_label"],
             orientation="h",
             marker={"color": COLORS["clean"]},
-            text=[f"+{value:,.0f}" for value in data["surplus_90"]],
+            text=[f"+{value:,.0f}" for value in data["surplus"]],
             textposition="outside",
             textfont={"color": COLORS["text"], "size": 12},
             cliponaxis=False,
-            customdata=np.column_stack([data["observed_90"], data["expected_90"]]),
-            hovertemplate="%{y}<br>Archive surplus: +%{x:,.1f}<br>Observed: %{customdata[0]:,.1f}<br>Expected: %{customdata[1]:,.1f}<extra></extra>",
+            customdata=np.column_stack([data[observed_column], data[expected_column]]),
+            hovertemplate=f"%{{y}}<br>Archive surplus ({days}D): +%{{x:,.1f}}<br>Observed: %{{customdata[0]:,.1f}}<br>Expected: %{{customdata[1]:,.1f}}<extra></extra>",
         )
     )
     _base_layout(fig, height=height, margin={"l": 150, "r": 48, "t": 24, "b": 58})
     fig.update_layout(showlegend=False)
-    fig.update_xaxes(title="More archived soundings over 90 days", rangemode="tozero")
+    fig.update_xaxes(title=f"More archived soundings over {days} days", rangemode="tozero")
     fig.update_yaxes(gridcolor="rgba(0,0,0,0)")
     return fig
 
