@@ -26,16 +26,16 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert 'id="nco-heatmap-custom" class="nco-heatmap-custom" hidden' in text
     assert 'id="nco-cell-detail"' in text and 'hidden>' in text
     assert "Average ingest" in text
-    assert "Latest day:" in text
+    assert "Latest:" in text
     assert 'aria-label="Weekdays"' in text
     assert all(f">{label}<" in text for label in ("M", "T", "W", "Th", "F", "Sa", "Su"))
     assert "ncoFormatDateDetail" in text
     assert "Healthy: 98 to 100 percent" in text
     assert "98 to 100 percent" in text
     assert "combined NCO operational-message ingest calendar" in text and "No data" in text
-    assert "NCO operational-message availability" in text
+    assert "product records" in text
     assert all(label in text for label in (">Combined<", ">00Z<", ">12Z<"))
-    assert "Latest source record:" in text and "Last successful NCO refresh:" in text
+    assert "Source:" in text and "Last successful NCO refresh:" in text
     assert all(label in text for label in ("7D", "14D", "30D", "90D"))
     assert "Sources and data health" in text
     assert "Built " in text and "Data snapshot" in text
