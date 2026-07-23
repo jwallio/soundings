@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import pandas as pd
 
-from scripts.build_upper_air_public_site import _nco_freshness, build_public_site
+from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, build_public_site
 from scripts.run_upper_air_monitor import _record_source_step
 
 
@@ -54,6 +54,13 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert (tmp_path / "latest-station-status.csv").is_file()
     assert (tmp_path / "nco-ingest-history.csv").is_file()
     assert (tmp_path / "og.png").is_file()
+
+
+def test_archive_gap_display_uses_signed_semantic_colors() -> None:
+    assert _archive_gap_display(4.44) == ("+4.4%", "clean")
+    assert _archive_gap_display(-4.44) == ("-4.4%", "problem")
+    assert _archive_gap_display(0) == ("+0.0%", "")
+    assert _archive_gap_display(float("nan")) == ("—", "")
 
 
 def test_nco_freshness_marks_retained_data_stale() -> None:

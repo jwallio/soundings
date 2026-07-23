@@ -408,6 +408,19 @@ def test_archive_deficit_fills_are_contiguous() -> None:
     assert all(not any(value is None for value in trace.y) for trace in fills)
 
 
+def test_archive_surplus_fills_use_green_and_deficits_use_red() -> None:
+    series = pd.DataFrame(
+        {
+            "date": pd.date_range("2025-01-01", periods=6, freq="D"),
+            "observed": [100.0, 110.0, 112.0, 90.0, 92.0, 105.0],
+            "baseline": [100.0] * 6,
+        }
+    )
+    figure = archive_trend_figure(series)
+    fills = [trace for trace in figure.data if trace.fill == "tonexty"]
+    assert {trace.fillcolor for trace in fills} == {"rgba(255,112,79,0.28)", "rgba(82,211,162,0.28)"}
+
+
 def test_station_archive_shortfall_chart_ranks_largest_gap_first_visually() -> None:
     deficits = pd.DataFrame(
         {

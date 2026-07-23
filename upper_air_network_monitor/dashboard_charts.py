@@ -156,25 +156,35 @@ def empty_figure(message: str, *, height: int = 390) -> go.Figure:
     return _base_layout(fig, height=height)
 
 
-def _deficit_segments(data: pd.DataFrame) -> list[pd.DataFrame]:
-    """Return contiguous below-baseline runs for clean Plotly area fills.
+def _comparison_segments(data: pd.DataFrame, *, above: bool) -> list[pd.DataFrame]:
+    """Return contiguous observed-vs-baseline runs for clean area fills.
 
-    A single ``where(below)`` trace inserts NaNs whenever the observed series
-    crosses the baseline. Plotly can then close the fill polygon across those
-    NaNs, producing the detached triangular patches seen in the dashboard.
-    Segmenting on both deficit state and date continuity keeps each filled
-    polygon bounded by the actual observations that support it.
+    Segmenting on comparison state and date continuity keeps each filled
+    polygon bounded by the observations that support it. This avoids Plotly
+    closing one large polygon across missing dates or across a baseline
+    crossing, which previously produced detached-looking deficit patches.
     """
+    comparison = data["observed"].gt(data["baseline"]) if above else data["observed"].lt(data["baseline"])
     eligible = data.loc[
         data["observed"].notna()
         & data["baseline"].notna()
-        & data["observed"].lt(data["baseline"]),
+        & comparison,
         ["date", "observed", "baseline"],
     ].sort_values("date")
     if eligible.empty:
         return []
     breaks = eligible["date"].diff().gt(pd.Timedelta(days=1)).cumsum()
     return [segment for _, segment in eligible.groupby(breaks) if len(segment) >= 2]
+
+
+def _deficit_segments(data: pd.DataFrame) -> list[pd.DataFrame]:
+    """Return contiguous below-baseline runs for red area fills."""
+    return _comparison_segments(data, above=False)
+
+
+def _surplus_segments(data: pd.DataFrame) -> list[pd.DataFrame]:
+    """Return contiguous above-baseline runs for green area fills."""
+    return _comparison_segments(data, above=True)
 
 
 def archive_trend_figure(
@@ -240,29 +250,33 @@ def archive_trend_figure(
                 hovertemplate="%{x|%b %d, %Y}<br>Historical range high: %{y:.1f}/day<extra></extra>",
             )
         )
-    for segment in _deficit_segments(data):
-        fig.add_trace(
-            go.Scatter(
-                x=segment["date"],
-                y=segment["baseline"],
-                mode="lines",
-                line={"width": 0},
-                hoverinfo="skip",
-                showlegend=False,
+    for segments, fillcolor in (
+        (_deficit_segments(data), "rgba(255,112,79,0.28)"),
+        (_surplus_segments(data), "rgba(82,211,162,0.28)"),
+    ):
+        for segment in segments:
+            fig.add_trace(
+                go.Scatter(
+                    x=segment["date"],
+                    y=segment["baseline"],
+                    mode="lines",
+                    line={"width": 0},
+                    hoverinfo="skip",
+                    showlegend=False,
+                )
             )
-        )
-        fig.add_trace(
-            go.Scatter(
-                x=segment["date"],
-                y=segment["observed"],
-                mode="lines",
-                line={"width": 0},
-                fill="tonexty",
-                fillcolor="rgba(255,112,79,0.28)",
-                hoverinfo="skip",
-                showlegend=False,
+            fig.add_trace(
+                go.Scatter(
+                    x=segment["date"],
+                    y=segment["observed"],
+                    mode="lines",
+                    line={"width": 0},
+                    fill="tonexty",
+                    fillcolor=fillcolor,
+                    hoverinfo="skip",
+                    showlegend=False,
+                )
             )
-        )
     if show_daily and "daily" in data:
         fig.add_trace(
             go.Scatter(
