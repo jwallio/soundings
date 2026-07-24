@@ -394,6 +394,20 @@ def test_plotly_builders_render_real_chart_structures() -> None:
     assert all("not a confirmed cause" not in str(trace.hovertemplate) for trace in event_trend.data)
 
 
+def test_archive_window_bars_color_surplus_green_and_shortfall_red() -> None:
+    windows = pd.DataFrame(
+        {
+            "days": [30, 7],
+            "observed": [108.0, 90.0],
+            "expected": [100.0, 100.0],
+            "deficit": [8.0, -10.0],
+            "percent": [8.0, -10.0],
+        }
+    )
+    colors = archive_windows_figure(windows, vertical=True).data[0].marker.color
+    assert list(colors) == ["#52D3A2", "#FF704F"]
+
+
 def test_archive_deficit_fills_are_contiguous() -> None:
     series = pd.DataFrame(
         {

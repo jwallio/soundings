@@ -426,7 +426,12 @@ def archive_windows_figure(windows: pd.DataFrame, *, height: int = 350, vertical
     if windows.empty or not {"days", "percent", "deficit"}.issubset(windows.columns):
         return empty_figure("Recent-window metrics are unavailable.", height=height)
     data = windows.dropna(subset=["days", "percent"]).sort_values("days", ascending=False).copy()
-    colors = [COLORS["deficit"] for _value in data["days"]]
+    # The signed window difference is the visual semantic: shortfalls are
+    # coral/red, while windows above the same-date baseline are clean/green.
+    colors = [
+        COLORS["clean"] if value > 0 else COLORS["deficit"] if value < 0 else COLORS["unknown"]
+        for value in data["percent"]
+    ]
     labels = [f"{int(value)} days" for value in data["days"]]
     custom = np.column_stack([data["deficit"].abs(), data["observed"], data["expected"]])
     if vertical:
