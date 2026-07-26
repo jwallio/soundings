@@ -34,6 +34,7 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert "Healthy: 98 to 100 percent" in text
     assert "Degraded: 80 to 89.9 percent" in text
     assert "Critical: below 80 percent" in text
+    assert "#f97316" in text and "#ef4444" in text
     assert "98 to 100 percent" in text
     assert "combined NCO operational-message ingest calendar" in text and "No data" in text
     assert "product records" in text
