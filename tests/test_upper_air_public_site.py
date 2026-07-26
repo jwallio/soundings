@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import pandas as pd
 
-from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, build_public_site
+from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, _nco_latest_text, build_public_site
 from scripts.run_upper_air_monitor import _record_source_step
 
 
@@ -32,6 +32,8 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert all(f">{label}<" in text for label in ("M", "T", "W", "Th", "F", "Sa", "Su"))
     assert "ncoFormatDateDetail" in text
     assert "Healthy: 98 to 100 percent" in text
+    assert "Degraded: 80 to 89.9 percent" in text
+    assert "Critical: below 80 percent" in text
     assert "98 to 100 percent" in text
     assert "combined NCO operational-message ingest calendar" in text and "No data" in text
     assert "product records" in text
@@ -60,7 +62,7 @@ def test_archive_gap_display_uses_signed_semantic_colors() -> None:
     assert _archive_gap_display(4.44) == ("+4.4%", "clean")
     assert _archive_gap_display(-4.44) == ("-4.4%", "problem")
     assert _archive_gap_display(0) == ("+0.0%", "")
-    assert _archive_gap_display(float("nan")) == ("—", "")
+    assert _archive_gap_display(float("nan")) == ("â€”", "")
 
 
 def test_nco_freshness_marks_retained_data_stale() -> None:
@@ -86,6 +88,19 @@ def test_nco_freshness_marks_retained_data_stale() -> None:
     assert latest == "Jul 20, 2026"
     assert "Last successful NCO refresh" in refresh
     assert stale is True
+
+
+def test_nco_latest_text_uses_expected_product_total() -> None:
+    daily = pd.DataFrame([{
+        "date": "2026-07-15",
+        "received": 153,
+        "expected": 207,
+        "percent": 73.913,
+        "available_rows": 3,
+    }])
+    latest, detail = _nco_latest_text(daily, 69)
+    assert latest == "Latest: 153 of 207 expected product records Â· 73.9%"
+    assert detail.endswith("Â· 3 applicable product records")
 
 
 def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> None:
