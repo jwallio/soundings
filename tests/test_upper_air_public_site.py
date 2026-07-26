@@ -62,7 +62,7 @@ def test_archive_gap_display_uses_signed_semantic_colors() -> None:
     assert _archive_gap_display(4.44) == ("+4.4%", "clean")
     assert _archive_gap_display(-4.44) == ("-4.4%", "problem")
     assert _archive_gap_display(0) == ("+0.0%", "")
-    assert _archive_gap_display(float("nan")) == ("â€”", "")
+    assert _archive_gap_display(float("nan")) == ("—", "")
 
 
 def test_nco_freshness_marks_retained_data_stale() -> None:
@@ -99,8 +99,8 @@ def test_nco_latest_text_uses_expected_product_total() -> None:
         "available_rows": 3,
     }])
     latest, detail = _nco_latest_text(daily, 69)
-    assert latest == "Latest: 153 of 207 expected product records Â· 73.9%"
-    assert detail.endswith("Â· 3 applicable product records")
+    assert latest == "Latest: 153 of 207 expected product records · 73.9%"
+    assert detail.endswith("· 3 applicable product records")
 
 
 def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> None:
