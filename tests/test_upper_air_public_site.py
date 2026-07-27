@@ -12,6 +12,8 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     text = page.read_text(encoding="utf-8")
     assert "CONUS Upper-Air Data Watch" in text
     assert "soundings.wall.cloud" in text
+    assert "Sounding data (IGRA) through" in text
+    assert "Model ingest (NCO) through" in text
     assert "SOUNDING AVAILABILITY" in text and "Sounding availability trend" in text
     assert "Diamonds label same-date historical event maximums" not in text
     assert 'id="custom-range"' in text and "NWS Layoffs" in text
