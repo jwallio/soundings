@@ -1,6 +1,3 @@
-Exit code: 0
-Wall time: 0.3 seconds
-Output:
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -16,16 +13,14 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert "CONUS Upper-Air Data Watch" in text
     assert "soundings.wall.cloud" in text
     assert "SOUNDING AVAILABILITY" in text and "Sounding availability trend" in text
-    assert 'id="share"' in text
-    assert 'class="nav-share"' in text
-    assert 'id="share-archive-card"' in text
-    assert 'id="share-operations-card"' in text
-    assert 'id="share-stations-card"' in text
+    assert 'id="share"' not in text
+    assert '<a class="nav-share"' not in text
     assert 'data-share-image="share_archive.png"' in text
     assert 'data-share-image="share_operations.png"' in text
     assert 'data-share-image="share_station_rankings.png"' in text
     assert 'navigator.share({title,url' not in text
-    assert 'class="share-image-preview"' in text
+    assert 'class="share-image-preview"' not in text
+    assert text.count('class="share-image-action"') >= 3
     assert "Diamonds label same-date historical event maximums" not in text
     assert 'id="custom-range"' in text and "NWS Layoffs" in text
     assert "NCO reported for ingest" in text
@@ -118,4 +113,3 @@ def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> No
     assert status["sources"]["nco"]["error_kind"] == "upstream_fetch"
     assert status["sources"]["nco"]["latest_successful_record_date"] == "2026-07-15"
     assert "HTTP 500" in status["sources"]["nco"]["last_error"]
-
