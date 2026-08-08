@@ -197,22 +197,25 @@ def _write_share_images(
         ax.legend(loc="upper left", frameon=False, fontsize=9, labelcolor=SHARE_TEXT)
         for spine in ax.spines.values(): spine.set_color(SHARE_LINE)
         ax.set_ylabel("records/day", color=SHARE_MUTED, fontsize=9)
-    fig.text(.07, .285, "Recent archive windows", color=SHARE_TEXT, fontsize=13, fontweight="bold", va="top")
+    fig.text(.07, .285, "Recent archive windows", color=SHARE_TEXT, fontsize=15, fontweight="bold", va="top")
     # Use the same headline-number treatment as the primary gap: the period
     # label sits directly below each signed percentage instead of forcing the
     # reader to decode a low, compressed axis.
     if archive_windows.empty:
         fig.text(.50, .185, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=11)
     else:
-        bars = archive_windows.dropna(subset=["days", "percent"]).sort_values("days", ascending=True)
+        # The 7-day value is already the dominant headline above; keep the
+        # lower comparison row focused on the longer windows.
+        bars = archive_windows.dropna(subset=["days", "percent"])
+        bars = bars[bars["days"].ne(7)].sort_values("days", ascending=True)
         values = pd.to_numeric(bars["percent"], errors="coerce").to_numpy()
         labels = [f"{int(v)} day" if int(v) == 1 else f"{int(v)} days" for v in bars["days"]]
         left, width = .07, .86 / max(len(values), 1)
         for index, (label, value) in enumerate(zip(labels, values)):
             x = left + width * (index + .5)
             color = SHARE_GREEN if value >= 0 else SHARE_ORANGE
-            fig.text(x, .205, f"{value:+.1f}%", color=color, fontsize=19, fontweight="bold", ha="center", va="bottom")
-            fig.text(x, .165, label, color=SHARE_MUTED, fontsize=8.5, ha="center", va="top")
+            fig.text(x, .205, f"{value:+.1f}%", color=color, fontsize=23, fontweight="bold", ha="center", va="bottom")
+            fig.text(x, .158, label, color=SHARE_MUTED, fontsize=11, fontweight="bold", ha="center", va="top")
     fig.text(.07, .045, "NOAA/NCEI IGRA v2 · data-availability diagnostic", color=SHARE_MUTED, fontsize=9)
     fig.text(.93, .045, "wall.cloud", color=SHARE_BLUE, fontsize=10, fontweight="bold", ha="right")
     fig.savefig(paths["share_archive.png"], dpi=100, facecolor=fig.get_facecolor())
