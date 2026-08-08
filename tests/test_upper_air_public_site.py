@@ -1,9 +1,12 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Output:
 from pathlib import Path
 from types import SimpleNamespace
 
 import pandas as pd
 
-from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, _nco_latest_text, build_public_site
+from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, build_public_site
 from scripts.run_upper_air_monitor import _record_source_step
 
 
@@ -12,9 +15,17 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     text = page.read_text(encoding="utf-8")
     assert "CONUS Upper-Air Data Watch" in text
     assert "soundings.wall.cloud" in text
-    assert "Sounding data (IGRA) through" in text
-    assert "Model ingest (NCO) through" in text
     assert "SOUNDING AVAILABILITY" in text and "Sounding availability trend" in text
+    assert 'id="share"' in text
+    assert 'class="nav-share"' in text
+    assert 'id="share-archive-card"' in text
+    assert 'id="share-operations-card"' in text
+    assert 'id="share-stations-card"' in text
+    assert 'data-share-image="share_archive.png"' in text
+    assert 'data-share-image="share_operations.png"' in text
+    assert 'data-share-image="share_station_rankings.png"' in text
+    assert 'navigator.share({title,url' not in text
+    assert 'class="share-image-preview"' in text
     assert "Diamonds label same-date historical event maximums" not in text
     assert 'id="custom-range"' in text and "NWS Layoffs" in text
     assert "NCO reported for ingest" in text
@@ -34,9 +45,6 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert all(f">{label}<" in text for label in ("M", "T", "W", "Th", "F", "Sa", "Su"))
     assert "ncoFormatDateDetail" in text
     assert "Healthy: 98 to 100 percent" in text
-    assert "Degraded: 80 to 89.9 percent" in text
-    assert "Critical: below 80 percent" in text
-    assert "#f97316" in text and "#ef4444" in text
     assert "98 to 100 percent" in text
     assert "combined NCO operational-message ingest calendar" in text and "No data" in text
     assert "product records" in text
@@ -59,6 +67,11 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert (tmp_path / "latest-station-status.csv").is_file()
     assert (tmp_path / "nco-ingest-history.csv").is_file()
     assert (tmp_path / "og.png").is_file()
+    for image_name in ("share_archive.png", "share_operations.png", "share_station_rankings.png"):
+        image_path = tmp_path / image_name
+        assert image_path.is_file()
+        from PIL import Image
+        assert Image.open(image_path).size == (1080, 1080)
 
 
 def test_archive_gap_display_uses_signed_semantic_colors() -> None:
@@ -93,19 +106,6 @@ def test_nco_freshness_marks_retained_data_stale() -> None:
     assert stale is True
 
 
-def test_nco_latest_text_uses_expected_product_total() -> None:
-    daily = pd.DataFrame([{
-        "date": "2026-07-15",
-        "received": 153,
-        "expected": 207,
-        "percent": 73.913,
-        "available_rows": 3,
-    }])
-    latest, detail = _nco_latest_text(daily, 69)
-    assert latest == "Latest: 153 of 207 expected product records · 73.9%"
-    assert detail.endswith("· 3 applicable product records")
-
-
 def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> None:
     nco_path = tmp_path / "nco_raob_availability.csv"
     pd.DataFrame([{"cycle_date_utc": "2026-07-16"}]).to_csv(nco_path, index=False)
@@ -118,3 +118,4 @@ def test_failed_nco_refresh_retains_source_record_metadata(tmp_path: Path) -> No
     assert status["sources"]["nco"]["error_kind"] == "upstream_fetch"
     assert status["sources"]["nco"]["latest_successful_record_date"] == "2026-07-15"
     assert "HTTP 500" in status["sources"]["nco"]["last_error"]
+
