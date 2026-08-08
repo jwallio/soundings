@@ -998,6 +998,11 @@ if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stat
         1,
     )
     page = page.replace(
+        '</head>',
+        '<style>@media(max-width:600px){nav .wrap{flex-wrap:wrap;gap:8px;padding:8px 0;align-items:center}.nav-status{order:3;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;border-radius:12px;padding:5px 8px;font-size:10px;line-height:1.2;overflow-wrap:anywhere}.nav-status span{min-width:0;display:block}.navlinks{margin-left:auto}}</style></head>',
+        1,
+    )
+    page = page.replace(
         '</body></html>',
         '<script>document.querySelectorAll(".share-action").forEach(button=>button.addEventListener("click",async()=>{const target=button.dataset.shareTarget;const url=new URL(window.location.href);url.hash=target;const title=button.closest(".share-card")?.querySelector("h3")?.textContent||"Soundings share card";try{if(navigator.share){await navigator.share({title,url:url.href});}else{await navigator.clipboard.writeText(url.href);const prior=button.textContent;button.textContent="Link copied";setTimeout(()=>{button.textContent=prior;},1800);}}catch(_error){}}));</script></body></html>',
         1,
