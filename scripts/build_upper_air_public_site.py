@@ -206,7 +206,8 @@ def _write_share_images(
     else:
         # The 7-day value is already the dominant headline above; keep the
         # lower comparison row focused on the longer windows.
-        bars = archive_windows.dropna(subset=["days", "percent"])
+        bars = archive_windows.dropna(subset=["days", "percent"]).copy()
+        bars["days"] = pd.to_numeric(bars["days"], errors="coerce")
         bars = bars[bars["days"].ne(7)].sort_values("days", ascending=True)
         values = pd.to_numeric(bars["percent"], errors="coerce").to_numpy()
         labels = [f"{int(v)} day" if int(v) == 1 else f"{int(v)} days" for v in bars["days"]]
