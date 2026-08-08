@@ -145,6 +145,8 @@ def _write_share_images(
     resolved_count: int,
     nco_latest_text: str,
     nco_latest_detail: str,
+    nco_metrics: pd.DataFrame,
+    nco_daily: pd.DataFrame,
 ) -> dict[str, Path]:
     """Render readable 1080px share images without relying on Plotly export.
 
@@ -196,52 +198,80 @@ def _write_share_images(
         for spine in ax.spines.values(): spine.set_color(SHARE_LINE)
         ax.set_ylabel("records/day", color=SHARE_MUTED, fontsize=9)
     fig.text(.07, .285, "Recent archive windows", color=SHARE_TEXT, fontsize=13, fontweight="bold", va="top")
-    bar_ax = fig.add_axes([.10, .105, .80, .14], facecolor=SHARE_BG)
+    # Use the same headline-number treatment as the primary gap: the period
+    # label sits directly below each signed percentage instead of forcing the
+    # reader to decode a low, compressed axis.
     if archive_windows.empty:
-        bar_ax.text(.5, .5, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", transform=bar_ax.transAxes)
-        bar_ax.set_axis_off()
+        fig.text(.50, .185, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=11)
     else:
         bars = archive_windows.dropna(subset=["days", "percent"]).sort_values("days", ascending=True)
         values = pd.to_numeric(bars["percent"], errors="coerce").to_numpy()
-        labels = [f"{int(v)}D" for v in bars["days"]]
-        colors = [SHARE_GREEN if v >= 0 else SHARE_ORANGE for v in values]
-        bar_ax.bar(labels, values, color=colors, width=.65)
-        bar_ax.axhline(0, color=SHARE_MUTED, linewidth=1)
-        bar_ax.set_ylim(min(-10, float(values.min()) - 2), max(10, float(values.max()) + 2))
-        bar_ax.tick_params(colors=SHARE_MUTED, labelsize=10)
-        bar_ax.grid(axis="y", color=SHARE_LINE, alpha=.55)
-        for label, value in zip(bar_ax.containers[0], values):
-            bar_ax.text(label.get_x() + label.get_width()/2, value + (0.45 if value >= 0 else -0.8), f"{value:+.1f}%", ha="center", va="bottom" if value >= 0 else "top", color=SHARE_TEXT, fontsize=9, fontweight="bold")
-        for spine in bar_ax.spines.values(): spine.set_visible(False)
+        labels = [f"{int(v)} day" if int(v) == 1 else f"{int(v)} days" for v in bars["days"]]
+        left, width = .07, .86 / max(len(values), 1)
+        for index, (label, value) in enumerate(zip(labels, values)):
+            x = left + width * (index + .5)
+            color = SHARE_GREEN if value >= 0 else SHARE_ORANGE
+            fig.text(x, .205, f"{value:+.1f}%", color=color, fontsize=19, fontweight="bold", ha="center", va="bottom")
+            fig.text(x, .165, label, color=SHARE_MUTED, fontsize=8.5, ha="center", va="top")
     fig.text(.07, .045, "NOAA/NCEI IGRA v2 · data-availability diagnostic", color=SHARE_MUTED, fontsize=9)
     fig.text(.93, .045, "wall.cloud", color=SHARE_BLUE, fontsize=10, fontweight="bold", ha="right")
     fig.savefig(paths["share_archive.png"], dpi=100, facecolor=fig.get_facecolor())
     plt.close(fig)
 
-    # Operations card: the map and the two key operational summaries are kept
-    # large; no tiny embedded chart is used.
+    # Operations card: keep the map and status counts prominent, then add a
+    # compact lookback strip. The counts are product-record shortfalls (the
+    # NCO denominator can contain multiple applicable rows per station), not
+    # unique stations missing a launch.
     fig = plt.figure(figsize=(10.8, 10.8), dpi=100, facecolor=SHARE_BG)
     fig.text(.07, .94, "OPERATIONAL MESSAGES", color=SHARE_BLUE, fontsize=14, fontweight="bold", va="top")
     fig.text(.07, .895, "Current NCO-reported issues", color=SHARE_TEXT, fontsize=27, fontweight="bold", va="top")
     try:
         map_image = plt.imread(io.BytesIO(base64.b64decode(map_uri.split(",", 1)[1])))
-        map_ax = fig.add_axes([.08, .48, .84, .34]); map_ax.imshow(map_image); map_ax.set_axis_off()
+        map_ax = fig.add_axes([.08, .51, .84, .31]); map_ax.imshow(map_image); map_ax.set_axis_off()
     except Exception:
-        fig.text(.50, .64, "Station map unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=15)
-    _share_box(fig, .07, .29, .40, .12, edge=SHARE_ORANGE)
-    _share_box(fig, .53, .29, .40, .12, edge=SHARE_GREEN)
-    fig.text(.095, .365, f"{issue_count} / {active_count}", color=SHARE_ORANGE, fontsize=30, fontweight="bold")
-    fig.text(.095, .315, "stations with an issue", color=SHARE_MUTED, fontsize=12)
-    fig.text(.555, .365, f"{clean_count}", color=SHARE_GREEN, fontsize=30, fontweight="bold")
-    fig.text(.555, .315, "no issue reported", color=SHARE_MUTED, fontsize=12)
-    _share_box(fig, .07, .13, .86, .11, edge=SHARE_BLUE)
-    fig.text(.095, .205, "LATEST MAPPED STATUS", color=SHARE_TEXT, fontsize=11, fontweight="bold")
-    fig.text(.095, .165, f"{new_count} new or changed · {persistent_count} persistent · {resolved_count} resolved", color=SHARE_MUTED, fontsize=12)
-    fig.text(.07, .09, "NCO reported for ingest", color=SHARE_TEXT, fontsize=14, fontweight="bold")
-    fig.text(.07, .06, nco_latest_text, color=SHARE_BLUE, fontsize=13, fontweight="bold")
-    fig.text(.93, .06, nco_latest_detail, color=SHARE_MUTED, fontsize=9, ha="right")
-    fig.text(.07, .025, "Operational-message reporting; not confirmed IGRA archive totals", color=SHARE_MUTED, fontsize=8.5)
-    fig.text(.93, .025, "wall.cloud", color=SHARE_BLUE, fontsize=10, fontweight="bold", ha="right")
+        fig.text(.50, .65, "Station map unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=15)
+    _share_box(fig, .07, .32, .40, .11, edge=SHARE_ORANGE)
+    _share_box(fig, .53, .32, .40, .11, edge=SHARE_GREEN)
+    fig.text(.095, .39, f"{issue_count} / {active_count}", color=SHARE_ORANGE, fontsize=30, fontweight="bold")
+    fig.text(.095, .345, "stations with an issue", color=SHARE_MUTED, fontsize=12)
+    fig.text(.555, .39, f"{clean_count}", color=SHARE_GREEN, fontsize=30, fontweight="bold")
+    fig.text(.555, .345, "no issue reported", color=SHARE_MUTED, fontsize=12)
+    _share_box(fig, .07, .225, .86, .07, edge=SHARE_BLUE)
+    fig.text(.095, .275, "LATEST MAPPED STATUS", color=SHARE_TEXT, fontsize=10, fontweight="bold")
+    fig.text(.095, .245, f"{new_count} new or changed · {persistent_count} persistent · {resolved_count} resolved", color=SHARE_MUTED, fontsize=10)
+    fig.text(.07, .19, "NCO ingest · missing product records", color=SHARE_TEXT, fontsize=12, fontweight="bold")
+    metric_days = (7, 14, 30, 90)
+    metric_rows = []
+    daily = nco_daily.copy() if isinstance(nco_daily, pd.DataFrame) else pd.DataFrame()
+    if not daily.empty and {"date", "received", "expected"}.issubset(daily.columns):
+        daily["date"] = pd.to_datetime(daily["date"], errors="coerce").dt.normalize()
+        for col in ("received", "expected"):
+            daily[col] = pd.to_numeric(daily[col], errors="coerce")
+        daily = daily.dropna(subset=["date"]).sort_values("date")
+    end = daily["date"].max() if not daily.empty else pd.NaT
+    for days in metric_days:
+        if pd.isna(end):
+            metric_rows.append((days, float("nan"), float("nan")))
+            continue
+        subset = daily[daily["date"].between(end - pd.Timedelta(days=days - 1), end)]
+        expected = float(subset["expected"].sum(min_count=1)) if not subset.empty else float("nan")
+        received = float(subset["received"].sum(min_count=1)) if not subset.empty else float("nan")
+        rate = received / expected * 100.0 if pd.notna(expected) and expected > 0 and pd.notna(received) else float("nan")
+        missing = max(expected - received, 0.0) if pd.notna(expected) and pd.notna(received) else float("nan")
+        metric_rows.append((days, rate, missing))
+    left, width = .07, .86 / len(metric_days)
+    for index, (days, rate, missing) in enumerate(metric_rows):
+        x = left + width * (index + .5)
+        rate_color = SHARE_GREEN if pd.notna(rate) and rate >= 98 else SHARE_ORANGE
+        rate_text = f"{rate:.1f}%" if pd.notna(rate) else "—"
+        missing_text = f"{missing:.0f} missing" if pd.notna(missing) else "no data"
+        fig.text(x, .155, rate_text, color=rate_color, fontsize=17, fontweight="bold", ha="center")
+        fig.text(x, .132, f"{days}D", color=SHARE_MUTED, fontsize=9, fontweight="bold", ha="center")
+        fig.text(x, .112, missing_text, color=SHARE_MUTED, fontsize=8, ha="center")
+    fig.text(.07, .07, nco_latest_text, color=SHARE_BLUE, fontsize=11, fontweight="bold")
+    fig.text(.07, .045, nco_latest_detail, color=SHARE_MUTED, fontsize=8.5)
+    fig.text(.07, .018, "Operational-message reporting; not confirmed IGRA archive totals", color=SHARE_MUTED, fontsize=7.5)
+    fig.text(.93, .018, "wall.cloud", color=SHARE_BLUE, fontsize=10, fontweight="bold", ha="right")
     fig.savefig(paths["share_operations.png"], dpi=100, facecolor=fig.get_facecolor())
     plt.close(fig)
 
@@ -842,6 +872,8 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
         resolved_count=resolved_count,
         nco_latest_text=share_nco_latest_text,
         nco_latest_detail=share_nco_latest_detail,
+        nco_metrics=nco_view_metrics["combined"],
+        nco_daily=nco_views["combined"],
     )
     updated = pd.to_datetime(kpis.generated_at, errors="coerce")
     updated_text = (
@@ -890,7 +922,7 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
  .nco-ingest-subtitle{{color:var(--muted);font-size:10px;margin-top:2px}}.nco-freshness{{margin:8px 9px 0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:10px}}.nco-freshness strong{{color:var(--text);font-weight:750}}.nco-freshness.stale{{border-color:rgba(246,200,95,.65);color:var(--amber)}}
 </style></head><body>
 <a class="skip" href="#content">Skip to data</a>
-<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a class="nav-share" href="#share">Share</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status">Data through {html.escape(str(kpis.latest_date))}</div></div></nav>
+<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status">Data through {html.escape(str(kpis.latest_date))}</div></div></nav>
 <main id="content" class="wrap">
 <header class="hero"><div><div class="eyebrow">CONUS UPPER-AIR DATA WATCH</div><h1>Sounding data availability, clearly tracked.</h1></div>
 <article class="card {signal_class}"><div class="kpi-label">Current 7-day archive gap</div><div class="kpi-value {gap_class}">{gap_text}</div><div class="kpi-detail">{kpis.observed:.1f} observed vs {kpis.expected:.1f} expected records per day</div><div class="signal-grid"><div><strong>{shortfall_90:.0f}</strong><span>fewer records over 90 days</span></div><div><strong>{percent_90:.1f}%</strong><span>90-day difference</span></div></div></article></header>
@@ -1224,19 +1256,12 @@ if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stat
         share_end = page.find('</section>', share_start)
         if share_end >= 0:
             share_end += len('</section>')
-            page = page[:share_start] + (
-                '<section id="share" class="section share-section"><div class="section-head"><div>'
-                '<div class="eyebrow">SHARE IMAGES</div><h2>Downloadable data snapshots</h2></div>'
-                '<p>Each button creates a readable 1080 × 1080 PNG for posting or saving.</p></div>'
-                '<div class="share-grid share-image-grid">'
-                '<article id="share-archive-card" class="share-card"><div class="share-card-head"><div><div class="share-card-kicker">SOUNDING AVAILABILITY</div><h3>Current 7-day archive gap</h3></div><button type="button" class="share-image-action" data-share-image="share_archive.png">Share image</button></div><img class="share-image-preview" src="share_archive.png" alt="Square sounding availability archive gap image"></article>'
-                '<article id="share-operations-card" class="share-card"><div class="share-card-head"><div><div class="share-card-kicker">OPERATIONAL MESSAGES</div><h3>Current NCO-reported issues</h3></div><button type="button" class="share-image-action" data-share-image="share_operations.png">Share image</button></div><img class="share-image-preview" src="share_operations.png" alt="Square station status and NCO issue image"></article>'
-                '<article id="share-stations-card" class="share-card"><div class="share-card-head"><div><div class="share-card-kicker">STATION RANKINGS</div><h3>Archive shortfall and surplus</h3></div><button type="button" class="share-image-action" data-share-image="share_station_rankings.png">Share image</button></div><img class="share-image-preview" src="share_station_rankings.png" alt="Square station archive shortfall and surplus image"></article>'
-                '</div></section>'
-            ) + page[share_end:]
+            # Share images are generated/downloaded from the contextual buttons
+            # beside the live charts; do not render a duplicate gallery section.
+            page = page[:share_start] + page[share_end:]
     page = page.replace(
         '</head>',
-        '<style>.feature-title-row,.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.share-image-action{flex:0 0 auto;border:1px solid var(--blue);background:rgba(89,200,245,.08);color:var(--blue);border-radius:9px;padding:7px 11px;cursor:pointer;font-size:11px;font-weight:800;white-space:nowrap}.share-image-action:hover,.share-image-action:focus-visible{background:var(--panel2);box-shadow:0 0 0 2px rgba(89,200,245,.2)}.share-image-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.share-image-preview{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;background:var(--bg);border-radius:12px;margin-top:12px}@media(max-width:900px){.share-image-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.feature-title-row{align-items:flex-start}.section-head{align-items:flex-start;flex-wrap:wrap}.share-image-grid{grid-template-columns:1fr}.share-image-action{font-size:10px;padding:6px 8px}}</style></head>',
+        '<style>.feature-title-row,.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.share-image-action{flex:0 0 auto;border:1px solid var(--blue);background:rgba(89,200,245,.08);color:var(--blue);border-radius:9px;padding:7px 11px;cursor:pointer;font-size:11px;font-weight:800;white-space:nowrap}.share-image-action:hover,.share-image-action:focus-visible{background:var(--panel2);box-shadow:0 0 0 2px rgba(89,200,245,.2)}@media(max-width:600px){.feature-title-row{align-items:flex-start}.section-head{align-items:flex-start;flex-wrap:wrap}.share-image-action{font-size:10px;padding:6px 8px}}</style></head>',
         1,
     )
     page = page.replace(
