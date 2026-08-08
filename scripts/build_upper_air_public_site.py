@@ -22,6 +22,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.graph_objects as go
 import plotly.io as pio
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -330,7 +331,7 @@ def _nco_latest_text(daily: pd.DataFrame, reference_count: int | None) -> tuple[
         return "Latest: —", f"Complete through {date_text}"
     if pd.isna(expected) or not expected:
         return f"Latest: {received:.0f} of {int(latest.available_rows)} product records", f"Complete through {date_text} · expected inventory unavailable"
-    return f"Latest: {received:.0f} of {int(expected)} expected product records · {percent:.1f}%", f"Complete through {date_text} · {int(latest.available_rows)} applicable product records"
+    return f"Latest: {received:.0f} of {int(latest.available_rows)} product records · {percent:.1f}%", f"Complete through {date_text}"
 
 
 def _nco_heatmap_markup(
@@ -379,14 +380,57 @@ def _nco_heatmap_markup(
         '<span title="Healthy: 98–100%" aria-label="Healthy: 98 to 100 percent"><i class="health-healthy"></i>Healthy</span>'
         '<span title="Minor: 95–97.9%" aria-label="Minor: 95 to 97.9 percent"><i class="health-minor"></i>Minor</span>'
         '<span title="Reduced: 90–94.9%" aria-label="Reduced: 90 to 94.9 percent"><i class="health-reduced"></i>Reduced</span>'
-        '<span title="Degraded: 80–89.9%" aria-label="Degraded: 80 to 89.9 percent"><i class="health-degraded"></i>Degraded</span>'
-        '<span title="Critical: below 80%" aria-label="Critical: below 80 percent"><i class="health-critical"></i>Critical</span>'
+        '<span title="Degraded: below 90%" aria-label="Degraded: below 90 percent"><i class="health-degraded"></i>Degraded</span>'
         '<span title="No data: monitoring record unavailable" aria-label="No data: monitoring record unavailable"><i class="health-none"></i>No data</span></div>'
         '<div id="nco-cell-tooltip" class="nco-cell-tooltip" role="tooltip" hidden></div>'
-        '<p id="nco-health-thresholds" class="sr-only">Healthy: 98 to 100 percent. Minor misses: 95 to 97.9 percent. Reduced: 90 to 94.9 percent. Degraded: 80 to 89.9 percent. Critical: below 80 percent. No data: no monitoring record.</p>'
+        '<p id="nco-health-thresholds" class="sr-only">Healthy: 98 to 100 percent. Minor misses: 95 to 97.9 percent. Reduced: 90 to 94.9 percent. Degraded: below 90 percent. No data: no monitoring record.</p>'
         '<div id="nco-cell-detail" class="nco-cell-detail" tabindex="-1" aria-live="polite" hidden><button type="button" class="nco-detail-close" aria-label="Dismiss selected day details">×</button></div>'
         f'<script type="application/json" id="nco-heatmap-payload" data-min-date="{source_start.date().isoformat()}" data-max-date="{source_end.date().isoformat()}" data-default-start="{default_start.date().isoformat()}" data-default-end="{default_end.date().isoformat()}">{payload}</script>'
     )
+
+
+def _nco_share_summary_figure(metrics: pd.DataFrame, *, height: int = 220) -> go.Figure:
+    """Build a compact lookback summary suitable for a screenshot card."""
+    required = {"days", "current_percent", "delta_pp"}
+    if metrics.empty or not required.issubset(metrics.columns):
+        figure = go.Figure()
+        figure.add_annotation(text="NCO ingest summary unavailable.", x=0.5, y=0.5, xref="paper", yref="paper", showarrow=False)
+        figure.update_layout(height=height, paper_bgcolor="#0D2538", plot_bgcolor="#0D2538", font={"color": "#AFC1D4"})
+        return figure
+    data = metrics.dropna(subset=["days", "current_percent"]).sort_values("days").copy()
+    if data.empty:
+        return _nco_share_summary_figure(pd.DataFrame(), height=height)
+    values = pd.to_numeric(data["current_percent"], errors="coerce")
+    deltas = pd.to_numeric(data["delta_pp"], errors="coerce")
+    colors = [
+        "#52D3A2" if value >= 98 else "#89D58F" if value >= 95 else "#F6C85F" if value >= 90 else "#FF8A3D" if value >= 80 else "#EF4444"
+        for value in values
+    ]
+    labels = [f"{int(days)}D" for days in data["days"]]
+    figure = go.Figure(
+        go.Bar(
+            x=labels,
+            y=values,
+            marker={"color": colors},
+            text=[f"{value:.1f}%" for value in values],
+            textposition="outside",
+            textfont={"size": 18, "color": "#F8FBFF"},
+            cliponaxis=False,
+            customdata=deltas,
+            hovertemplate="%{x}<br>Ingest: %{y:.1f}%<br>Change: %{customdata:+.1f} pp<extra></extra>",
+        )
+    )
+    figure.update_layout(
+        height=height,
+        margin={"l": 42, "r": 16, "t": 28, "b": 38},
+        paper_bgcolor="#0D2538",
+        plot_bgcolor="#0D2538",
+        font={"family": "Arial, sans-serif", "color": "#F8FBFF", "size": 16},
+        showlegend=False,
+    )
+    figure.update_yaxes(range=[0, 108], ticksuffix="%", gridcolor="#294960", title=None, tickfont={"size": 14})
+    figure.update_xaxes(showgrid=False, title=None)
+    return figure
 
 
 def _station_deficit_frame(stations: pd.DataFrame) -> tuple[pd.DataFrame, str]:
@@ -540,12 +584,62 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
         snapshot.stations,
         _nco_freshness(snapshot),
     )
+    share_nco_latest_text, share_nco_latest_detail = _nco_latest_text(
+        nco_views["combined"],
+        _nco_reference_count(snapshot.stations),
+    )
     issue_figure = issue_category_figure(issue_history, show_smoothed_trend=True, height=350)
     issue_figure.update_xaxes(range=[issue_default_start, issue_last])
     categories = _plotly_fragment(
         issue_figure,
         include_runtime=False,
         div_id="issue-categories",
+    )
+    share_trend_figure = archive_trend_figure(
+        kpis.series,
+        show_event_tags=True,
+        show_workforce_events=True,
+        height=430,
+    )
+    share_trend_figure.layout.annotations = ()
+    share_trend_figure.update_layout(margin={"l": 54, "r": 24, "t": 34, "b": 42})
+    share_trend_figure.update_xaxes(range=[default_start, last_trend_date], rangeselector=None)
+    share_trend_figure.update_xaxes(tickfont={"size": 15})
+    share_trend_figure.update_yaxes(tickfont={"size": 15})
+    share_trend_figure.update_layout(font={"family": "Arial, sans-serif", "color": "#F8FBFF", "size": 16})
+    share_trend_figure.update_layout(yaxis={"range": [y_cap_low, y_cap_high], "autorange": False})
+    share_trend = _plotly_fragment(share_trend_figure, include_runtime=False, div_id="share-archive-trend")
+    share_windows_figure = archive_windows_figure(archive_windows, height=280, vertical=True)
+    share_windows_figure.update_xaxes(tickfont={"size": 15})
+    share_windows_figure.update_yaxes(tickfont={"size": 15})
+    share_windows_figure.update_layout(font={"family": "Arial, sans-serif", "color": "#F8FBFF", "size": 16})
+    share_windows = _plotly_fragment(
+        share_windows_figure,
+        include_runtime=False,
+        div_id="share-archive-windows",
+    )
+    share_nco_summary = _plotly_fragment(
+        _nco_share_summary_figure(nco_view_metrics["combined"], height=220),
+        include_runtime=False,
+        div_id="share-nco-summary",
+    )
+    share_shortfall_figure = station_archive_shortfall_figure(station_deficits, height=300, days=7)
+    share_shortfall_figure.update_layout(font={"family": "Arial, sans-serif", "color": "#F8FBFF", "size": 15})
+    share_shortfall_figure.update_xaxes(tickfont={"size": 13})
+    share_shortfall_figure.update_yaxes(tickfont={"size": 13})
+    share_shortfall = _plotly_fragment(
+        share_shortfall_figure,
+        include_runtime=False,
+        div_id="share-station-shortfalls-7",
+    )
+    share_surplus_figure = station_archive_surplus_figure(station_deficits, height=300, days=7)
+    share_surplus_figure.update_layout(font={"family": "Arial, sans-serif", "color": "#F8FBFF", "size": 15})
+    share_surplus_figure.update_xaxes(tickfont={"size": 13})
+    share_surplus_figure.update_yaxes(tickfont={"size": 13})
+    share_surplus = _plotly_fragment(
+        share_surplus_figure,
+        include_runtime=False,
+        div_id="share-station-surpluses-7",
     )
     map_uri = _map_data_uri(snapshot)
     updated = pd.to_datetime(kpis.generated_at, errors="coerce")
@@ -596,12 +690,18 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
  .nco-ingest-subtitle{{color:var(--muted);font-size:10px;margin-top:2px}}.nco-freshness{{margin:8px 9px 0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:10px}}.nco-freshness strong{{color:var(--text);font-weight:750}}.nco-freshness.stale{{border-color:rgba(246,200,95,.65);color:var(--amber)}}.nco-cell.health-degraded{{background:#f97316}}.health-degraded{{background:#f97316}}.nco-cell.health-critical{{background:#ef4444}}.health-critical{{background:#ef4444}}.nav-status{{display:grid;gap:2px;line-height:1.2;font-size:11px}}
 </style></head><body>
 <a class="skip" href="#content">Skip to data</a>
-<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status"><span>Sounding data (IGRA) through {html.escape(str(kpis.latest_date))}</span><span>Model ingest (NCO) through {html.escape(nco_nav_date)}</span></div></div></nav>
+<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a class="nav-share" href="#share">Share</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status"><span>Sounding data (IGRA) through {html.escape(str(kpis.latest_date))}</span><span>Model ingest (NCO) through {html.escape(nco_nav_date)}</span></div></div></nav>
 <main id="content" class="wrap">
 <header class="hero"><div><div class="eyebrow">CONUS UPPER-AIR DATA WATCH</div><h1>Sounding data availability, clearly tracked.</h1></div>
 <article class="card {signal_class}"><div class="kpi-label">Current 7-day archive gap</div><div class="kpi-value {gap_class}">{gap_text}</div><div class="kpi-detail">{kpis.observed:.1f} observed vs {kpis.expected:.1f} expected records per day</div><div class="signal-grid"><div><strong>{shortfall_90:.0f}</strong><span>fewer records over 90 days</span></div><div><strong>{percent_90:.1f}%</strong><span>90-day difference</span></div></div></article></header>
 <section id="archive" class="section"><div class="section-head"><div class="eyebrow">SOUNDING AVAILABILITY</div><h2>Observed records versus expected</h2></div><article class="card chart-card"><div class="chart-title">Sounding availability trend</div><div class="trend-controls"><div class="preset-controls" aria-label="Trend date range"><button type="button" class="range-button" data-days="182">6MO</button><button type="button" class="range-button active" data-days="365">1YR</button><button type="button" class="range-button" data-days="730">2YR</button><button type="button" class="range-button" data-days="10">10D</button><button type="button" class="range-button" data-days="30">30D</button><button type="button" class="range-button" data-days="60">60D</button><button type="button" class="range-button" data-days="90">90D</button><button type="button" id="nws-layoffs-range" class="event-range-button">NWS Layoffs</button><button type="button" id="scale-toggle" class="scale-toggle">Full Y scale</button></div><form id="custom-range" class="custom-range"><span>Custom</span><input id="range-start" type="date" aria-label="Custom range start" min="{first_trend_date.date().isoformat()}" max="{last_trend_date.date().isoformat()}" value="{first_trend_date.date().isoformat()}"><span>to</span><input id="range-end" type="date" aria-label="Custom range end" min="{first_trend_date.date().isoformat()}" max="{last_trend_date.date().isoformat()}" value="{last_trend_date.date().isoformat()}"><button type="submit">Apply</button></form></div>{trend}</article></section>
 <section class="section"><article class="card chart-card"><div class="chart-title">Recent archive windows</div>{windows}</article><div class="grid two-even station-ranking-grid"><article class="card chart-card"><div class="chart-title">Stations ranked by archive shortfall</div><div class="chart-sub">IGRA archive records vs {html.escape(station_baseline_label)}</div><div class="station-window-controls" aria-label="Shortfall ranking period">{station_window_buttons}</div>{station_shortfall_panels_html}</article><article class="card chart-card"><div class="chart-title">Stations ranked by archive surplus</div><div class="chart-sub">IGRA archive records above {html.escape(station_baseline_label)}</div><div class="station-window-controls" aria-label="Surplus ranking period">{station_window_buttons}</div>{station_surplus_panels_html}</article></div></section>
+
+<section id="share" class="section share-section"><div class="section-head"><div><div class="eyebrow">SHARE CARDS</div><h2>Quick-share data snapshots</h2></div><p>Screenshot-ready views using the current archive and operational-message data.</p></div><div class="share-grid">
+<article id="share-archive-card" class="share-card share-card-wide"><div class="share-card-head"><div><div class="share-card-kicker">SOUNDING AVAILABILITY</div><h3>Current 7-day archive gap</h3><p>Observed records versus expected · trailing 1-year trend, baseline capped</p></div><button type="button" class="share-action" data-share-target="share-archive-card">Share card</button></div><div class="share-gap-value {gap_class}">{gap_text}</div><div class="share-gap-detail">{kpis.observed:.1f} observed vs {kpis.expected:.1f} expected records per day</div><div class="share-chart-title">Sounding availability trend</div>{share_trend}<div class="share-chart-title share-chart-title-tight">Recent archive windows</div>{share_windows}<div class="share-card-source">NOAA/NCEI IGRA v2 · {html.escape(station_baseline_label)}</div></article>
+<article id="share-operations-card" class="share-card"><div class="share-card-head"><div><div class="share-card-kicker">OPERATIONAL MESSAGES</div><h3>Current NCO-reported issues</h3><p>CONUS map and operational-message availability</p></div><button type="button" class="share-action" data-share-target="share-operations-card">Share card</button></div><img class="map share-map" src="{map_uri}" alt="Miller-projection CONUS map of upper-air stations with latest NCO-reported status"><div class="share-status-grid"><div class="share-status-box share-status-issue"><strong class="problem">{issue_count} / {active_count}</strong><span>stations with an issue</span></div><div class="share-status-box share-status-clean"><strong class="clean">{clean_count}</strong><span>no issue reported</span></div></div><div class="share-status-banner"><div class="share-chart-title">Latest mapped status</div><div class="share-status-note">{new_count} new or changed · {persistent_count} persistent · {resolved_count} resolved</div></div><div class="share-status-banner share-nco-banner"><div class="share-chart-title">NCO reported for ingest</div><div class="share-nco-latest">{html.escape(share_nco_latest_text)}</div><div class="share-nco-detail">{html.escape(share_nco_latest_detail)}</div></div>{share_nco_summary}<div class="share-card-source">NCO operational-message reporting; not confirmed IGRA archive totals</div></article>
+<article id="share-stations-card" class="share-card"><div class="share-card-head"><div><div class="share-card-kicker">STATION RANKINGS</div><h3>Archive shortfall and surplus</h3><p>Largest station-level changes over the last 7 days</p></div><button type="button" class="share-action" data-share-target="share-stations-card">Share card</button></div><div class="share-ranking-grid"><div><div class="share-chart-title">Shortfall</div>{share_shortfall}</div><div><div class="share-chart-title">Surplus</div>{share_surplus}</div></div><div class="share-card-source">IGRA archive records vs {html.escape(station_baseline_label)}</div></article>
+</div></section>
 
 <section id="stations" class="section"><div class="section-head"><div class="eyebrow">STATION STATUS</div><h2>Current NCO-reported issues</h2></div><div class="grid two"><article class="card"><img class="map" src="{map_uri}" alt="Miller-projection map of CONUS upper-air stations with state borders and latest NCO-reported status"></article><article class="card status-card"><div class="kpi-label">Latest mapped status</div><p class="kpi-detail">Stations with an NCO-reported issue</p><div class="kpi-value problem">{issue_count} / {active_count}</div><p class="kpi-detail">{clean_count} stations have no issue reported</p><div class="change-strip"><div class="change-stat new"><strong>{new_count}</strong><span>new or changed</span></div><div class="change-stat"><strong>{persistent_count}</strong><span>persistent</span></div><div class="change-stat resolved"><strong>{resolved_count}</strong><span>resolved</span></div></div><details class="station-search-details"><summary>Search all mapped stations</summary>{_station_directory(current_stations)}</details></article></div></section>
 
@@ -679,7 +779,7 @@ if(ncoPayloadElement){{
   const ncoIso=date=>date.toISOString().slice(0,10);
   const ncoEscape=value=>String(value).replace(/[&<>\"]/g,character=>({{ '&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;' }})[character]);
   const ncoPct=value=>Number.isFinite(Number(value))?Number(value).toFixed(1)+'%':'—';
-  const ncoHealth=value=>{{const number=Number(value);if(!Number.isFinite(number))return 'no-data';if(number>=98)return 'health-healthy';if(number>=95)return 'health-minor';if(number>=90)return 'health-reduced';if(number>=80)return 'health-degraded';return 'health-critical';}};
+  const ncoHealth=value=>{{const number=Number(value);if(!Number.isFinite(number))return 'no-data';if(number>=98)return 'health-healthy';if(number>=95)return 'health-minor';if(number>=90)return 'health-reduced';return 'health-degraded';}};
   const ncoRate=(startIso,endIso)=>{{let received=0,expected=0,days=0;for(const row of ncoPayload.days||[]){{if(row.date>=startIso&&row.date<=endIso&&Number.isFinite(Number(row.received))&&Number(row.expected)>0){{received+=Number(row.received);expected+=Number(row.expected);days++;}}}}return {{rate:expected?received/expected*100:null,days}};}};
   const ncoFormatDate=date=>new Intl.DateTimeFormat('en-US',{{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}}).format(new Date(date+'T00:00:00Z'));
   const ncoPresentSources=row=>Object.entries(row?.models||{{}}).filter(([,value])=>value!==null&&Number.isFinite(Number(value))).map(([model,value])=>model+' report: '+Number(value).toFixed(0));
@@ -779,7 +879,7 @@ if(ncoPayloadElement){{
   const ncoCycleIso=date=>date.toISOString().slice(0,10);
   const ncoCycleFmtDate=date=>new Intl.DateTimeFormat('en-US',{{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}}).format(new Date(date+'T00:00:00Z'));
   const ncoCyclePct=value=>Number.isFinite(Number(value))?Number(value).toFixed(1)+'%':'—';
-  const ncoCycleHealth=value=>{{const number=Number(value);if(!Number.isFinite(number))return 'no-data';if(number>=98)return 'health-healthy';if(number>=95)return 'health-minor';if(number>=90)return 'health-reduced';if(number>=80)return 'health-degraded';return 'health-critical';}};
+  const ncoCycleHealth=value=>{{const number=Number(value);if(!Number.isFinite(number))return 'no-data';if(number>=98)return 'health-healthy';if(number>=95)return 'health-minor';if(number>=90)return 'health-reduced';return 'health-degraded';}};
   const ncoCycleRate=(start,end)=>{{let received=0,expected=0,days=0;for(const row of ncoCycleRows()){{if(row.date>=start&&row.date<=end&&Number.isFinite(Number(row.received))&&Number(row.expected)>0){{received+=Number(row.received);expected+=Number(row.expected);days++;}}}}return {{rate:expected?received/expected*100:null,days}};}};
   const ncoCycleDelta=(start,end)=>{{const current=ncoCycleRate(start,end);const a=new Date(start+'T00:00:00Z');const b=new Date(end+'T00:00:00Z');const length=Math.round((b-a)/86400000)+1;const previousEnd=new Date(a);previousEnd.setUTCDate(previousEnd.getUTCDate()-1);const previousStart=new Date(previousEnd);previousStart.setUTCDate(previousStart.getUTCDate()-(length-1));const previous=ncoCycleRate(ncoCycleIso(previousStart),ncoCycleIso(previousEnd));return {{current,previous,delta:current.rate!==null&&previous.rate!==null?current.rate-previous.rate:null,previousStart:ncoCycleIso(previousStart),previousEnd:ncoCycleIso(previousEnd)}};}};
   const ncoCycleModels=row=>Object.entries(row?.models||{{}}).filter(([,value])=>value!==null&&Number.isFinite(Number(value))).map(([model,value])=>model+' report: '+Number(value).toFixed(0));
@@ -821,9 +921,85 @@ if(stationSearch){{stationSearch.addEventListener('input',()=>{{const query=stat
         '<style>.station-ranking-grid{margin-top:14px}.station-window-controls{display:flex;gap:4px;flex-wrap:wrap;padding:8px 9px 2px}.station-window-button{border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:7px;padding:5px 8px;cursor:pointer;font-size:11px;font-weight:750}.station-window-button:hover,.station-window-button.active,.station-window-button:focus-visible{color:var(--text);border-color:var(--blue);background:var(--panel2)}.station-ranking-panel[hidden]{display:none!important}.nco-ingest-card{display:flex;flex-direction:column}.nco-ingest-card .nco-heatmap-scroller{flex:1;display:flex;min-height:0}.nco-ingest-card .nco-heatmap{display:flex;flex:1;flex-direction:column;width:100%}.nco-ingest-card .nco-heatmap-body{flex:1;min-height:120px}.nco-ingest-card .nco-heatmap-grid{height:100%;grid-template-rows:repeat(7,minmax(10px,1fr))}.nco-ingest-card .nco-cell{height:auto;min-height:10px}.nco-weekday-labels{width:22px;font-size:8px}.nco-weekday-labels span{font-size:8px;white-space:nowrap}.nco-weekday-labels span::after{content:none!important}.nco-months{margin-left:26px}.nco-months span{visibility:visible!important}@media(max-width:600px){.station-window-controls{padding-inline:5px}.station-window-button{padding:5px 6px;font-size:10px}.nco-ingest-card .nco-heatmap-body{min-height:90px}.nco-weekday-labels{width:18px;font-size:7px;visibility:visible!important}.nco-weekday-labels span{font-size:7px}.nco-months{margin-left:22px;font-size:7px}.nco-months span{max-width:28px;visibility:visible!important}}</style></head>',
         1,
     )
+    # Keep each 1080px share card genuinely square while fitting the complete
+    # snapshot. Plotly writes inline heights, so these scoped limits are
+    # intentional: they prevent the chart panels from pushing text beyond the
+    # image bounds (especially on mobile previews).
+    page = page.replace(
+        '</head>',
+        '<style>'
+        '#share-archive-card #share-archive-trend{height:330px!important}'
+        '#share-archive-card #share-archive-windows{height:160px!important}'
+        '#share-operations-card .share-map{height:300px!important;max-height:300px!important}'
+        '#share-operations-card #share-nco-summary{height:150px!important}'
+        '@media(max-width:600px){'
+        '#share-archive-card{padding:8px!important}'
+        '#share-archive-card .share-card-head{gap:4px}'
+        '#share-archive-card .share-card-kicker{font-size:8px}'
+        '#share-archive-card h3{font-size:20px}'
+        '#share-archive-card p{font-size:8px}'
+        '#share-archive-card .share-action{font-size:9px;padding:4px 6px}'
+        '#share-archive-card .share-gap-value{font-size:48px;margin:5px 0 1px}'
+        '#share-archive-card .share-gap-detail{font-size:8px}'
+        '#share-archive-card .share-chart-title{font-size:10px;margin:3px 0 1px}'
+        '#share-archive-card #share-archive-trend{height:80px!important}'
+        '#share-archive-card #share-archive-windows{height:55px!important}'
+        '#share-archive-card .share-card-source{font-size:7px}'
+        '#share-operations-card{padding:8px!important}'
+        '#share-operations-card .share-card-head{gap:4px}'
+        '#share-operations-card .share-card-kicker{font-size:8px}'
+        '#share-operations-card h3{font-size:18px}'
+        '#share-operations-card p{font-size:8px}'
+        '#share-operations-card .share-action{font-size:9px;padding:4px 6px}'
+        '#share-operations-card .share-map{height:70px!important;max-height:70px!important;margin-top:3px}'
+        '#share-operations-card .share-status-grid{gap:5px;margin-top:3px}'
+        '#share-operations-card .share-status-box{padding:3px 4px;border-radius:6px}'
+        '#share-operations-card .share-status-grid>div{padding-top:2px}'
+        '#share-operations-card .share-status-grid strong{font-size:18px}'
+        '#share-operations-card .share-status-grid span{font-size:7px}'
+        '#share-operations-card .share-status-banner{margin-top:3px;padding:3px 4px}'
+        '#share-operations-card .share-status-banner .share-chart-title{font-size:9px;margin:0 0 1px}'
+        '#share-operations-card .share-status-note{font-size:8px}'
+        '#share-operations-card .share-nco-latest{font-size:10px;margin-top:1px}'
+        '#share-operations-card .share-nco-detail{font-size:7px}'
+        '#share-operations-card #share-nco-summary{height:55px!important}'
+        '#share-operations-card .share-card-source{font-size:7px}'
+        '#share-stations-card{padding:8px!important}'
+        '#share-stations-card .share-card-head{gap:4px}'
+        '#share-stations-card .share-card-kicker{font-size:8px}'
+        '#share-stations-card h3{font-size:18px}'
+        '#share-stations-card p{font-size:8px}'
+        '#share-stations-card .share-action{font-size:9px;padding:4px 6px}'
+        '#share-stations-card .share-chart-title{font-size:10px;margin:3px 0 1px}'
+        '#share-stations-card #share-station-shortfalls-7,#share-stations-card #share-station-surpluses-7{height:105px!important}'
+        '#share-stations-card .share-card-source{font-size:7px}'
+        '}'
+        '</style></head>',
+        1,
+    )
+    page = page.replace(
+        '</head>',
+        '<style>.share-grid{display:grid;grid-template-columns:1fr;gap:24px}.share-card{width:min(100%,1080px);aspect-ratio:1/1;margin-inline:auto;padding:28px;border-radius:24px;display:flex;flex-direction:column;justify-content:flex-start}.share-card-wide{grid-column:auto}.share-card-head{gap:24px}.share-card-kicker{font-size:18px}.share-card h3{font-size:clamp(30px,4vw,54px);margin:6px 0 5px}.share-card p{font-size:18px;line-height:1.25}.share-action{padding:11px 16px;font-size:16px}.share-gap-value{font-size:clamp(72px,8vw,124px);margin:18px 0 5px}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:18px}.share-chart-title{margin:16px 0 4px;font-size:22px}.share-card-source{margin-top:8px;font-size:14px}.share-map{margin-top:12px;max-height:410px;flex:0 0 auto}.share-status-grid{gap:18px;margin-top:14px}.share-status-box{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:var(--panel2)}.share-status-issue{border-color:rgba(255,112,79,.7);background:rgba(255,112,79,.1)}.share-status-clean{border-color:rgba(82,211,162,.65);background:rgba(82,211,162,.1)}.share-status-grid>div{padding-top:10px}.share-status-grid strong{font-size:48px;line-height:1}.share-status-grid span{font-size:17px}.share-status-banner{margin-top:12px;padding:9px 12px;border-left:4px solid var(--orange);background:rgba(255,112,79,.08);border-radius:8px}.share-nco-banner{border-left-color:var(--blue);background:rgba(89,200,245,.08)}.share-status-banner .share-chart-title{margin:0 0 3px}.share-nco-latest{font-size:26px;margin-top:6px}.share-ranking-grid{gap:22px}.share-card .js-plotly-plot{width:100%!important}.share-card .plot-container,.share-card .svg-container{max-width:100%!important}@media(max-width:900px){.share-card{padding:20px}.share-card-kicker{font-size:14px}.share-card h3{font-size:clamp(26px,5vw,44px)}.share-card p{font-size:15px}.share-gap-value{font-size:clamp(62px,10vw,96px)}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:15px}.share-chart-title{font-size:18px}.share-status-grid strong{font-size:38px}.share-status-grid span{font-size:14px}.share-nco-latest{font-size:22px}}@media(max-width:600px){.navlinks{display:flex;gap:8px;font-size:12px}.navlinks a:not(.nav-share){display:none}.nav-share{display:block!important}.share-card{width:100%;padding:12px;border-radius:16px}.share-card-head{gap:8px}.share-card-kicker{font-size:9px}.share-card h3{font-size:clamp(20px,6vw,30px);margin:2px 0}.share-card p{font-size:10px;line-height:1.15}.share-action{padding:5px 7px;font-size:10px}.share-gap-value{font-size:clamp(44px,14vw,70px);margin:8px 0 2px}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:10px}.share-chart-title{margin:5px 0 1px;font-size:12px}.share-card-source{font-size:8px}.share-map{margin-top:5px;max-height:none;height:clamp(105px,32vw,190px)!important}.share-status-grid{gap:7px;margin-top:5px}.share-status-box{padding:5px 6px;border-radius:8px}.share-status-grid>div{padding-top:4px}.share-status-grid strong{font-size:24px}.share-status-grid span{font-size:9px}.share-status-banner{margin-top:5px;padding:4px 6px;border-left-width:2px}.share-nco-latest{font-size:14px;margin-top:2px}.share-ranking-grid{grid-template-columns:1fr;gap:3px}.share-card .js-plotly-plot{min-height:0}.share-card #share-archive-trend{height:clamp(105px,34vw,210px)!important}.share-card #share-archive-windows{height:clamp(76px,24vw,150px)!important}.share-card #share-nco-summary{height:clamp(72px,22vw,120px)!important}.share-card #share-station-shortfalls-7,.share-card #share-station-surpluses-7{height:clamp(86px,28vw,150px)!important}}</style></head>',
+        1,
+    )
     page = page.replace(
         '<article class="card chart-card"><div class="nco-ingest-head">',
         '<article class="card chart-card nco-ingest-card"><div class="nco-ingest-head">',
+        1,
+    )
+    page = page.replace(
+        '</head>',
+        '<style>.share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.share-card{min-width:0;background:linear-gradient(150deg,rgba(89,200,245,.08),var(--panel) 55%);border:1px solid var(--line);border-radius:20px;padding:18px;overflow:hidden;break-inside:avoid}.share-card-wide{grid-column:1/-1}.share-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.share-card-kicker{color:var(--blue);font-size:10px;font-weight:850;letter-spacing:.12em}.share-card h3{margin:4px 0 2px;font-size:clamp(21px,2.2vw,30px);line-height:1.1;letter-spacing:-.025em}.share-card p{margin:0;color:var(--muted);font-size:12px}.share-action{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);color:var(--blue);border-radius:8px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:800}.share-action:hover,.share-action:focus-visible{border-color:var(--blue);background:var(--panel2)}.share-gap-value{font-size:clamp(46px,6vw,76px);font-weight:850;line-height:1;margin:16px 0 3px;letter-spacing:-.06em}.share-gap-detail,.share-nco-detail,.share-status-note{color:var(--muted);font-size:12px}.share-chart-title{margin:14px 0 2px;color:var(--text);font-size:12px;font-weight:800;letter-spacing:.02em}.share-chart-title-tight{margin-top:4px}.share-card-source{margin-top:8px;color:var(--muted);font-size:10px}.share-map{margin-top:14px;max-height:340px;object-fit:contain;background:var(--panel2)}.share-status-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.share-status-grid>div{border-top:1px solid var(--line);padding-top:8px}.share-status-grid strong{display:block;font-size:22px}.share-status-grid span{color:var(--muted);font-size:11px}.share-nco-latest{font-size:16px;font-weight:800;margin-top:5px}.share-ranking-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.share-ranking-grid>div{min-width:0}.share-card .js-plotly-plot{width:100%!important}.share-card .plot-container,.share-card .svg-container{max-width:100%!important}@media(max-width:900px){.share-grid{grid-template-columns:1fr}.share-card-wide{grid-column:auto}}@media(max-width:600px){.navlinks{display:flex;gap:8px;font-size:12px}.navlinks a:not(.nav-share){display:none}.nav-share{display:block!important}.share-card{padding:14px;border-radius:16px}.share-card-head{gap:8px}.share-action{padding:6px 8px}.share-ranking-grid{grid-template-columns:1fr}.share-card .js-plotly-plot{min-height:0}}</style></head>',
+        1,
+    )
+    page = page.replace(
+        '</head>',
+        '<style>.share-grid{grid-template-columns:1fr!important;gap:24px!important}.share-card{width:min(100%,1080px)!important;aspect-ratio:1/1!important;margin-inline:auto!important;padding:28px!important;border-radius:24px!important;display:flex!important;flex-direction:column!important}.share-card-wide{grid-column:auto!important}.share-card-head{gap:24px}.share-card-kicker{font-size:18px}.share-card h3{font-size:clamp(30px,4vw,54px);margin:6px 0 5px}.share-card p{font-size:18px;line-height:1.25}.share-action{padding:11px 16px;font-size:16px}.share-gap-value{font-size:clamp(72px,8vw,124px);margin:18px 0 5px}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:18px}.share-chart-title{margin:16px 0 4px;font-size:22px}.share-card-source{margin-top:8px;font-size:14px}.share-map{margin-top:12px;max-height:410px}.share-status-grid{gap:18px;margin-top:14px}.share-status-box{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:var(--panel2)}.share-status-issue{border-color:rgba(255,112,79,.7);background:rgba(255,112,79,.1)}.share-status-clean{border-color:rgba(82,211,162,.65);background:rgba(82,211,162,.1)}.share-status-grid>div{padding-top:10px}.share-status-grid strong{font-size:48px;line-height:1}.share-status-grid span{font-size:17px}.share-status-banner{margin-top:12px;padding:9px 12px;border-left:4px solid var(--orange);background:rgba(255,112,79,.08);border-radius:8px}.share-nco-banner{border-left-color:var(--blue);background:rgba(89,200,245,.08)}.share-status-banner .share-chart-title{margin:0 0 3px}.share-nco-latest{font-size:26px;margin-top:6px}.share-ranking-grid{gap:22px}.share-card #share-archive-trend,.share-card #share-archive-windows,.share-card #share-nco-summary,.share-card #share-station-shortfalls-7,.share-card #share-station-surpluses-7{font-size:inherit}@media(max-width:900px){.share-card{padding:20px!important}.share-card-kicker{font-size:14px}.share-card h3{font-size:clamp(26px,5vw,44px)}.share-card p{font-size:15px}.share-gap-value{font-size:clamp(62px,10vw,96px)}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:15px}.share-chart-title{font-size:18px}.share-status-grid strong{font-size:38px}.share-status-grid span{font-size:14px}.share-nco-latest{font-size:22px}}@media(max-width:600px){.navlinks{display:flex;gap:8px;font-size:12px}.navlinks a:not(.nav-share){display:none}.nav-share{display:block!important}.share-card{width:100%!important;padding:12px!important;border-radius:16px!important}.share-card-head{gap:8px}.share-card-kicker{font-size:9px}.share-card h3{font-size:clamp(20px,6vw,30px);margin:2px 0}.share-card p{font-size:10px;line-height:1.15}.share-action{padding:5px 7px;font-size:10px}.share-gap-value{font-size:clamp(44px,14vw,70px);margin:8px 0 2px}.share-gap-detail,.share-nco-detail,.share-status-note{font-size:10px}.share-chart-title{margin:5px 0 1px;font-size:12px}.share-card-source{font-size:8px}.share-map{margin-top:5px;max-height:none;height:clamp(105px,32vw,190px)!important}.share-status-grid{gap:7px;margin-top:5px}.share-status-box{padding:5px 6px;border-radius:8px}.share-status-grid>div{padding-top:4px}.share-status-grid strong{font-size:24px}.share-status-grid span{font-size:9px}.share-status-banner{margin-top:5px;padding:4px 6px;border-left-width:2px}.share-nco-latest{font-size:14px;margin-top:2px}.share-ranking-grid{grid-template-columns:1fr;gap:3px}.share-card #share-archive-trend{height:clamp(105px,34vw,210px)!important}.share-card #share-archive-windows{height:clamp(76px,24vw,150px)!important}.share-card #share-nco-summary{height:clamp(72px,22vw,120px)!important}.share-card #share-station-shortfalls-7,.share-card #share-station-surpluses-7{height:clamp(86px,28vw,150px)!important}}</style></head>',
+        1,
+    )
+    page = page.replace(
+        '</body></html>',
+        '<script>document.querySelectorAll(".share-action").forEach(button=>button.addEventListener("click",async()=>{const target=button.dataset.shareTarget;const url=new URL(window.location.href);url.hash=target;const title=button.closest(".share-card")?.querySelector("h3")?.textContent||"Soundings share card";try{if(navigator.share){await navigator.share({title,url:url.href});}else{await navigator.clipboard.writeText(url.href);const prior=button.textContent;button.textContent="Link copied";setTimeout(()=>{button.textContent=prior;},1800);}}catch(_error){}}));</script></body></html>',
         1,
     )
     index_path = output_dir / "index.html"
