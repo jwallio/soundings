@@ -162,17 +162,19 @@ def _write_share_images(
     # window comparison. Fill is segmented by sign so surplus is unambiguously green.
     fig = plt.figure(figsize=(10.8, 10.8), dpi=100, facecolor=SHARE_BG)
     fig.text(.07, .94, "SOUNDING AVAILABILITY", color=SHARE_BLUE, fontsize=14, fontweight="bold", va="top")
-    fig.text(.07, .895, "Current 7-day archive gap", color=SHARE_TEXT, fontsize=27, fontweight="bold", va="top")
     gap = float(getattr(snapshot.payload, "gap_percent", float("nan")))
     gap_color = SHARE_GREEN if pd.notna(gap) and gap > 0 else SHARE_ORANGE
     gap_text = f"{gap:+.1f}%" if pd.notna(gap) else "—"
-    fig.text(.07, .79, gap_text, color=gap_color, fontsize=68, fontweight="bold", va="top")
-    fig.text(.07, .70, "Observed archive records versus the same-date baseline", color=SHARE_MUTED, fontsize=13, va="top")
-    fig.text(.07, .66, f"Complete through {_share_date(getattr(snapshot.payload, 'latest_date', None))}", color=SHARE_MUTED, fontsize=12, va="top")
+    # Match the reference composition: the story label and signed gap share
+    # the top row, keeping the most important comparison visible at a glance.
+    fig.text(.10, .875, "Current 7-day\narchive gap", color=SHARE_TEXT, fontsize=24, fontweight="bold", va="top", linespacing=1.05)
+    fig.text(.50, .89, gap_text, color=gap_color, fontsize=62, fontweight="bold", va="top")
+    fig.text(.10, .765, "Observed archive records versus the same-date baseline", color=SHARE_MUTED, fontsize=13, va="top")
+    fig.text(.60, .765, f"Complete through {_share_date(getattr(snapshot.payload, 'latest_date', None))}", color=SHARE_MUTED, fontsize=12, va="top")
 
-    _share_box(fig, .06, .345, .88, .27)
-    fig.text(.09, .585, "ONE-YEAR TREND · BASELINE-CAPPED", color=SHARE_TEXT, fontsize=12, fontweight="bold", va="top")
-    ax = fig.add_axes([.105, .39, .80, .16], facecolor=SHARE_PANEL)
+    _share_box(fig, .06, .395, .88, .29)
+    fig.text(.09, .645, "ONE-YEAR TREND · BASELINE-CAPPED", color=SHARE_TEXT, fontsize=12, fontweight="bold", va="top")
+    ax = fig.add_axes([.105, .435, .80, .16], facecolor=SHARE_PANEL)
     series = snapshot.payload.series.copy()
     if not series.empty and {"date", "observed", "baseline"}.issubset(series.columns):
         series["date"] = pd.to_datetime(series["date"], errors="coerce")
@@ -197,26 +199,37 @@ def _write_share_images(
         ax.legend(loc="upper left", frameon=False, fontsize=9, labelcolor=SHARE_TEXT)
         for spine in ax.spines.values(): spine.set_color(SHARE_LINE)
         ax.set_ylabel("records/day", color=SHARE_MUTED, fontsize=9)
-    fig.text(.07, .285, "Recent archive windows", color=SHARE_TEXT, fontsize=15, fontweight="bold", va="top")
-    # Use the same headline-number treatment as the primary gap: the period
-    # label sits directly below each signed percentage instead of forcing the
-    # reader to decode a low, compressed axis.
+    fig.text(.07, .35, "Recent archive windows", color=SHARE_TEXT, fontsize=15, fontweight="bold", va="top")
+    # Use compact bars for the longer comparison windows. The 7-day value is
+    # already the dominant headline above, and the x-order runs from the
+    # most recent remaining window to the longest lookback.
     if archive_windows.empty:
-        fig.text(.50, .185, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=11)
+        fig.text(.50, .20, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=11)
     else:
-        # The 7-day value is already the dominant headline above; keep the
-        # lower comparison row focused on the longer windows.
         bars = archive_windows.dropna(subset=["days", "percent"]).copy()
         bars["days"] = pd.to_numeric(bars["days"], errors="coerce")
         bars = bars[bars["days"].ne(7)].sort_values("days", ascending=True)
-        values = pd.to_numeric(bars["percent"], errors="coerce").to_numpy()
-        labels = [f"{int(v)} day" if int(v) == 1 else f"{int(v)} days" for v in bars["days"]]
-        left, width = .07, .86 / max(len(values), 1)
-        for index, (label, value) in enumerate(zip(labels, values)):
-            x = left + width * (index + .5)
-            color = SHARE_GREEN if value >= 0 else SHARE_ORANGE
-            fig.text(x, .205, f"{value:+.1f}%", color=color, fontsize=23, fontweight="bold", ha="center", va="bottom")
-            fig.text(x, .158, label, color=SHARE_MUTED, fontsize=11, fontweight="bold", ha="center", va="top")
+        if bars.empty:
+            fig.text(.50, .20, "Window data unavailable", color=SHARE_MUTED, ha="center", va="center", fontsize=11)
+        else:
+            values = pd.to_numeric(bars["percent"], errors="coerce").to_numpy()
+            labels = [f"{int(v)} days" for v in bars["days"]]
+            bar_ax = fig.add_axes([.10, .105, .80, .20], facecolor=SHARE_PANEL)
+            colors = [SHARE_GREEN if value >= 0 else SHARE_ORANGE for value in values]
+            positions = range(len(values))
+            bar_ax.bar(positions, values, color=colors, width=.72)
+            bar_ax.axhline(0, color=SHARE_MUTED, linewidth=1.2)
+            low = min(-7.0, float(values.min()) - 1.0)
+            high = max(1.0, float(values.max()) + 1.0)
+            bar_ax.set_ylim(low, high)
+            bar_ax.set_xticks(list(positions), labels)
+            bar_ax.tick_params(axis="x", colors=SHARE_MUTED, labelsize=10, length=0, pad=8)
+            bar_ax.tick_params(axis="y", colors=SHARE_MUTED, labelsize=9, length=0)
+            bar_ax.grid(axis="y", color=SHARE_LINE, alpha=.7, linewidth=.7)
+            for index, value in enumerate(values):
+                offset = .22 if value >= 0 else -.22
+                bar_ax.text(index, value + offset, f"{value:+.1f}%", color=SHARE_TEXT, fontsize=10, fontweight="bold", ha="center", va="bottom" if value >= 0 else "top")
+            for spine in bar_ax.spines.values(): spine.set_visible(False)
     fig.text(.07, .045, "NOAA/NCEI IGRA v2 · data-availability diagnostic", color=SHARE_MUTED, fontsize=9)
     fig.text(.93, .045, "wall.cloud", color=SHARE_BLUE, fontsize=10, fontweight="bold", ha="right")
     fig.savefig(paths["share_archive.png"], dpi=100, facecolor=fig.get_facecolor())
