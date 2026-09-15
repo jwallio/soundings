@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import pandas as pd
 
-from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, build_public_site
+from scripts.build_upper_air_public_site import _archive_gap_display, _nco_freshness, _spc_table, build_public_site
 from scripts.run_upper_air_monitor import _record_source_step
 
 
@@ -49,18 +49,24 @@ def test_public_site_builds_source_backed_standalone_page(tmp_path: Path) -> Non
     assert "Sources and data health" in text
     assert "Built " in text and "Data snapshot" in text
     assert "DATA HEALTH / SOURCE COVERAGE" not in text
-    assert "Optional SPC feed unavailable" in text
+    assert "Every available archive period" in text
+    assert "SPC observed-sounding feed ready" in text
+    assert "SPC OBSERVED SOUNDINGS" in text
+    assert "View SPC page" in text
     assert "NCO ingest counts" in text and "Jan 5, 2025" in text
     assert 'id="issue-custom-range"' in text
     assert "Download archive CSV" in text
     assert "Download station CSV" in text
     assert "Download NCO CSV" in text
+    assert "Download SPC sounding CSV" in text
     assert "archive-availability.csv" in text
     assert "latest-station-status.csv" in text
     assert "nco-ingest-history.csv" in text
+    assert "spc-sounding-availability.csv" in text
     assert (tmp_path / "archive-availability.csv").is_file()
     assert (tmp_path / "latest-station-status.csv").is_file()
     assert (tmp_path / "nco-ingest-history.csv").is_file()
+    assert (tmp_path / "spc-sounding-availability.csv").is_file()
     assert (tmp_path / "og.png").is_file()
     for image_name in ("share_archive.png", "share_operations.png", "share_station_rankings.png"):
         image_path = tmp_path / image_name
@@ -74,6 +80,38 @@ def test_archive_gap_display_uses_signed_semantic_colors() -> None:
     assert _archive_gap_display(-4.44) == ("-4.4%", "problem")
     assert _archive_gap_display(0) == ("+0.0%", "")
     assert _archive_gap_display(float("nan")) == ("—", "")
+
+
+def test_spc_table_renders_all_periods_and_source_station_count() -> None:
+    frame = pd.DataFrame(
+        [
+            {
+                "sounding_time_utc": "2026-09-15T18:00:00Z",
+                "available_count": "25",
+                "expected_count": "69",
+                "availability_percent": "36.2",
+                "source_station_count": "25",
+                "source_url": "https://www.spc.noaa.gov/exper/soundings/26091518_OBS/",
+                "page_status": "ready",
+            },
+            {
+                "sounding_time_utc": "2026-09-15T16:00:00Z",
+                "available_count": "0",
+                "expected_count": "69",
+                "availability_percent": "0.0",
+                "source_station_count": "1",
+                "source_url": "https://www.spc.noaa.gov/exper/soundings/26091516_OBS/",
+                "page_status": "ready",
+            },
+        ]
+    )
+
+    text = _spc_table(frame)
+
+    assert text.index("Sep 15, 2026 18:00 UTC") < text.index("Sep 15, 2026 16:00 UTC")
+    assert "25 source · 25 / 69 (36.2%)" in text
+    assert "1 source · 0 / 69 (0.0%)" in text
+    assert text.count("View SPC page") == 2
 
 
 def test_nco_freshness_marks_retained_data_stale() -> None:

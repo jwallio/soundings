@@ -398,10 +398,60 @@ def _issue_rows(snapshot) -> str:
     )
 
 
+def _spc_table(frame: pd.DataFrame) -> str:
+    """Render every SPC archive period captured by the current snapshot."""
+    if frame.empty:
+        return '<p class="empty">No SPC observed-sounding archive periods are available.</p>'
+
+    data = frame.copy()
+    if "sounding_time_utc" in data:
+        data["sounding_dt"] = pd.to_datetime(data["sounding_time_utc"], errors="coerce", utc=True)
+        data = data.sort_values("sounding_dt", ascending=False, na_position="last")
+    rows: list[str] = []
+    for row in data.itertuples(index=False):
+        timestamp = getattr(row, "sounding_dt", pd.NaT)
+        if pd.notna(timestamp):
+            timestamp_text = f"{_display_date(timestamp)} {timestamp.hour:02d}:00 UTC"
+        else:
+            timestamp_text = "Unknown time"
+        status = str(getattr(row, "page_status", "unknown"))
+        ready = status in {"ready", "ready_empty"}
+        status_label = "Ready" if status == "ready" else "Ready · no station IDs" if status == "ready_empty" else status.replace("_", " ").title()
+        status_class = "clean" if ready else "problem"
+        available = pd.to_numeric(getattr(row, "available_count", pd.NA), errors="coerce")
+        expected = pd.to_numeric(getattr(row, "expected_count", pd.NA), errors="coerce")
+        percent = pd.to_numeric(getattr(row, "availability_percent", pd.NA), errors="coerce")
+        source_count = pd.to_numeric(getattr(row, "source_station_count", pd.NA), errors="coerce")
+        if pd.notna(available) and pd.notna(expected):
+            tracked_text = f"{int(available)} / {int(expected)}"
+            if pd.notna(percent):
+                tracked_text += f" ({float(percent):.1f}%)"
+            count_text = f"{int(source_count)} source · {tracked_text}" if pd.notna(source_count) else tracked_text
+        else:
+            count_text = "Unavailable"
+        source_url = html.escape(str(getattr(row, "source_url", "")), quote=True)
+        rows.append(
+            "<tr>"
+            f"<td><strong>{html.escape(timestamp_text)}</strong></td>"
+            f"<td>{count_text}</td>"
+            f'<td><span class="status {status_class}">{html.escape(status_label)}</span></td>'
+            f'<td><a href="{source_url}" target="_blank" rel="noreferrer">View SPC page</a></td>'
+            "</tr>"
+        )
+    return (
+        '<div class="table-wrap spc-table-wrap"><table><thead><tr>'
+        '<th>Sounding time</th><th>SPC stations · tracked / expected</th><th>Status</th><th>Source</th>'
+        "</tr></thead><tbody>"
+        + "".join(rows)
+        + "</tbody></table></div>"
+    )
+
+
 def _write_downloads(output_dir: Path, snapshot, station_status: pd.DataFrame) -> None:
     snapshot.payload.series.to_csv(output_dir / "archive-availability.csv", index=False)
     station_status.to_csv(output_dir / "latest-station-status.csv", index=False)
     snapshot.nco.to_csv(output_dir / "nco-ingest-history.csv", index=False)
+    snapshot.spc.to_csv(output_dir / "spc-sounding-availability.csv", index=False)
 
 
 def _write_fallback_og(output_dir: Path, snapshot) -> None:
@@ -705,10 +755,19 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
     kpis = snapshot.payload
     health = source_health_summary(snapshot.source_status)
     health_color = "green" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "amber"
-    optional_health = "Optional SPC feed unavailable" if health["optional_problems"] else "Optional feeds ready"
+    spc_statuses = snapshot.spc.get("page_status", pd.Series(dtype=str)).astype(str) if not snapshot.spc.empty else pd.Series(dtype=str)
+    spc_ready_count = int(spc_statuses.isin({"ready", "ready_empty"}).sum()) if not spc_statuses.empty else 0
+    if snapshot.spc.empty:
+        optional_health = "Optional SPC feed unavailable"
+    elif health["optional_problems"]:
+        optional_health = f"SPC feed needs review: {spc_ready_count} of {len(snapshot.spc)} archive periods ready"
+    else:
+        optional_health = f"SPC observed-sounding feed ready: {spc_ready_count} archive periods"
     nco_coverage = _source_coverage(snapshot, "NCO availability")
     issue_coverage = _source_coverage(snapshot, "NCO station issues")
     igra_coverage = _source_coverage(snapshot, "IGRA daily archive")
+    spc_coverage = _source_coverage(snapshot, "SPC sounding page")
+    spc_table = _spc_table(snapshot.spc)
     igra_qualifier = _source_qualifier(snapshot, "IGRA daily archive")
     archive_windows = archive_window_metrics(kpis.series, days=(7, 14, 30, 60, 90, 180, 360))
     window_90 = archive_windows[archive_windows["days"].eq(90)]
@@ -927,7 +986,7 @@ def build_public_site(output_dir: Path = DEFAULT_OUTPUT) -> Path:
 details{{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}}summary{{cursor:pointer;font-weight:800;color:var(--blue);list-style:none}}summary::-webkit-details-marker{{display:none}}summary::after{{content:" +";color:var(--muted)}}details[open] summary::after{{content:" −"}}.table-wrap{{overflow:auto;margin-top:10px}}table{{width:100%;border-collapse:collapse;font-size:13px}}th,td{{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}}th{{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}}.status,.station-status{{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--panel2)}}.status.new-issue,.status.category-changed,.station-status.issue{{color:var(--orange)}}.status.resolved,.station-status.clean{{color:var(--green)}}
 .review-card{{margin-top:8px;padding:12px 20px}}.review-card details{{border-top:0;margin-top:0;padding-top:0}}
  .directory-tools{{display:grid;grid-template-columns:auto minmax(180px,420px) 1fr;gap:12px;align-items:center;margin:14px 0}}.directory-tools label{{font-weight:800}}.directory-tools input{{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}}.directory-tools input:focus{{border-color:var(--blue);box-shadow:0 0 0 3px rgba(89,200,245,.12)}}#station-count{{justify-self:end;color:var(--muted);font-size:12px}}.station-table{{max-height:420px}}.downloads{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}}.download{{text-decoration:none;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--blue);font-weight:750;font-size:13px}}.download:hover{{background:var(--panel2)}}
- .health-summary{{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0 0}}.health-summary strong{{font-size:16px}}.health-badge{{border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800}}.health-badge.green{{color:var(--green);border-color:rgba(82,211,162,.5)}}.health-badge.amber{{color:var(--amber);border-color:rgba(246,200,95,.5)}}.health-optional{{color:var(--muted);font-size:12px;margin:4px 0 12px}}.health-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}}.health-item{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px;min-width:0}}.health-item strong{{display:block;font-size:14px;white-space:nowrap}}.health-item span,.health-item small{{display:block;color:var(--muted);font-size:12px;margin-top:3px}}.health-item small{{font-size:11px;color:var(--amber)}}.health-item .green{{color:var(--green)}}.health-item .amber{{color:var(--amber)}}
+ .health-summary{{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 0 0}}.health-summary strong{{font-size:16px}}.health-badge{{border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800}}.health-badge.green{{color:var(--green);border-color:rgba(82,211,162,.5)}}.health-badge.amber{{color:var(--amber);border-color:rgba(246,200,95,.5)}}.health-optional{{color:var(--muted);font-size:12px;margin:4px 0 12px}}.health-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}}.health-item{{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px;min-width:0}}.health-item strong{{display:block;font-size:14px;white-space:nowrap}}.health-item span,.health-item small{{display:block;color:var(--muted);font-size:12px;margin-top:3px}}.health-item small{{font-size:11px;color:var(--amber)}}.health-item .green{{color:var(--green)}}.health-item .amber{{color:var(--amber)}}
  [hidden]{{display:none!important}}.sr-only{{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}}.nco-detail-close:focus-visible,.nco-view-button:focus-visible{{outline:2px solid var(--blue);outline-offset:2px}}
 footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;color:var(--muted);font-size:13px}}.footer-row{{display:flex;justify-content:space-between;gap:20px}}.empty{{color:var(--muted)}}
 @media(min-width:901px){{.station-search-details[open]{{position:fixed;z-index:100;top:7vh;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 64px));max-height:86vh;overflow:auto;margin:0;padding:22px;background:var(--panel);border:1px solid var(--blue);border-radius:18px;box-shadow:0 0 0 100vmax rgba(2,10,17,.72),0 24px 70px rgba(0,0,0,.5)}}.station-search-details[open] .station-table{{max-height:none}}}}
@@ -939,7 +998,7 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
  .nco-ingest-subtitle{{color:var(--muted);font-size:10px;margin-top:2px}}.nco-freshness{{margin:8px 9px 0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:10px}}.nco-freshness strong{{color:var(--text);font-weight:750}}.nco-freshness.stale{{border-color:rgba(246,200,95,.65);color:var(--amber)}}
 </style></head><body>
 <a class="skip" href="#content">Skip to data</a>
-<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#methods">Methods</a></div><div class="nav-status">Data through {html.escape(str(kpis.latest_date))}</div></div></nav>
+<nav><div class="wrap"><a class="brand" href="https://wall.cloud/">wall.cloud</a><div class="navlinks"><a href="#archive">Soundings</a><a href="#stations">Stations</a><a href="#operations">Operations</a><a href="#spc">SPC</a><a href="#methods">Methods</a></div><div class="nav-status">Data through {html.escape(str(kpis.latest_date))}</div></div></nav>
 <main id="content" class="wrap">
 <header class="hero"><div><div class="eyebrow">CONUS UPPER-AIR DATA WATCH</div><h1>Sounding data availability, clearly tracked.</h1></div>
 <article class="card {signal_class}"><div class="kpi-label">Current 7-day archive gap</div><div class="kpi-value {gap_class}">{gap_text}</div><div class="kpi-detail">{kpis.observed:.1f} observed vs {kpis.expected:.1f} expected records per day</div><div class="signal-grid"><div><strong>{shortfall_90:.0f}</strong><span>fewer records over 90 days</span></div><div><strong>{percent_90:.1f}%</strong><span>90-day difference</span></div></div></article></header>
@@ -956,7 +1015,9 @@ footer{{border-top:1px solid var(--line);margin-top:28px;padding:24px 0 40px;col
 
 <section id="operations" class="section"><div class="section-head"><div class="eyebrow">OPERATIONAL MESSAGES</div><h2>NCO reported for ingest</h2></div><div class="grid two-even"><article class="card chart-card">{nco}</article><article class="card chart-card"><div class="chart-title">Reported issue categories</div><div class="chart-sub">Default view: latest 28 days</div><div class="trend-controls operation-controls"><form id="issue-custom-range" class="custom-range"><span>Custom</span><input id="issue-range-start" type="date" aria-label="Issue-category custom range start" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_default_start.date().isoformat()}"><span>to</span><input id="issue-range-end" type="date" aria-label="Issue-category custom range end" min="{issue_first.date().isoformat()}" max="{issue_last.date().isoformat()}" value="{issue_last.date().isoformat()}"><button type="submit">Apply</button></form></div>{categories}</article></div><article class="card review-card"><details><summary>Review station changes from the previous comparable cycle</summary>{_issue_rows(snapshot)}</details></article></section>
 
-<section id="methods" class="section"><div class="section-head"><div><div class="eyebrow">SOURCES & METHODS</div><h2>Sources and data health</h2></div><p>Built {html.escape(build_text)}.<br>Data snapshot {html.escape(updated_text)}.</p></div><article class="card"><div class="health-summary"><div><strong>{health["required_ready"]} of {health["required_total"]} required products ready</strong></div><span class="health-badge {health_color}">{"Ready" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "Review"}</span></div><p class="health-optional">{html.escape(optional_health)}</p><div class="health-grid"><div class="health-item"><strong>IGRA daily archive</strong><span>{html.escape(igra_coverage)}</span>{f'<small>{html.escape(igra_qualifier)}</small>' if igra_qualifier else ''}</div><div class="health-item"><strong>NCO ingest counts</strong><span>{html.escape(nco_coverage)}</span></div><div class="health-item"><strong>NCO issue statuses</strong><span>{html.escape(issue_coverage)}</span></div></div><ul>{caveats}</ul><p class="kpi-detail">Sources: NOAA/NCEI IGRA v2; NWS/NCEP/NCO SDM Administrative Messages; CONUS upper-air station master.</p><div class="downloads"><a class="download" href="archive-availability.csv" download aria-label="Download archive CSV">Archive CSV</a><a class="download" href="latest-station-status.csv" download aria-label="Download station CSV">Station CSV</a><a class="download" href="nco-ingest-history.csv" download aria-label="Download NCO CSV">NCO CSV</a></div></article></section>
+<section id="spc" class="section"><div class="section-head"><div class="eyebrow">SPC OBSERVED SOUNDINGS</div><h2>Every available archive period</h2><p class="chart-sub">The table includes all sounding times currently listed by SPC, including supplemental and 18 UTC periods. Station-level IDs are preserved in the downloadable CSV.</p></div><article class="card"><div class="health-summary"><div><strong>{spc_ready_count} of {len(snapshot.spc)} archive periods parsed</strong></div><span class="health-badge {'green' if spc_ready_count == len(snapshot.spc) and len(snapshot.spc) else 'amber'}">{'Ready' if spc_ready_count == len(snapshot.spc) and len(snapshot.spc) else 'Review'}</span></div>{spc_table}</article></section>
+
+<section id="methods" class="section"><div class="section-head"><div><div class="eyebrow">SOURCES & METHODS</div><h2>Sources and data health</h2></div><p>Built {html.escape(build_text)}.<br>Data snapshot {html.escape(updated_text)}.</p></div><article class="card"><div class="health-summary"><div><strong>{health["required_ready"]} of {health["required_total"]} required products ready</strong></div><span class="health-badge {health_color}">{"Ready" if health["problems"] == 0 and health["duplicate_rows"] == 0 else "Review"}</span></div><p class="health-optional">{html.escape(optional_health)}</p><div class="health-grid"><div class="health-item"><strong>IGRA daily archive</strong><span>{html.escape(igra_coverage)}</span>{f'<small>{html.escape(igra_qualifier)}</small>' if igra_qualifier else ''}</div><div class="health-item"><strong>NCO ingest counts</strong><span>{html.escape(nco_coverage)}</span></div><div class="health-item"><strong>NCO issue statuses</strong><span>{html.escape(issue_coverage)}</span></div><div class="health-item"><strong>SPC observed soundings</strong><span>{html.escape(spc_coverage)}</span></div></div><ul>{caveats}</ul><p class="kpi-detail">Sources: NOAA/NCEI IGRA v2; NWS/NCEP/NCO SDM Administrative Messages; SPC observed sounding archive; CONUS upper-air station master.</p><div class="downloads"><a class="download" href="archive-availability.csv" download aria-label="Download archive CSV">Archive CSV</a><a class="download" href="latest-station-status.csv" download aria-label="Download station CSV">Station CSV</a><a class="download" href="nco-ingest-history.csv" download aria-label="Download NCO CSV">NCO CSV</a><a class="download" href="spc-sounding-availability.csv" download aria-label="Download SPC sounding CSV">SPC CSV</a></div></article></section>
 </main><footer><div class="wrap footer-row"><div><strong class="brand">wall.cloud</strong><br>Weather data, carefully framed.</div><div><a href="#methods">Sources and methods</a></div></div></footer>
 <script>
 const trendChart=document.getElementById('archive-trend');

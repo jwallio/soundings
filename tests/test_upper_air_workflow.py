@@ -8,7 +8,9 @@ def test_scheduled_refreshes_use_distinct_full_archive_cron() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
     assert '- cron: "45 1,3,13 * * *"' in text
     assert '- cron: "45 15 * * *"' in text
+    assert '- cron: "45 19 * * *"' in text
     assert 'github.event.schedule }}" == "45 15 * * *"' in text
+    assert 'grep -q "SPC OBSERVED SOUNDINGS"' in text
 
 
 def test_nco_only_runs_restore_data_and_skip_archive_sources() -> None:

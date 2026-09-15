@@ -197,8 +197,13 @@ def summary(outdir: Path) -> None:
         print("Latest NCO missing/problem stations: unavailable")
 
     if not spc.empty:
-        row = spc.iloc[-1]
-        print(f"SPC parser status: {row.get('parser_method', 'unknown')}")
+        ready = int(spc.get("page_status", pd.Series(dtype=str)).astype(str).isin({"ready", "ready_empty"}).sum())
+        latest = spc.sort_values("sounding_time_utc").iloc[-1] if "sounding_time_utc" in spc else spc.iloc[-1]
+        print(f"SPC archive periods: {ready} of {len(spc)} parsed")
+        print(
+            f"Latest SPC sounding: {latest.get('sounding_time_utc', 'unknown')} "
+            f"({latest.get('available_count', '—')} of {latest.get('expected_count', '—')} expected stations)"
+        )
     else:
         print("SPC parser status: unavailable")
 
@@ -282,7 +287,14 @@ def main() -> int:
                 [python, "scripts/parse_spc_sounding_page.py"],
                 required=False,
             )
-            _record_source_step(status, "spc", spc_code, spc_output, Path("data/spc_sounding_availability.csv"), "date")
+            _record_source_step(
+                status,
+                "spc",
+                spc_code,
+                spc_output,
+                Path("data/spc_sounding_availability.csv"),
+                "sounding_time_utc",
+            )
         dashboard_code, dashboard_output = run_step(
             "Make dashboard",
             [python, "scripts/make_upper_air_dashboard.py", "--outdir", str(outdir)],

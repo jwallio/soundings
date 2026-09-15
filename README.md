@@ -4,7 +4,7 @@ Public, data-availability dashboard for CONUS upper-air observations and NCO ope
 
 Live site: https://soundings.wall.cloud
 
-The scheduled GitHub Actions workflow checks NCO status four times daily (01:45Z, 03:45Z, 13:45Z, and 15:45Z) and publishes the static dashboard to GitHub Pages. The 15:45Z run and manual dispatch perform the full IGRA historical refresh and social-graphics build; the other scheduled runs restore retained IGRA/station data, skip the expensive archive refresh, and update NCO status/site content. If retained archive data is unavailable, an NCO-only run is promoted to a full refresh.
+The scheduled GitHub Actions workflow checks NCO status and the SPC observed-sounding archive five times daily (01:45Z, 03:45Z, 13:45Z, 15:45Z, and 19:45Z) and publishes the static dashboard to GitHub Pages. The 19:45Z check is after SPC's normal 18:30Z publishing window, so the current seven-day archive index is scanned for every available sounding period, including supplemental 18 UTC periods. The 15:45Z run and manual dispatch perform the full IGRA historical refresh and social-graphics build; the other scheduled runs restore retained IGRA/station data, skip the expensive archive refresh, and update NCO/SPC status and site content. If retained archive data is unavailable, a reduced refresh is promoted to a full refresh.
 
 ## Local build
 
@@ -17,7 +17,7 @@ python scripts/build_upper_air_public_site.py
 
 The generated public bundle is `upper-air-site/dist/`.
 
-The dashboard compares archive records with a same-date baseline and shows NCO operational-message/product-record availability as a separate signal. GFS, NAM, and NCEP rows are operational-message products, not unique station counts; missing source rows remain missing and are not converted to zero. NCO status is not a confirmed balloon-launch count, and neither layer is a model-skill measure.
+The dashboard compares archive records with a same-date baseline and shows NCO operational-message/product-record availability and SPC observed-sounding availability as separate signals. The SPC table retains every archive time currently listed by SPC; station-level IDs and source URLs are available in `spc-sounding-availability.csv`. GFS, NAM, and NCEP rows are operational-message products, not unique station counts; missing source rows remain missing and are not converted to zero. NCO status is not a confirmed balloon-launch count, and neither layer is a model-skill measure.
 
 The generated page exposes the latest source-record date, last successful NCO refresh, build time, and a retained-data warning when an upstream NCO request or parser fails. A failed NCO refresh does not replace valid historical CSV data with an empty file.
 

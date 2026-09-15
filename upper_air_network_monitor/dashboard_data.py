@@ -37,6 +37,7 @@ class DashboardSnapshot:
     repo_root: Path
     payload: SocialPayload
     nco: pd.DataFrame
+    spc: pd.DataFrame
     issues: pd.DataFrame
     stations: pd.DataFrame
     station_deficits: pd.DataFrame
@@ -155,6 +156,31 @@ def prepare_nco(frame: pd.DataFrame) -> pd.DataFrame:
     if "model" in data:
         data["model"] = data["model"].fillna("NCO").astype(str).str.upper()
     return data.sort_values([column for column in ("cycle_dt", "message_dt") if column in data]).reset_index(drop=True)
+
+
+def prepare_spc(frame: pd.DataFrame) -> pd.DataFrame:
+    """Normalize the multi-period SPC observed-sounding snapshot."""
+    data = frame.copy()
+    if data.empty:
+        return data
+    for column in ("available_count", "expected_count", "availability_percent"):
+        if column in data:
+            data[column] = pd.to_numeric(data[column], errors="coerce")
+    if "sounding_time_utc" in data:
+        data["sounding_dt"] = pd.to_datetime(data["sounding_time_utc"], errors="coerce", utc=True)
+    elif {"cycle_date_utc", "cycle_hour"}.issubset(data.columns):
+        hour = data["cycle_hour"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(2)
+        data["cycle_hour"] = hour
+        data["sounding_dt"] = pd.to_datetime(
+            data["cycle_date_utc"].astype(str) + " " + hour + ":00",
+            errors="coerce",
+            utc=True,
+        )
+    else:
+        data["sounding_dt"] = pd.NaT
+    if "cycle_hour" in data:
+        data["cycle_hour"] = data["cycle_hour"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(2)
+    return data.sort_values([column for column in ("sounding_dt", "run_time_utc") if column in data]).reset_index(drop=True)
 
 
 NCO_INGEST_MODELS = ("GFS", "NAM", "NCEP")
@@ -492,12 +518,13 @@ def _source_rows(repo_root: Path, paths: dict[str, Path], frames: dict[str, pd.D
         "IGRA daily archive": "date",
         "NCO availability": "cycle_date_utc",
         "NCO station issues": "cycle_date_utc",
-        "SPC sounding page": "date",
+        "SPC sounding page": "sounding_time_utc",
     }
     key_columns = {
         "IGRA daily archive": ["date", "year"],
         "NCO availability": ["cycle_date_utc", "cycle_hour", "model"],
         "NCO station issues": ["cycle_date_utc", "cycle_hour", "model", "wmo_id", "station_id", "issue_text"],
+        "SPC sounding page": ["sounding_time_utc"],
     }
     rows: list[dict[str, object]] = []
     for name, path in paths.items():
@@ -509,6 +536,13 @@ def _source_rows(repo_root: Path, paths: dict[str, Path], frames: dict[str, pd.D
         keys = key_columns.get(name, [])
         duplicate_rows = int(frame.duplicated(keys).sum()) if keys and set(keys).issubset(frame.columns) else 0
         status = "ready" if resolved.exists() and not frame.empty else ("empty" if resolved.exists() else "missing")
+        if (
+            status == "ready"
+            and name == "SPC sounding page"
+            and "page_status" in frame
+            and not frame["page_status"].astype(str).isin({"ready", "ready_empty"}).all()
+        ):
+            status = "check"
         if status == "ready" and duplicate_rows:
             status = "check"
         rows.append(
@@ -584,7 +618,7 @@ def load_dashboard_snapshot(repo_root: Path) -> DashboardSnapshot:
     igra_metadata_path = repo_root / IGRA_METADATA_PATH
     igra_metadata = _read_json(igra_metadata_path)
     spc_status_path = repo_root / SPC_STATUS_PATH
-    spc_status = _read_csv(spc_status_path, dtype=str)
+    spc_status = prepare_spc(_read_csv(spc_status_path, dtype=str))
     refresh_status = _read_json(repo_root / REFRESH_STATUS_PATH)
     source_paths = {
         "metrics manifest": manifest_path,
@@ -610,6 +644,7 @@ def load_dashboard_snapshot(repo_root: Path) -> DashboardSnapshot:
         repo_root=repo_root,
         payload=payload,
         nco=nco,
+        spc=spc_status,
         issues=issues,
         stations=stations,
         station_deficits=station_deficits,

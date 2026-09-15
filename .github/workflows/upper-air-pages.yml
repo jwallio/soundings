@@ -9,11 +9,13 @@ on:
         default: false
         type: boolean
   schedule:
-    # The early checks are NCO-only; the 15:45Z check refreshes the archive.
-    # Keep these as separate cron entries so github.event.schedule identifies
-    # the full-refresh run reliably.
+    # The 19:45Z check is deliberately after SPC's normal 18:30Z publishing
+    # window so supplemental 18 UTC soundings are captured. Keep these as
+    # separate cron entries so github.event.schedule identifies the full
+    # archive-refresh run reliably.
     - cron: "45 1,3,13 * * *"
     - cron: "45 15 * * *"
+    - cron: "45 19 * * *"
 
 permissions:
   contents: read
@@ -108,6 +110,7 @@ jobs:
           test -s upper-air-site/dist/index.html
           test -s upper-air-site/dist/og.png
           grep -q "SOUNDING AVAILABILITY" upper-air-site/dist/index.html
+          grep -q "SPC OBSERVED SOUNDINGS" upper-air-site/dist/index.html
 
       - name: Set custom domain
         run: |
